@@ -238,6 +238,7 @@
 ## الخطوة 7 — محطة Expertise
 
 - **التاريخ:** 16 نوفمبر 2026
+- **Commit:** `7bb1700` — `feat: build expertise station with evidence-based skill tiers`
 - **الحالة:** منفذة — بانتظار الاعتماد.
 
 ### ما تم
