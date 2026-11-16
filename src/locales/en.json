@@ -89,6 +89,45 @@
       }
     }
   },
+  "expertise": {
+    "intro": "Grouped by evidence: what I have applied, what I have studied, and what I am learning now.",
+    "evidence": "Evidence",
+    "inAnalysis": "in analysis and design",
+    "tiers": {
+      "applied": {
+        "title": "Applied experience",
+        "description": "Skills I have actually used; each group links to the project that shows it."
+      },
+      "academic": {
+        "title": "Academic knowledge",
+        "description": "Gained through my IT engineering degree; not yet documented by a published project."
+      },
+      "learning": {
+        "title": "Learning and developing",
+        "description": "Areas I am currently learning and developing in, not presented as delivered experience."
+      }
+    },
+    "groups": {
+      "frontend": "Front-end development",
+      "data": "Databases and backend services",
+      "appliedAi": "Applied AI on real data",
+      "embedded": "Embedded systems and IoT",
+      "mobile": "Mobile apps",
+      "auth": "Authentication and access control",
+      "design": "Requirements analysis and system design",
+      "versioning": "Version control and deployment",
+      "tools": "Supporting tools",
+      "networking": "Networking and infrastructure",
+      "security": "Cybersecurity",
+      "backend": "Back-end development",
+      "sdlc": "Software development life cycle",
+      "aiEngineering": "Applied AI Engineering",
+      "agents": "AI Agents & Agentic Systems",
+      "aiops": "AIOps",
+      "architecture": "Advanced software architecture",
+      "cloud": "Cloud & DevOps"
+    }
+  },
   "sections": {
     "methodology": "Methodology",
     "expertise": "Expertise",

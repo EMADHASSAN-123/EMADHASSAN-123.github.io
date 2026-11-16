@@ -621,3 +621,122 @@ html:not([data-theme]) [data-requires-js] {
     }
   }
 }
+
+/* ===== Expertise: evidence tiers ===== */
+@layer components {
+  .skill-tier {
+    margin-top: 4rem;
+  }
+
+  .skill-tier__head {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+
+  /* Node style encodes the evidence level (same language as the hero). */
+  .skill-node {
+    flex-shrink: 0;
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-top: 0.55rem;
+    border: 1.5px solid rgb(var(--color-accent-primary));
+  }
+
+  .skill-tier--applied .skill-node {
+    background-color: rgb(var(--color-accent-primary));
+  }
+
+  .skill-tier--learning .skill-node {
+    border-style: dashed;
+  }
+
+  .skill-rows {
+    margin-top: 1.5rem;
+    border-top: 1px solid rgb(var(--color-border));
+  }
+
+  .skill-row {
+    display: grid;
+    gap: 0.5rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .skill-row__name {
+    font-weight: 500;
+    color: rgb(var(--color-text-primary));
+  }
+
+  .tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-primary));
+  }
+
+  .skill-tier--academic .tech-list,
+  .skill-tier--learning .tech-list,
+  .skill-tier--academic .skill-row__name,
+  .skill-tier--learning .skill-row__name {
+    color: rgb(var(--color-text-secondary));
+  }
+
+  .skill-row__evidence {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-row__evidence-label {
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-muted));
+  }
+
+  .evidence-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .evidence-chip {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border: 1px solid rgb(var(--color-border-strong) / 0.7);
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-primary));
+    transition:
+      border-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
+  }
+
+  .evidence-chip:hover,
+  .evidence-chip:focus-visible {
+    border-color: rgb(var(--color-accent-primary));
+    color: rgb(var(--color-accent-primary));
+  }
+
+  /* Evidence from a project still in analysis and design. */
+  .evidence-chip--analysis {
+    border-style: dashed;
+  }
+
+  @media (min-width: 1024px) {
+    .skill-row {
+      grid-template-columns: 17rem minmax(0, 1fr);
+      column-gap: 2rem;
+      align-items: baseline;
+    }
+
+    .skill-tier--applied .skill-row {
+      grid-template-columns: 17rem minmax(0, 1fr) 20rem;
+    }
+
+    .skill-row__evidence .skill-row__evidence-label {
+      display: none;
+    }
+  }
+}
