@@ -419,6 +419,7 @@
 ## الخطوة 11 — صفحة دراسة الحالة للمشروع 1 + المخطط التفاعلي
 
 - **التاريخ:** 16 نوفمبر 2026
+- **Commit:** `c5dcbef` — `feat: add fuel quality case study with interactive architecture diagram`
 - **الحالة:** منفذة — بانتظار الاعتماد.
 
 ### ما تم
