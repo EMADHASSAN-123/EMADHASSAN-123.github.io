@@ -17,9 +17,10 @@ interface DiagramNode {
 interface Props {
   svg: string;
   nodes: DiagramNode[];
+  hint?: TranslationKey;
 }
 
-const { svg, nodes } = Astro.props;
+const { svg, nodes, hint = 'caseStudy.diagramHint' } = Astro.props;
 ---
 
 <div class="diagram" data-diagram>
@@ -30,7 +31,7 @@ const { svg, nodes } = Astro.props;
 
     <aside class="diagram__panel" aria-live="polite">
       <p class="diagram__hint" data-panel-hint>
-        <T k="caseStudy.diagramHint" />
+        <T k={hint} />
       </p>
       {nodes.map(({ id, name, description }) => (
         <div class="diagram__detail" data-panel={id} hidden>

@@ -1652,3 +1652,41 @@ html:not([data-theme]) [data-requires-js] {
     opacity: 0;
   }
 }
+
+/* ===== Case study additions ===== */
+@layer components {
+  .case-callout {
+    max-width: var(--layout-prose);
+    padding: 1rem 1.25rem;
+    border-inline-start: 3px solid rgb(var(--color-success));
+    background-color: rgb(var(--color-surface));
+    font-size: 1.25rem;
+    line-height: var(--leading-body);
+  }
+
+  .case-callout--notice {
+    border-inline-start-color: rgb(var(--color-info));
+    font-size: 1rem;
+  }
+
+  .case-callout--warning {
+    border-inline-start-color: rgb(var(--color-warning));
+    border-inline-start-style: dashed;
+    font-size: 1rem;
+  }
+
+  .diagram-node .diagram-text--sub {
+    fill: rgb(var(--color-text-secondary));
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .diagram-node--proposed rect {
+    stroke: rgb(var(--color-warning));
+    stroke-dasharray: 4 3;
+  }
+
+  .diagram-edge .diagram-edge__label--end {
+    text-anchor: end;
+  }
+}

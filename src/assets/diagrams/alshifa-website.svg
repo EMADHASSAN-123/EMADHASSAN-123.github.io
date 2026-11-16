@@ -1,0 +1,75 @@
+<svg viewBox="0 0 960 330" xmlns="http://www.w3.org/2000/svg" class="diagram-svg" focusable="false">
+  <defs>
+    <marker id="as-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 8 4 0 8Z" class="diagram-arrowhead" />
+    </marker>
+  </defs>
+
+  <g class="diagram-group" data-step="0">
+    <rect x="12" y="12" width="936" height="128" rx="10" />
+    <text x="28" y="36">Delivery process</text>
+  </g>
+  <g class="diagram-group" data-step="0">
+    <rect x="12" y="168" width="936" height="148" rx="10" />
+    <text x="28" y="192">Running website</text>
+  </g>
+
+  <g class="diagram-node" data-node="needs" data-step="1" tabindex="0" role="button" aria-pressed="false">
+    <rect x="28" y="60" width="132" height="56" rx="6" /><text x="94" y="93">Needs</text>
+  </g>
+  <g class="diagram-edge" data-from="needs" data-to="requirements" data-step="2">
+    <line x1="160" y1="88" x2="182" y2="88" marker-end="url(#as-arrow)" />
+  </g>
+  <g class="diagram-node" data-node="requirements" data-step="3" tabindex="0" role="button" aria-pressed="false">
+    <rect x="184" y="60" width="132" height="56" rx="6" /><text x="250" y="93">Requirements</text>
+  </g>
+  <g class="diagram-edge" data-from="requirements" data-to="content" data-step="4">
+    <line x1="316" y1="88" x2="338" y2="88" marker-end="url(#as-arrow)" />
+  </g>
+  <g class="diagram-node" data-node="content" data-step="5" tabindex="0" role="button" aria-pressed="false">
+    <rect x="340" y="60" width="132" height="56" rx="6" /><text x="406" y="93">Content</text>
+  </g>
+  <g class="diagram-edge" data-from="content" data-to="design" data-step="6">
+    <line x1="472" y1="88" x2="494" y2="88" marker-end="url(#as-arrow)" />
+  </g>
+  <g class="diagram-node" data-node="design" data-step="7" tabindex="0" role="button" aria-pressed="false">
+    <rect x="496" y="60" width="132" height="56" rx="6" /><text x="562" y="93">UI design</text>
+  </g>
+  <g class="diagram-edge" data-from="design" data-to="build" data-step="8">
+    <line x1="628" y1="88" x2="650" y2="88" marker-end="url(#as-arrow)" />
+  </g>
+  <g class="diagram-node" data-node="build" data-step="9" tabindex="0" role="button" aria-pressed="false">
+    <rect x="652" y="60" width="132" height="56" rx="6" /><text x="718" y="93">Development</text>
+  </g>
+  <g class="diagram-edge" data-from="build" data-to="launch" data-step="10">
+    <line x1="784" y1="88" x2="806" y2="88" marker-end="url(#as-arrow)" />
+  </g>
+  <g class="diagram-node" data-node="launch" data-step="11" tabindex="0" role="button" aria-pressed="false">
+    <rect x="808" y="60" width="124" height="56" rx="6" /><text x="870" y="93">Launch</text>
+  </g>
+
+  <g class="diagram-node" data-node="visitors" data-step="12" tabindex="0" role="button" aria-pressed="false">
+    <rect x="28" y="222" width="170" height="60" rx="6" /><text x="113" y="257">Visitors (500+)</text>
+  </g>
+  <g class="diagram-edge" data-from="visitors" data-to="ui" data-step="13">
+    <line x1="198" y1="252" x2="266" y2="252" marker-end="url(#as-arrow)" />
+    <text x="232" y="242">Browser</text>
+  </g>
+  <g class="diagram-node" data-node="ui" data-step="14" tabindex="0" role="button" aria-pressed="false">
+    <rect x="268" y="222" width="220" height="60" rx="6" />
+    <text x="378" y="248"><tspan x="378">Responsive UI</tspan><tspan x="378" dy="18">HTML + Tailwind CSS</tspan></text>
+  </g>
+  <g class="diagram-edge" data-from="ui" data-to="logic" data-step="15">
+    <line x1="488" y1="252" x2="538" y2="252" marker-end="url(#as-arrow)" />
+  </g>
+  <g class="diagram-node" data-node="logic" data-step="16" tabindex="0" role="button" aria-pressed="false">
+    <rect x="540" y="222" width="150" height="60" rx="6" /><text x="615" y="257">JavaScript</text>
+  </g>
+  <g class="diagram-edge" data-from="logic" data-to="supabase" data-step="17">
+    <line x1="690" y1="252" x2="758" y2="252" marker-end="url(#as-arrow)" />
+    <text x="724" y="242">Ajax</text>
+  </g>
+  <g class="diagram-node" data-node="supabase" data-step="18" tabindex="0" role="button" aria-pressed="false">
+    <rect x="760" y="222" width="172" height="60" rx="6" /><text x="846" y="257">Supabase</text>
+  </g>
+</svg>

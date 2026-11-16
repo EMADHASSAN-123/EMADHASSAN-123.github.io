@@ -1,0 +1,63 @@
+<svg viewBox="0 0 960 360" xmlns="http://www.w3.org/2000/svg" class="diagram-svg" focusable="false">
+  <defs>
+    <marker id="cm-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 8 4 0 8Z" class="diagram-arrowhead" />
+    </marker>
+  </defs>
+
+  <g class="diagram-group" data-step="0">
+    <rect x="12" y="16" width="204" height="332" rx="10" /><text x="28" y="40">Readers</text>
+  </g>
+  <g class="diagram-group" data-step="0">
+    <rect x="312" y="16" width="336" height="332" rx="10" /><text x="328" y="40">Supabase</text>
+  </g>
+  <g class="diagram-group" data-step="0">
+    <rect x="744" y="16" width="204" height="332" rx="10" /><text x="760" y="40">Admin</text>
+  </g>
+
+  <g class="diagram-node" data-node="blog" data-step="1" tabindex="0" role="button" aria-pressed="false">
+    <rect x="24" y="64" width="180" height="60" rx="6" /><text x="114" y="99">Blog pages</text>
+  </g>
+  <g class="diagram-node" data-node="comments" data-step="2" tabindex="0" role="button" aria-pressed="false">
+    <rect x="24" y="264" width="180" height="60" rx="6" /><text x="114" y="299">Comments</text>
+  </g>
+
+  <g class="diagram-node" data-node="auth" data-step="3" tabindex="0" role="button" aria-pressed="false">
+    <rect x="330" y="64" width="300" height="60" rx="6" />
+    <text x="480" y="90"><tspan x="480">Auth</tspan><tspan x="480" dy="18" class="diagram-text--sub">GitHub, Google, Email</tspan></text>
+  </g>
+  <g class="diagram-node" data-node="database" data-step="4" tabindex="0" role="button" aria-pressed="false">
+    <rect x="330" y="164" width="300" height="60" rx="6" />
+    <text x="480" y="190"><tspan x="480">Database</tspan><tspan x="480" dy="18" class="diagram-text--sub">tables + access policies</tspan></text>
+  </g>
+  <g class="diagram-node" data-node="realtime" data-step="5" tabindex="0" role="button" aria-pressed="false">
+    <rect x="330" y="264" width="300" height="60" rx="6" />
+    <text x="480" y="290"><tspan x="480">Realtime</tspan><tspan x="480" dy="18" class="diagram-text--sub">comments + notifications</tspan></text>
+  </g>
+
+  <g class="diagram-node" data-node="dashboard" data-step="6" tabindex="0" role="button" aria-pressed="false">
+    <rect x="756" y="64" width="180" height="60" rx="6" /><text x="846" y="99">Admin dashboard</text>
+  </g>
+  <g class="diagram-node" data-node="editor" data-step="7" tabindex="0" role="button" aria-pressed="false">
+    <rect x="756" y="164" width="180" height="60" rx="6" /><text x="846" y="199">TinyMCE editor</text>
+  </g>
+  <g class="diagram-node" data-node="stats" data-step="8" tabindex="0" role="button" aria-pressed="false">
+    <rect x="756" y="264" width="180" height="60" rx="6" /><text x="846" y="299">Statistics &amp; charts</text>
+  </g>
+
+  <g class="diagram-edge" data-from="dashboard" data-to="auth" data-step="9">
+    <line x1="756" y1="94" x2="632" y2="94" marker-end="url(#cm-arrow)" /><text x="694" y="84">sign-in</text>
+  </g>
+  <g class="diagram-edge" data-from="editor" data-to="database" data-step="10">
+    <line x1="756" y1="194" x2="632" y2="194" marker-end="url(#cm-arrow)" /><text x="694" y="184">posts</text>
+  </g>
+  <g class="diagram-edge" data-from="database" data-to="stats" data-step="11">
+    <path d="M630 212H700V294H754" marker-end="url(#cm-arrow)" /><text x="694" y="256" class="diagram-edge__label--end">activity</text>
+  </g>
+  <g class="diagram-edge" data-from="database" data-to="blog" data-step="12">
+    <path d="M330 194H262V94H206" marker-end="url(#cm-arrow)" /><text x="296" y="184">posts</text>
+  </g>
+  <g class="diagram-edge" data-from="comments" data-to="realtime" data-step="13">
+    <line x1="204" y1="294" x2="328" y2="294" marker-end="url(#cm-arrow)" /><text x="266" y="284">live</text>
+  </g>
+</svg>

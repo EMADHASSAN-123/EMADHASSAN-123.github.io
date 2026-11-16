@@ -12,7 +12,8 @@ import { withBase } from '@/lib/site';
 
 interface Props {
   id: CollectionEntry<'projects'>['id'];
-  year: string;
+  /** Omitted when the year is not documented. */
+  year?: string;
 }
 
 const { id, year } = Astro.props;
@@ -70,9 +71,11 @@ const key = (field: string) => `caseStudies.${id}.${field}` as TranslationKey;
       <p class="mt-6 max-w-prose text-lg text-text-secondary">
         <T k={`projects.items.${id}.description` as TranslationKey} />
       </p>
-      <p class="mt-3 text-sm text-text-muted">
-        <T k="caseStudy.year" />: <span dir="ltr">{year}</span>
-      </p>
+      {year && (
+        <p class="mt-3 text-sm text-text-muted">
+          <T k="caseStudy.year" />: <span dir="ltr">{year}</span>
+        </p>
+      )}
     </header>
 
     <slot />

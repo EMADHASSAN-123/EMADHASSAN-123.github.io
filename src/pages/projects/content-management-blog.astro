@@ -1,0 +1,82 @@
+---
+/**
+ * Case study — Project 2 (PROJECT_CONTEXT section 5.3): a prototype with
+ * core features, explicitly not a finished commercial product.
+ */
+import ProjectLayout from '@/layouts/ProjectLayout.astro';
+import InteractiveDiagram from '@/components/projects/InteractiveDiagram.astro';
+import TechStack from '@/components/projects/TechStack.astro';
+import T from '@/components/ui/T.astro';
+import diagramSvg from '@/assets/diagrams/content-management.svg?raw';
+import type { TranslationKey } from '@/lib/i18n';
+
+const id = 'content-management-blog';
+const k = (path: string) => `caseStudies.${id}.${path}` as TranslationKey;
+const node = (nodeId: string, name: string) => ({
+  id: nodeId,
+  name,
+  description: k(`nodes.${nodeId}`),
+});
+const nodes = [
+  node('blog', 'Blog pages'),
+  node('comments', 'Comments'),
+  node('auth', 'Auth (GitHub, Google, Email)'),
+  node('database', 'Database (tables + access policies)'),
+  node('realtime', 'Realtime (comments + notifications)'),
+  node('dashboard', 'Admin dashboard'),
+  node('editor', 'TinyMCE editor'),
+  node('stats', 'Statistics & charts'),
+];
+const contribution = Array.from({ length: 8 }, (_, i) =>
+  k(`contribution.c${String(i + 1).padStart(2, '0')}`),
+);
+const layers: { key: TranslationKey; items: string[] }[] = [
+  {
+    key: 'caseStudy.layers.frontend',
+    items: ['HTML5', 'CSS3', 'Tailwind CSS', 'JavaScript', 'TinyMCE'],
+  },
+  { key: 'caseStudy.layers.data', items: ['Supabase'] },
+  { key: 'caseStudy.layers.versioning', items: ['Git', 'GitHub'] },
+];
+---
+
+<ProjectLayout id={id}>
+  <section class="case-section container" aria-labelledby="cs-problem">
+    <h2 id="cs-problem" class="case-section__title">
+      <T k="caseStudy.problem" />
+    </h2>
+    <p class="max-w-prose text-lg">
+      <T k={k('problem1')} />
+    </p>
+    <p class="case-callout case-callout--notice mt-6">
+      <T k={k('problem2')} />
+    </p>
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-architecture">
+    <h2 id="cs-architecture" class="case-section__title">
+      <T k="caseStudy.architecture" />
+    </h2>
+    <InteractiveDiagram svg={diagramSvg} nodes={nodes} />
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-contribution">
+    <h2 id="cs-contribution" class="case-section__title">
+      <T k="caseStudy.contribution" />
+    </h2>
+    <ul class="contribution-list">
+      {contribution.map((c) => (
+        <li>
+          <T k={c} />
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-stack">
+    <h2 id="cs-stack" class="case-section__title">
+      <T k="caseStudy.stack" />
+    </h2>
+    <TechStack layers={layers} />
+  </section>
+</ProjectLayout>
