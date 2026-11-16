@@ -51,6 +51,44 @@
       "university": "Taiz University, 2024/2025"
     }
   },
+  "methodology": {
+    "intro": "How I move from a problem to a solution, step by step.",
+    "loop": "Continuous improvement: evaluation results feed back into step 1.",
+    "steps": {
+      "understand": {
+        "name": "Understand the problem",
+        "description": "I study the problem and the context it emerged from."
+      },
+      "stakeholders": {
+        "name": "Stakeholders",
+        "description": "I identify the stakeholders and the users."
+      },
+      "requirements": {
+        "name": "Requirements",
+        "description": "I analyze functional and non-functional requirements."
+      },
+      "architecture": {
+        "name": "Architecture",
+        "description": "I design the system architecture, its components and their responsibilities."
+      },
+      "dataFlow": {
+        "name": "Relationships and data flow",
+        "description": "I map the relationships, data flows, and processes."
+      },
+      "technology": {
+        "name": "Technology choice",
+        "description": "I choose technologies that fit the nature of the problem."
+      },
+      "build": {
+        "name": "Build and test",
+        "description": "I develop, implement, and test the solution."
+      },
+      "evaluate": {
+        "name": "Evaluate and improve",
+        "description": "I evaluate the results and keep improving the solution."
+      }
+    }
+  },
   "sections": {
     "methodology": "Methodology",
     "expertise": "Expertise",

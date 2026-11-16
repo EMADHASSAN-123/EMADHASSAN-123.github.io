@@ -1,0 +1,65 @@
+---
+/**
+ * Methodology station (PHASE2_IA section 5.3): the eight steps of
+ * PROJECT_CONTEXT section 3.2 as an engineering pipeline. Horizontal on wide
+ * screens (4 per row on tablets), stacked vertically on mobile. Step 8 feeds
+ * back into step 1 ("continuous improvement"), drawn as a loop on wide screens.
+ */
+import T from '@/components/ui/T.astro';
+import type { TranslationKey } from '@/lib/i18n';
+
+const stepIds = [
+  'understand',
+  'stakeholders',
+  'requirements',
+  'architecture',
+  'dataFlow',
+  'technology',
+  'build',
+  'evaluate',
+] as const;
+
+const steps = stepIds.map((id) => ({
+  name: `methodology.steps.${id}.name` as TranslationKey,
+  description: `methodology.steps.${id}.description` as TranslationKey,
+}));
+---
+
+<section id="methodology" class="border-t border-border py-24">
+  <div class="container">
+    <h2 class="text-3xl font-bold">
+      <T k="sections.methodology" />
+    </h2>
+    <p class="mt-3 max-w-prose text-lg text-text-secondary">
+      <T k="methodology.intro" />
+    </p>
+
+    <div class="pipeline mt-14">
+      <div class="pipeline__loop" aria-hidden="true">
+        <span>
+          <T k="methodology.loop" />
+        </span>
+      </div>
+
+      <ol class="pipeline__steps">
+        {steps.map(({ name, description }, index) => (
+          <li class="pipeline__step">
+            <span class="pipeline__marker" aria-hidden="true">
+              {index + 1}
+            </span>
+            <h3 class="pipeline__name">
+              <T k={name} />
+            </h3>
+            <p class="pipeline__description">
+              <T k={description} />
+            </p>
+          </li>
+        ))}
+      </ol>
+
+      <p class="pipeline__loop-note">
+        <T k="methodology.loop" />
+      </p>
+    </div>
+  </div>
+</section>
