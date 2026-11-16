@@ -58,6 +58,7 @@
 ## الخطوة 2 — Design Tokens + Tailwind + Dark/Light/Auto
 
 - **التاريخ:** 16 نوفمبر 2026
+- **Commit:** `7f9916d` — `feat: add design tokens and dark/light/auto theme foundation`
 - **الحالة:** منفذة — بانتظار الاعتماد.
 
 ### ما تم
