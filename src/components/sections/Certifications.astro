@@ -1,0 +1,163 @@
+---
+/**
+ * Certifications station (PHASE2_IA section 5.6, PROJECT_CONTEXT section 4.4).
+ * Official names only. Tier 1 (graduation / course with a passed quiz) is
+ * framed more prominently than tier 2 (workshop / course attendance).
+ * Files are verbatim copies in public/certifications/.
+ */
+import T from '@/components/ui/T.astro';
+import { LOCALES, i18nAttrs, type TranslationKey } from '@/lib/i18n';
+import { withBase } from '@/lib/site';
+
+interface Certificate {
+  id: 'gmai' | 'introAi' | 'promptEng' | 'freelancing';
+  name: string;
+  initial: string;
+  date: string;
+  tier: 1 | 2;
+  file: string;
+  certificateId?: string;
+  hasBadge?: boolean;
+}
+
+// Ordered by professional value and verification level (PROJECT_CONTEXT 4.4.1).
+const certificates: Certificate[] = [
+  {
+    id: 'gmai',
+    name: 'Certificate of Excellence',
+    initial: 'G',
+    date: '2026-09-17',
+    tier: 1,
+    file: 'gmai-certificate-of-excellence-2026.pdf',
+    hasBadge: true,
+  },
+  {
+    id: 'introAi',
+    name: 'Introduction to AI',
+    initial: 'I',
+    date: '2026-10-26',
+    tier: 1,
+    file: 'introduction-to-ai-2026.pdf',
+    hasBadge: true,
+  },
+  {
+    id: 'promptEng',
+    name: 'Prompt Engineering: How to Make Artificial Intelligence Work for You',
+    initial: 'C',
+    date: '2025-11-15',
+    tier: 2,
+    file: 'prompt-engineering-workshop-2025.pdf',
+    certificateId: 'RJRXKA-CE000261',
+  },
+  {
+    id: 'freelancing',
+    name: 'Online Freelancing Strategies and AI',
+    initial: 'A',
+    date: '2024-07-26',
+    tier: 2,
+    file: 'online-freelancing-strategies-and-ai-2024.jpg',
+  },
+];
+
+const dateFormats = {
+  ar: new Intl.DateTimeFormat('ar-u-nu-latn', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }),
+  en: new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }),
+};
+
+const key = (id: Certificate['id'], field: string) =>
+  `certifications.items.${id}.${field}` as TranslationKey;
+---
+
+<section id="certifications" class="border-t border-border py-24">
+  <div class="container">
+    <h2 class="text-3xl font-bold">
+      <T k="sections.certifications" />
+    </h2>
+    <p class="mt-3 max-w-prose text-lg text-text-secondary">
+      <T k="certifications.intro" />
+    </p>
+
+    <ul
+      class="cert-list mt-12"
+      role="list"
+      tabindex="0"
+      {...i18nAttrs({ 'aria-label': 'certifications.scrollLabel' })}
+    >
+      {certificates.map(({ id, name, initial, date, tier, file, certificateId, hasBadge }) => (
+        <li class="cert-card" data-tier={tier}>
+          <div class="cert-card__head">
+            <span class="cert-card__initial" aria-hidden="true">
+              {initial}
+            </span>
+            <div class="min-w-0">
+              <p class="cert-card__type">
+                <T k={key(id, 'type')} />
+              </p>
+              <h3 class="cert-card__name" lang="en" dir="ltr">
+                {name}
+              </h3>
+            </div>
+          </div>
+
+          {hasBadge && (
+            <p class="cert-card__badge">
+              <T k={key(id, 'badge')} />
+            </p>
+          )}
+
+          <div class="cert-card__meta">
+            <p>
+              <T k={key(id, 'issuer')} />
+            </p>
+            <p>
+              <time datetime={date}>
+                {LOCALES.map((locale) => (
+                  <span data-lang={locale} lang={locale}>
+                    {dateFormats[locale].format(new Date(date))}
+                  </span>
+                ))}
+              </time>
+            </p>
+            {certificateId && (
+              <p>
+                <span class="text-text-muted">
+                  <T k="certifications.idLabel" />:
+                </span>{' '}
+                <span class="font-mono" dir="ltr">
+                  {certificateId}
+                </span>
+              </p>
+            )}
+          </div>
+
+          <p class="cert-card__details">
+            <T k={key(id, 'details')} />
+          </p>
+
+          <a
+            href={withBase(`/certifications/${file}`)}
+            target="_blank"
+            rel="noopener"
+            class="cert-card__link"
+          >
+            <T k="certifications.view" />
+            <span class="sr-only">
+              {' '}
+              <T k="certifications.newTab" />
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

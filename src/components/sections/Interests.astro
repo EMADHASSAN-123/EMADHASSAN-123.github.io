@@ -1,0 +1,22 @@
+---
+/**
+ * Future interests station (PHASE2_IA section 5.1): a short narrative of
+ * direction. The topic list itself lives in the Expertise learning tier,
+ * so it is not repeated here (owner-approved split).
+ */
+import T from '@/components/ui/T.astro';
+---
+
+<section id="interests" class="border-t border-border py-24">
+  <div class="container">
+    <h2 class="text-3xl font-bold">
+      <T k="sections.interests" />
+    </h2>
+    <p class="mt-6 max-w-prose text-lg text-text-primary">
+      <T k="interests.text" />
+    </p>
+    <p class="interests-note mt-4 max-w-prose text-sm text-text-muted">
+      <T k="interests.note" />
+    </p>
+  </div>
+</section>

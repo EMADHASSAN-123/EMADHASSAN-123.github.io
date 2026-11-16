@@ -1,0 +1,74 @@
+---
+/**
+ * Interactive architecture diagram (PHASE2_IA section 6.2, PHASE3_ARCH section 3).
+ * Desktop: hand-drawn SVG with selectable nodes and a side panel.
+ * Mobile and assistive tech: the same nodes as an ordered, expandable list.
+ * Node texts come from the locale files so both languages stay in one place.
+ */
+import T from '@/components/ui/T.astro';
+import { i18nAttrs, type TranslationKey } from '@/lib/i18n';
+
+interface DiagramNode {
+  id: string;
+  name: string;
+  description: TranslationKey;
+}
+
+interface Props {
+  svg: string;
+  nodes: DiagramNode[];
+  hint?: TranslationKey;
+}
+
+const { svg, nodes, hint = 'caseStudy.diagramHint' } = Astro.props;
+---
+
+<div class="diagram" data-diagram>
+  <div class="diagram__canvas">
+    <figure class="diagram__figure" {...i18nAttrs({ 'aria-label': 'caseStudy.diagramLabel' })}>
+      <Fragment set:html={svg} />
+    </figure>
+
+    <aside class="diagram__panel" aria-live="polite">
+      <p class="diagram__hint" data-panel-hint>
+        <T k={hint} />
+      </p>
+      {nodes.map(({ id, name, description }) => (
+        <div class="diagram__detail" data-panel={id} hidden>
+          <h3 class="diagram__detail-name" lang="en" dir="ltr">
+            {name}
+          </h3>
+          <p class="diagram__detail-text">
+            <T k={description} />
+          </p>
+        </div>
+      ))}
+    </aside>
+  </div>
+
+  <div class="diagram__list">
+    <h3 class="text-base font-semibold">
+      <T k="caseStudy.diagramListTitle" />
+    </h3>
+    <ol class="mt-4">
+      {nodes.map(({ name, description }) => (
+        <li>
+          <details>
+            <summary>
+              <span lang="en" dir="ltr">
+                {name}
+              </span>
+            </summary>
+            <p>
+              <T k={description} />
+            </p>
+          </details>
+        </li>
+      ))}
+    </ol>
+  </div>
+</div>
+
+<script>
+  import '@/scripts/interactive-diagram';
+</script>

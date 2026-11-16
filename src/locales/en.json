@@ -89,6 +89,150 @@
       }
     }
   },
+  "expertise": {
+    "intro": "Grouped by evidence: what I have applied, what I have studied, and what I am learning now.",
+    "evidence": "Evidence",
+    "inAnalysis": "in analysis and design",
+    "tiers": {
+      "applied": {
+        "title": "Applied experience",
+        "description": "Skills I have actually used; each group links to the project that shows it."
+      },
+      "academic": {
+        "title": "Academic knowledge",
+        "description": "Gained through my IT engineering degree; not yet documented by a published project."
+      },
+      "learning": {
+        "title": "Learning and developing",
+        "description": "Areas I am currently learning and developing in, not presented as delivered experience."
+      }
+    },
+    "groups": {
+      "frontend": "Front-end development",
+      "data": "Databases and backend services",
+      "appliedAi": "Applied AI on real data",
+      "embedded": "Embedded systems and IoT",
+      "mobile": "Mobile apps",
+      "auth": "Authentication and access control",
+      "design": "Requirements analysis and system design",
+      "versioning": "Version control and deployment",
+      "tools": "Supporting tools",
+      "networking": "Networking and infrastructure",
+      "security": "Cybersecurity",
+      "backend": "Back-end development",
+      "sdlc": "Software development life cycle",
+      "aiEngineering": "Applied AI Engineering",
+      "agents": "AI Agents & Agentic Systems",
+      "aiops": "AIOps",
+      "architecture": "Advanced software architecture",
+      "cloud": "Cloud & DevOps"
+    }
+  },
+  "projects": {
+    "intro": "Four engineering experiments, ordered by professional value, each with a case study.",
+    "caseStudy": "Case study",
+    "stackPending": "Stack to be decided",
+    "status": {
+      "implemented": "Implemented — working engineering model",
+      "live": "Live and in use",
+      "prototype": "Prototype",
+      "in-analysis": "In analysis and design"
+    },
+    "items": {
+      "fuel-quality-detection": {
+        "nameAr": "",
+        "description": "A portable device that detects fuel quality and adulteration using 18-channel multispectral sensing and machine learning, with a companion mobile app."
+      },
+      "alshifa-quran-website": {
+        "nameAr": "",
+        "description": "A responsive website for a real charity, from understanding its needs to launch; it gave more than 500 people access to the center's programs."
+      },
+      "content-management-blog": {
+        "nameAr": "",
+        "description": "A prototype content management system with a dashboard and TinyMCE editor, real-time comments and notifications, and GitHub, Google and email sign-in."
+      },
+      "alshifa-management-system": {
+        "nameAr": "",
+        "description": "A system for managing the center's branches, study circles, students and teachers, currently in analysis and first-release (MVP) design."
+      }
+    }
+  },
+  "certifications": {
+    "intro": "External credentials, each with its original file.",
+    "view": "View certificate",
+    "newTab": "(opens in a new tab)",
+    "idLabel": "Certificate ID",
+    "scrollLabel": "Certificates, scrollable horizontally",
+    "items": {
+      "gmai": {
+        "issuer": "Green Media AI (GMAI) — Sharjah, UAE",
+        "type": "Applied program graduation",
+        "details": "Graduated from the GREEN IMPACT MAKERS program after successfully defending the applied project “Creating a GEM from Scratch”; 6 training hours.",
+        "badge": "With distinction"
+      },
+      "introAi": {
+        "issuer": "Dr. Ibrahim Sobh",
+        "type": "Self-paced course with a final quiz",
+        "details": "Covers ML foundations, neural networks, generative AI, LLMs, prompt engineering, RAG, AI agents, MCP and skills, fine-tuning, and the limitations and risks of AI.",
+        "badge": "Score: 12 / 12 (100%)"
+      },
+      "promptEng": {
+        "issuer": "Continuing Education Center",
+        "type": "Workshop attendance",
+        "details": "Prompt engineering workshop.",
+        "badge": ""
+      },
+      "freelancing": {
+        "issuer": "Alhababi Business for E-Services & Entrepreneurship — UK",
+        "type": "Online course attendance",
+        "details": "3 hours; trainer: Eng. Kamal Alhababi.",
+        "badge": ""
+      }
+    }
+  },
+  "interests": {
+    "text": "I am heading toward applied AI solution engineering: applications built on LLMs and RAG, and intelligent agents with clear responsibilities and tools. In parallel, I am deepening my understanding of software architecture, cloud infrastructure and operations, because an intelligent system is only complete when it can be run, monitored and improved.",
+    "note": "These are areas I am learning and developing in, not delivered experience yet."
+  },
+  "contact": {
+    "intro": "A direct channel or a detailed message, whichever suits you.",
+    "channelsTitle": "Direct channels",
+    "formTitle": "Send a message",
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "call": "Call directly",
+      "linkedin": "LinkedIn",
+      "facebook": "Facebook",
+      "email": "Email",
+      "emailPending": "Coming soon"
+    },
+    "newTab": "(opens in a new tab)",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Project details or question",
+      "honeypot": "Leave this field empty"
+    },
+    "submit": "Send message",
+    "sending": "Sending…",
+    "privacy": "Your message is stored securely and never shared.",
+    "privacyLink": "Privacy policy",
+    "errors": {
+      "required": "This field is required.",
+      "name": "Enter a name between 2 and 100 characters.",
+      "email": "Enter a valid email, like name@example.com.",
+      "subject": "Enter a subject between 3 and 150 characters.",
+      "message": "Enter a message between 10 and 5,000 characters."
+    },
+    "status": {
+      "success": "Your message was sent. I will reply to the email you entered.",
+      "invalid": "Check the highlighted fields and send again.",
+      "rateLimited": "Too many messages in a short time. Try again in 10 minutes.",
+      "failed": "The message could not be sent. Check your connection and try again, or use a direct channel.",
+      "notConnected": "The form is not connected yet. Please use a direct channel for now."
+    }
+  },
   "sections": {
     "methodology": "Methodology",
     "expertise": "Expertise",
@@ -100,5 +244,148 @@
   "footer": {
     "privacy": "Privacy policy",
     "rights": "All rights reserved."
+  },
+  "caseStudy": {
+    "home": "Home",
+    "projects": "Projects",
+    "breadcrumb": "Breadcrumb",
+    "year": "Year",
+    "problem": "Problem and context",
+    "architecture": "Architecture",
+    "diagramLabel": "System architecture diagram",
+    "diagramHint": "Select any component in the diagram to see its role.",
+    "diagramListTitle": "System components in order",
+    "contribution": "My role and contribution",
+    "stack": "Technologies by layer",
+    "projectNav": "Project navigation",
+    "previous": "Previous project",
+    "next": "Next project",
+    "layers": {
+      "hardware": "Hardware",
+      "communication": "Communication",
+      "dataMl": "Data and machine learning",
+      "mobile": "Mobile app",
+      "tooling": "Development tools",
+      "frontend": "Front end",
+      "data": "Data and backend services",
+      "versioning": "Version control"
+    },
+    "results": "Results",
+    "status": "Current status and next steps",
+    "links": "Related links",
+    "liveSite": "Live site",
+    "linkPending": "Coming soon"
+  },
+  "caseStudies": {
+    "fuel-quality-detection": {
+      "pageTitle": "Fuel Quality Detection System — Emad Ali Mohammed Hassan",
+      "nameAr": "",
+      "problem1": "The goal: detect fuel quality and adulteration with a portable device, by reading the sample's spectral signature and classifying it with a machine learning model.",
+      "problem2": "Its engineering value lies in integrating several layers: hardware, embedded systems, software, data, machine learning, and edge AI.",
+      "contribution": {
+        "c01": "Analyzed the problem and defined the requirements.",
+        "c02": "Designed the overall system architecture.",
+        "c03": "Built a portable fuel quality detection system.",
+        "c04": "Integrated the AS7265X multispectral sensor (18 spectral channels).",
+        "c05": "Worked with the ESP32 and the electronic components.",
+        "c06": "Handled I²C and BLE communication.",
+        "c07": "Collected, prepared and analyzed the spectral data.",
+        "c08": "Applied data preprocessing and feature engineering.",
+        "c09": "Developed and evaluated machine learning models to classify fuel samples.",
+        "c10": "Developed a Flutter and Dart app to interact with the system.",
+        "c11": "Used SQLite to store the data."
+      },
+      "nodes": {
+        "sensor": "Multispectral sensor that provides 18 spectral channels to read the fuel sample.",
+        "mcu": "The portable device's microcontroller: it reads the sensor over I²C and sends the readings to the phone over BLE.",
+        "app": "The phone app (Flutter and Dart) for interacting with the system: it receives the readings over BLE and runs the analysis on the phone.",
+        "preprocessing": "The app preprocesses the spectral readings before passing them to the model.",
+        "model": "A machine learning model that runs locally on the phone in TensorFlow Lite format to classify the fuel sample.",
+        "storage": "An SQLite database on the phone that stores the data.",
+        "dataCollection": "Collecting, preparing and analyzing spectral data from fuel samples.",
+        "features": "Applying data preprocessing and feature engineering with Python and Jupyter.",
+        "training": "Developing and evaluating machine learning models to classify fuel samples with Scikit-learn."
+      }
+    },
+    "alshifa-quran-website": {
+      "pageTitle": "Al Shifa Center Website — Emad Ali Mohammed Hassan",
+      "nameAr": "",
+      "problem1": "A responsive website for a real charity, built to extend its online reach and present its programs and services.",
+      "problem2": "I owned the project end to end: from working with the organization to understand its needs, to launching the site for real use.",
+      "results": "Extended the center's online reach and gave more than 500 people access to its programs and services.",
+      "contribution": {
+        "c01": "Worked with the organization to understand its needs.",
+        "c02": "Analyzed the requirements and defined the needed functions.",
+        "c03": "Defined the right content for the site.",
+        "c04": "Designed the site's interfaces.",
+        "c05": "Developed the interfaces and features.",
+        "c06": "Launched the site and made it available for real use."
+      },
+      "nodes": {
+        "needs": "Working with the organization to understand its needs.",
+        "requirements": "Analyzing the requirements and defining the needed functions.",
+        "content": "Defining the right content for the site.",
+        "design": "Designing the site's interfaces.",
+        "build": "Developing the interfaces and features.",
+        "launch": "Launching the site for real use.",
+        "visitors": "Site visitors; the site gave more than 500 people access to the center's programs and services.",
+        "ui": "Responsive interfaces built with HTML and Tailwind CSS.",
+        "logic": "Front-end logic in JavaScript, with Ajax requests to Supabase.",
+        "supabase": "Supabase as the site's database and backend services."
+      }
+    },
+    "content-management-blog": {
+      "pageTitle": "Content Management System — Emad Ali Mohammed Hassan",
+      "nameAr": "",
+      "problem1": "A personal project to develop my skills in building web applications, systems and databases.",
+      "problem2": "A prototype with core features, not a finished commercial product.",
+      "contribution": {
+        "c01": "Analyzed and documented the system requirements.",
+        "c02": "Designed and built a content management dashboard.",
+        "c03": "Integrated the TinyMCE WYSIWYG editor.",
+        "c04": "Built a blog statistics system that shows activity with charts.",
+        "c05": "Implemented real-time comments and notifications with Supabase and JavaScript.",
+        "c06": "Designed the database tables and access policies.",
+        "c07": "Managed users, posts and permissions.",
+        "c08": "Implemented authentication with GitHub, Google and email."
+      },
+      "nodes": {
+        "blog": "The blog pages where visitors read the posts.",
+        "comments": "Comments on posts that appear in real time, using Supabase and JavaScript.",
+        "auth": "Authentication with GitHub, Google and email.",
+        "database": "Database tables and access policies for users, posts and permissions.",
+        "realtime": "Real-time comments and notifications through Supabase.",
+        "dashboard": "A dashboard for managing content, users, posts and permissions.",
+        "editor": "The integrated TinyMCE (WYSIWYG) editor for writing posts.",
+        "stats": "A blog statistics system that shows activity with charts."
+      }
+    },
+    "alshifa-management-system": {
+      "pageTitle": "Al Shifa Management System — Emad Ali Mohammed Hassan",
+      "nameAr": "",
+      "problem1": "A core management system under study and design, to organize Al Shifa Center's data and operations.",
+      "problem2": "The studied scope covers 12 modules, from branches, study circles and students to reports and permissions.",
+      "diagramHint": "All modules are proposed within the analysis scope, not built. Select a module to see its scope.",
+      "status": "In study, analysis and design; not a finished or published system.",
+      "next": "Current focus: designing a practical first release (MVP) that fits the center's nature and resources, with room to grow.",
+      "contribution": {
+        "c01": "Analyzing the system's requirements and functional scope.",
+        "c02": "Designing the system and database, and modeling the data."
+      },
+      "nodes": {
+        "branches": "Managing the center's branches.",
+        "circles": "Managing the study circles.",
+        "students": "Managing students.",
+        "teachers": "Managing teachers.",
+        "staff": "Managing supervisors and staff.",
+        "attendance": "Managing attendance and absence.",
+        "transfers": "Tracking student transfers between study circles.",
+        "memorization": "Recording completed Quran memorization.",
+        "salaries": "Recording monthly salaries.",
+        "expenses": "Tracking needs and expenses.",
+        "reports": "Preparing reports and statistics.",
+        "roles": "Managing roles and permissions."
+      }
+    }
   }
 }

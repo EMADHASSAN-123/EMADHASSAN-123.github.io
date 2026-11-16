@@ -1,0 +1,68 @@
+<svg viewBox="0 0 960 360" xmlns="http://www.w3.org/2000/svg" class="diagram-svg diagram-svg--proposed" focusable="false">
+  <defs>
+    <marker id="mis-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 8 4 0 8Z" class="diagram-arrowhead" />
+    </marker>
+  </defs>
+
+  <g class="diagram-group" data-step="0">
+    <rect x="12" y="12" width="300" height="112" rx="10" /><text x="28" y="34">Structure</text>
+  </g>
+  <g class="diagram-group" data-step="0">
+    <rect x="328" y="12" width="620" height="112" rx="10" /><text x="344" y="34">People</text>
+  </g>
+  <g class="diagram-group" data-step="0">
+    <rect x="12" y="148" width="936" height="104" rx="10" /><text x="28" y="170">Operations</text>
+  </g>
+  <g class="diagram-group" data-step="0">
+    <rect x="12" y="268" width="936" height="84" rx="10" /><text x="28" y="290">Cross-cutting</text>
+  </g>
+
+  <g class="diagram-node diagram-node--proposed" data-node="branches" data-step="1" tabindex="0" role="button" aria-pressed="false">
+    <rect x="28" y="48" width="124" height="56" rx="6" /><text x="90" y="81">Branches</text>
+  </g>
+  <g class="diagram-node diagram-node--proposed" data-node="circles" data-step="2" tabindex="0" role="button" aria-pressed="false">
+    <rect x="168" y="48" width="128" height="56" rx="6" /><text x="232" y="81">Study circles</text>
+  </g>
+  <g class="diagram-node diagram-node--proposed" data-node="students" data-step="3" tabindex="0" role="button" aria-pressed="false">
+    <rect x="344" y="48" width="180" height="56" rx="6" /><text x="434" y="81">Students</text>
+  </g>
+  <g class="diagram-node diagram-node--proposed" data-node="teachers" data-step="4" tabindex="0" role="button" aria-pressed="false">
+    <rect x="540" y="48" width="180" height="56" rx="6" /><text x="630" y="81">Teachers</text>
+  </g>
+  <g class="diagram-node diagram-node--proposed" data-node="staff" data-step="5" tabindex="0" role="button" aria-pressed="false">
+    <rect x="736" y="48" width="196" height="56" rx="6" /><text x="834" y="81">Supervisors &amp; staff</text>
+  </g>
+
+  <g class="diagram-node diagram-node--proposed" data-node="attendance" data-step="6" tabindex="0" role="button" aria-pressed="false">
+    <rect x="28" y="182" width="168" height="56" rx="6" /><text x="112" y="215">Attendance</text>
+  </g>
+  <g class="diagram-node diagram-node--proposed" data-node="transfers" data-step="7" tabindex="0" role="button" aria-pressed="false">
+    <rect x="212" y="182" width="168" height="56" rx="6" /><text x="296" y="215">Student transfers</text>
+  </g>
+  <g class="diagram-node diagram-node--proposed" data-node="memorization" data-step="8" tabindex="0" role="button" aria-pressed="false">
+    <rect x="396" y="182" width="168" height="56" rx="6" />
+    <text x="480" y="207"><tspan x="480">Memorization</tspan><tspan x="480" dy="18">completion</tspan></text>
+  </g>
+  <g class="diagram-node diagram-node--proposed" data-node="salaries" data-step="9" tabindex="0" role="button" aria-pressed="false">
+    <rect x="580" y="182" width="168" height="56" rx="6" /><text x="664" y="215">Monthly salaries</text>
+  </g>
+  <g class="diagram-node diagram-node--proposed" data-node="expenses" data-step="10" tabindex="0" role="button" aria-pressed="false">
+    <rect x="764" y="182" width="168" height="56" rx="6" /><text x="848" y="215">Needs &amp; expenses</text>
+  </g>
+
+  <g class="diagram-node diagram-node--proposed" data-node="reports" data-step="11" tabindex="0" role="button" aria-pressed="false">
+    <rect x="160" y="290" width="260" height="50" rx="6" /><text x="290" y="320">Reports &amp; statistics</text>
+  </g>
+  <g class="diagram-node diagram-node--proposed" data-node="roles" data-step="12" tabindex="0" role="button" aria-pressed="false">
+    <rect x="440" y="290" width="260" height="50" rx="6" /><text x="570" y="320">Roles &amp; permissions</text>
+  </g>
+
+  <!-- The only documented relation: students move between study circles. -->
+  <g class="diagram-edge" data-from="transfers" data-to="circles" data-step="13">
+    <path d="M276 182V140H232V106" marker-end="url(#mis-arrow)" />
+  </g>
+  <g class="diagram-edge" data-from="transfers" data-to="students" data-step="14">
+    <path d="M316 182V140H434V106" marker-end="url(#mis-arrow)" />
+  </g>
+</svg>

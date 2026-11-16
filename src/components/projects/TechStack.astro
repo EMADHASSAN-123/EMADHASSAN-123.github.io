@@ -1,0 +1,32 @@
+---
+/**
+ * Technologies grouped by layer (PHASE2_IA section 6.1, item 6).
+ */
+import T from '@/components/ui/T.astro';
+import type { TranslationKey } from '@/lib/i18n';
+
+interface Props {
+  layers: { key: TranslationKey; items: string[] }[];
+}
+
+const { layers } = Astro.props;
+---
+
+<dl class="stack-layers">
+  {layers.map(({ key, items }) => (
+    <div class="stack-layer">
+      <dt>
+        <T k={key} />
+      </dt>
+      <dd>
+        <ul class="tech-list">
+          {items.map((item) => (
+            <li lang="en" dir="ltr">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </dd>
+    </div>
+  ))}
+</dl>

@@ -1,0 +1,112 @@
+---
+/**
+ * Case study — Project 3 (PROJECT_CONTEXT section 5.4): live, real client.
+ * Includes Results (the only project with documented results) and a
+ * Related links section whose live-site link awaits the owner.
+ */
+import ProjectLayout from '@/layouts/ProjectLayout.astro';
+import InteractiveDiagram from '@/components/projects/InteractiveDiagram.astro';
+import TechStack from '@/components/projects/TechStack.astro';
+import T from '@/components/ui/T.astro';
+import diagramSvg from '@/assets/diagrams/alshifa-website.svg?raw';
+import type { TranslationKey } from '@/lib/i18n';
+
+const id = 'alshifa-quran-website';
+/** TODO: alshifa-live-url — the owner will provide the published site URL. */
+const LIVE_URL: string | null = null;
+
+const k = (path: string) => `caseStudies.${id}.${path}` as TranslationKey;
+const node = (nodeId: string, name: string) => ({
+  id: nodeId,
+  name,
+  description: k(`nodes.${nodeId}`),
+});
+const nodes = [
+  node('needs', 'Needs'),
+  node('requirements', 'Requirements'),
+  node('content', 'Content'),
+  node('design', 'UI design'),
+  node('build', 'Development'),
+  node('launch', 'Launch'),
+  node('visitors', 'Visitors (500+)'),
+  node('ui', 'Responsive UI (HTML + Tailwind CSS)'),
+  node('logic', 'JavaScript'),
+  node('supabase', 'Supabase'),
+];
+const contribution = Array.from({ length: 6 }, (_, i) =>
+  k(`contribution.c${String(i + 1).padStart(2, '0')}`),
+);
+const layers: { key: TranslationKey; items: string[] }[] = [
+  { key: 'caseStudy.layers.frontend', items: ['HTML', 'Tailwind CSS', 'JavaScript'] },
+  { key: 'caseStudy.layers.data', items: ['Ajax', 'Supabase'] },
+];
+---
+
+<ProjectLayout id={id}>
+  <section class="case-section container" aria-labelledby="cs-problem">
+    <h2 id="cs-problem" class="case-section__title">
+      <T k="caseStudy.problem" />
+    </h2>
+    <p class="max-w-prose text-lg">
+      <T k={k('problem1')} />
+    </p>
+    <p class="mt-4 max-w-prose text-text-secondary">
+      <T k={k('problem2')} />
+    </p>
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-architecture">
+    <h2 id="cs-architecture" class="case-section__title">
+      <T k="caseStudy.architecture" />
+    </h2>
+    <InteractiveDiagram svg={diagramSvg} nodes={nodes} />
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-contribution">
+    <h2 id="cs-contribution" class="case-section__title">
+      <T k="caseStudy.contribution" />
+    </h2>
+    <ul class="contribution-list">
+      {contribution.map((c) => (
+        <li>
+          <T k={c} />
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-stack">
+    <h2 id="cs-stack" class="case-section__title">
+      <T k="caseStudy.stack" />
+    </h2>
+    <TechStack layers={layers} />
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-results">
+    <h2 id="cs-results" class="case-section__title">
+      <T k="caseStudy.results" />
+    </h2>
+    <p class="case-callout">
+      <T k={k('results')} />
+    </p>
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-links">
+    <h2 id="cs-links" class="case-section__title">
+      <T k="caseStudy.links" />
+    </h2>
+    {LIVE_URL ? (
+      <a href={LIVE_URL} target="_blank" rel="noopener" class="btn-outline btn-lg">
+        <T k="caseStudy.liveSite" />
+      </a>
+    ) : (
+      <span
+        class="btn-outline btn-lg todo-placeholder"
+        aria-disabled="true"
+        title="TODO: alshifa-live-url"
+      >
+        <T k="caseStudy.liveSite" />: <T k="caseStudy.linkPending" />
+      </span>
+    )}
+  </section>
+</ProjectLayout>

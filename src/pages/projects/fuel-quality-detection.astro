@@ -1,0 +1,93 @@
+---
+/**
+ * Case study — Project 1 (PROJECT_CONTEXT section 5.2).
+ * Sections 7–9 of the template are omitted: no documented results,
+ * the project is implemented, and no public links are documented yet.
+ */
+import ProjectLayout from '@/layouts/ProjectLayout.astro';
+import InteractiveDiagram from '@/components/projects/InteractiveDiagram.astro';
+import TechStack from '@/components/projects/TechStack.astro';
+import T from '@/components/ui/T.astro';
+import diagramSvg from '@/assets/diagrams/fuel-quality.svg?raw';
+import type { TranslationKey } from '@/lib/i18n';
+
+const id = 'fuel-quality-detection';
+const node = (nodeId: string, name: string) => ({
+  id: nodeId,
+  name,
+  description: `caseStudies.${id}.nodes.${nodeId}` as TranslationKey,
+});
+
+// Reading order: runtime flow first, then offline model development.
+const nodes = [
+  node('sensor', 'AS7265X Sensor'),
+  node('mcu', 'ESP32 MCU'),
+  node('app', 'Flutter App'),
+  node('preprocessing', 'Preprocessing'),
+  node('model', 'ML Model (TFLite)'),
+  node('storage', 'SQLite Storage'),
+  node('dataCollection', 'Spectral data collection'),
+  node('features', 'Feature engineering'),
+  node('training', 'Training & evaluation'),
+];
+
+const contribution = Array.from(
+  { length: 11 },
+  (_, i) => `caseStudies.${id}.contribution.c${String(i + 1).padStart(2, '0')}` as TranslationKey,
+);
+
+const layers: { key: TranslationKey; items: string[] }[] = [
+  {
+    key: 'caseStudy.layers.hardware',
+    items: ['AS7265X Multispectral Sensor', 'ESP32', 'Electronic components'],
+  },
+  { key: 'caseStudy.layers.communication', items: ['I²C', 'BLE'] },
+  {
+    key: 'caseStudy.layers.dataMl',
+    items: ['Python', 'Jupyter', 'Scikit-learn', 'TensorFlow Lite'],
+  },
+  { key: 'caseStudy.layers.mobile', items: ['Flutter', 'Dart', 'SQLite'] },
+  { key: 'caseStudy.layers.tooling', items: ['Arduino IDE'] },
+];
+---
+
+<ProjectLayout id={id} year="2024/2025">
+  <section class="case-section container" aria-labelledby="cs-problem">
+    <h2 id="cs-problem" class="case-section__title">
+      <T k="caseStudy.problem" />
+    </h2>
+    <p class="max-w-prose text-lg">
+      <T k={`caseStudies.${id}.problem1`} />
+    </p>
+    <p class="mt-4 max-w-prose text-text-secondary">
+      <T k={`caseStudies.${id}.problem2`} />
+    </p>
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-architecture">
+    <h2 id="cs-architecture" class="case-section__title">
+      <T k="caseStudy.architecture" />
+    </h2>
+    <InteractiveDiagram svg={diagramSvg} nodes={nodes} />
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-contribution">
+    <h2 id="cs-contribution" class="case-section__title">
+      <T k="caseStudy.contribution" />
+    </h2>
+    <ul class="contribution-list">
+      {contribution.map((k) => (
+        <li>
+          <T k={k} />
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="case-section container" aria-labelledby="cs-stack">
+    <h2 id="cs-stack" class="case-section__title">
+      <T k="caseStudy.stack" />
+    </h2>
+    <TechStack layers={layers} />
+  </section>
+</ProjectLayout>

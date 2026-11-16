@@ -1,0 +1,218 @@
+---
+/**
+ * Expertise station (PHASE2_IA section 5.4). Skills from PROJECT_CONTEXT
+ * section 4, grouped by evidence into three visually distinct tiers:
+ * applied (with the projects that prove each group), academic, learning.
+ * No percentages, progress bars or ratings.
+ */
+import { getCollection, type CollectionEntry } from 'astro:content';
+import T from '@/components/ui/T.astro';
+import { i18nAttrs, type TranslationKey } from '@/lib/i18n';
+import { withBase } from '@/lib/site';
+
+type ProjectId = CollectionEntry<'projects'>['id'];
+
+interface SkillGroup {
+  key: TranslationKey;
+  items: string[];
+  evidence?: ProjectId[];
+}
+
+// PROJECT_CONTEXT section 4.1 — applied experience backed by documented projects.
+const applied: SkillGroup[] = [
+  {
+    key: 'expertise.groups.frontend',
+    items: ['HTML5', 'CSS3', 'Tailwind CSS', 'JavaScript'],
+    evidence: ['content-management-blog', 'alshifa-quran-website'],
+  },
+  {
+    key: 'expertise.groups.data',
+    items: ['Supabase (PostgreSQL)', 'SQLite'],
+    evidence: ['fuel-quality-detection', 'content-management-blog', 'alshifa-quran-website'],
+  },
+  {
+    key: 'expertise.groups.appliedAi',
+    items: [
+      'Data Preprocessing',
+      'Feature Engineering',
+      'Classification',
+      'Model Training',
+      'Model Evaluation',
+      'Scikit-learn',
+      'TensorFlow Lite',
+    ],
+    evidence: ['fuel-quality-detection'],
+  },
+  {
+    key: 'expertise.groups.embedded',
+    items: ['ESP32', 'AS7265X Multispectral Sensor', 'I²C', 'BLE', 'Edge AI', 'Arduino IDE'],
+    evidence: ['fuel-quality-detection'],
+  },
+  {
+    key: 'expertise.groups.mobile',
+    items: ['Flutter', 'Dart'],
+    evidence: ['fuel-quality-detection'],
+  },
+  {
+    key: 'expertise.groups.auth',
+    items: ['GitHub / Google / Email Authentication', 'Access Policies'],
+    evidence: ['content-management-blog'],
+  },
+  {
+    key: 'expertise.groups.design',
+    items: ['Requirements Analysis', 'System Design', 'Database Design', 'Data Modeling'],
+    evidence: ['fuel-quality-detection', 'content-management-blog', 'alshifa-management-system'],
+  },
+  { key: 'expertise.groups.versioning', items: ['Git', 'GitHub'] },
+  {
+    key: 'expertise.groups.tools',
+    items: ['Jupyter', 'Anaconda', 'Google Workspace', 'Microsoft Office'],
+  },
+];
+
+// PROJECT_CONTEXT section 4.2 — academic knowledge, pending documented evidence.
+const academic: SkillGroup[] = [
+  {
+    key: 'expertise.groups.networking',
+    items: [
+      'TCP/IP',
+      'Network Configuration',
+      'Network Troubleshooting',
+      'Network Services',
+      'IT Infrastructure',
+      'Network Implementation & Management',
+    ],
+  },
+  {
+    key: 'expertise.groups.security',
+    items: ['Information Security', 'Network Security', 'Access Control', 'Data Protection'],
+  },
+  {
+    key: 'expertise.groups.backend',
+    items: ['PHP', 'Python (Back-End)', 'Full-Stack Web Development'],
+  },
+  {
+    key: 'expertise.groups.sdlc',
+    items: ['Software Development Life Cycle', 'Software Architecture (conceptual)'],
+  },
+];
+
+// PROJECT_CONTEXT section 4.3 — areas currently being learned.
+const learning: SkillGroup[] = [
+  { key: 'expertise.groups.aiEngineering', items: ['LLMs', 'RAG', 'Generative AI'] },
+  {
+    key: 'expertise.groups.agents',
+    items: [
+      'Agent Design',
+      'Responsibilities',
+      'Tools',
+      'Context',
+      'Planning',
+      'Memory',
+      'Coordination',
+    ],
+  },
+  {
+    key: 'expertise.groups.aiops',
+    items: ['Monitoring', 'Observability', 'Anomaly Detection', 'Root Cause Analysis'],
+  },
+  {
+    key: 'expertise.groups.architecture',
+    items: ['High-Level Architecture', 'Component Architecture', 'Detailed Design'],
+  },
+  {
+    key: 'expertise.groups.cloud',
+    items: ['Cloud Infrastructure', 'Linux', 'DevOps', 'Service Management'],
+  },
+];
+
+const projects = new Map((await getCollection('projects')).map((entry) => [entry.id, entry.data]));
+
+const tiers = [
+  { id: 'applied', groups: applied },
+  { id: 'academic', groups: academic },
+  { id: 'learning', groups: learning },
+] as const;
+---
+
+<section id="expertise" class="border-t border-border py-24">
+  <div class="container">
+    <h2 class="text-3xl font-bold">
+      <T k="sections.expertise" />
+    </h2>
+    <p class="mt-3 max-w-prose text-lg text-text-secondary">
+      <T k="expertise.intro" />
+    </p>
+
+    {tiers.map(({ id, groups }) => (
+      <div class="skill-tier" data-tier={id}>
+        <div class="skill-tier__head">
+          <span class="skill-node" aria-hidden="true" />
+          <div>
+            <h3 class="text-xl font-bold">
+              <T k={`expertise.tiers.${id}.title`} />
+            </h3>
+            <p class="mt-1 max-w-prose text-sm text-text-secondary">
+              <T k={`expertise.tiers.${id}.description`} />
+            </p>
+          </div>
+        </div>
+
+        <dl class="skill-rows">
+          {groups.map(({ key, items, evidence }) => (
+            <div class="skill-row">
+              <dt class="skill-row__name">
+                <T k={key} />
+              </dt>
+              <dd class="skill-row__items">
+                <ul class="tech-list">
+                  {items.map((item) => (
+                    <li lang="en" dir="ltr">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+              {id === 'applied' && (
+                <dd class="skill-row__evidence">
+                  {evidence && evidence.length > 0 && (
+                    <>
+                      <span class="skill-row__evidence-label">
+                        <T k="expertise.evidence" />
+                      </span>
+                      <ul class="evidence-list">
+                        {evidence.map((projectId) => {
+                          const project = projects.get(projectId);
+                          if (!project) throw new Error(`Unknown project "${projectId}"`);
+                          const inAnalysis = project.status === 'in-analysis';
+                          return (
+                            <li>
+                              <a
+                                href={withBase(`/projects/${projectId}`)}
+                                class:list={[
+                                  'evidence-chip',
+                                  { 'evidence-chip--analysis': inAnalysis },
+                                ]}
+                                lang="en"
+                                dir="ltr"
+                                {...(inAnalysis
+                                  ? i18nAttrs({ title: 'expertise.inAnalysis' })
+                                  : {})}
+                              >
+                                {project.shortName}
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </>
+                  )}
+                </dd>
+              )}
+            </div>
+          ))}
+        </dl>
+      </div>
+    ))}
+  </div>
+</section>
