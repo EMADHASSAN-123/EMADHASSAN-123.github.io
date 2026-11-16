@@ -1,0 +1,33 @@
+---
+/**
+ * CV download link, or a visible TODO placeholder until the PDF exists.
+ */
+import T from '@/components/ui/T.astro';
+import { i18nAttrs } from '@/lib/i18n';
+import { CV_PATH, withBase } from '@/lib/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+{CV_PATH ? (
+  <a
+    href={withBase(CV_PATH)}
+    download
+    class:list={['btn-outline', className]}
+    {...i18nAttrs({ title: 'header.cvDownload' })}
+  >
+    <T k="header.cv" />
+  </a>
+) : (
+  <span
+    class:list={['btn-outline todo-placeholder', className]}
+    aria-disabled="true"
+    title="TODO: cv-file"
+  >
+    <T k="header.cv" />
+  </span>
+)}

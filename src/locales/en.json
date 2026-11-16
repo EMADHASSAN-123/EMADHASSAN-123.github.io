@@ -24,6 +24,17 @@
     "cv": "CV",
     "cvDownload": "Download CV (PDF)"
   },
+  "toggles": {
+    "language": {
+      "short": "عربي",
+      "label": "View the site in Arabic"
+    },
+    "theme": {
+      "auto": "Theme follows your device — switch to dark",
+      "dark": "Theme is dark — switch to light",
+      "light": "Theme is light — switch to automatic"
+    }
+  },
   "sections": {
     "methodology": "Methodology",
     "expertise": "Expertise",

@@ -170,3 +170,39 @@ html[lang='en'] [data-lang]:not([data-lang='en']) {
     cursor: not-allowed;
   }
 }
+
+/* ===== Theme toggle icon follows the stored preference ===== */
+[data-theme-icon] {
+  display: none;
+}
+
+html[data-theme-preference='auto'] [data-theme-icon='auto'],
+html[data-theme-preference='dark'] [data-theme-icon='dark'],
+html[data-theme-preference='light'] [data-theme-icon='light'] {
+  display: inline;
+}
+
+/* Controls that only work with JavaScript stay hidden when it is unavailable. */
+html:not([data-theme]) [data-requires-js] {
+  display: none !important;
+}
+
+@layer components {
+  .lang-button {
+    display: inline-grid;
+    place-items: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding-inline: 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgb(var(--color-text-secondary));
+    transition: color var(--duration-fast) var(--ease-standard);
+  }
+
+  .lang-button:hover,
+  .lang-button:focus-visible {
+    color: rgb(var(--color-text-primary));
+  }
+}

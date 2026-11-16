@@ -1,7 +1,10 @@
 ---
+import LanguageToggle from '@/components/layout/LanguageToggle.astro';
+import ThemeToggle from '@/components/layout/ThemeToggle.astro';
+import CvButton from '@/components/ui/CvButton.astro';
 import T from '@/components/ui/T.astro';
-import { LOCALES, i18nAttrs, translations, type TranslationKey } from '@/lib/i18n';
-import { CV_PATH, withBase } from '@/lib/site';
+import { i18nAttrs, statefulLabelAttrs, type TranslationKey } from '@/lib/i18n';
+import { withBase } from '@/lib/site';
 
 const links: { id: string; key: TranslationKey }[] = [
   { id: 'methodology', key: 'nav.methodology' },
@@ -10,13 +13,7 @@ const links: { id: string; key: TranslationKey }[] = [
   { id: 'contact', key: 'nav.contact' },
 ];
 
-const menuLabels = { open: translations('nav.openMenu'), close: translations('nav.closeMenu') };
-const menuLabelAttrs = Object.fromEntries(
-  LOCALES.flatMap((locale) => [
-    [`data-label-open-${locale}`, menuLabels.open[locale]],
-    [`data-label-close-${locale}`, menuLabels.close[locale]],
-  ]),
-);
+const menuLabel = statefulLabelAttrs({ open: 'nav.openMenu', close: 'nav.closeMenu' }, 'open');
 ---
 
 <header
@@ -45,32 +42,24 @@ const menuLabelAttrs = Object.fromEntries(
             </a>
           </li>
         ))}
+        <li class="pt-3 sm:hidden">
+          <CvButton />
+        </li>
       </ul>
     </nav>
 
-    <div class="ms-auto flex items-center gap-2">
-      {CV_PATH ? (
-        <a
-          href={withBase(CV_PATH)}
-          download
-          class="btn-outline"
-          {...i18nAttrs({ title: 'header.cvDownload' })}
-        >
-          <T k="header.cv" />
-        </a>
-      ) : (
-        <span class="btn-outline todo-placeholder" aria-disabled="true" title="TODO: cv-file">
-          <T k="header.cv" />
-        </span>
-      )}
+    <div class="ms-auto flex items-center gap-1">
+      <LanguageToggle />
+      <ThemeToggle />
+      <CvButton class="ms-2 hidden sm:inline-flex" />
       <button
         type="button"
         class="icon-button md:hidden"
         aria-controls="primary-nav"
         aria-expanded="false"
         data-menu-toggle
-        {...i18nAttrs({ 'aria-label': 'nav.openMenu' })}
-        {...menuLabelAttrs}
+        data-requires-js
+        {...menuLabel}
       >
         <svg
           viewBox="0 0 24 24"
@@ -91,8 +80,7 @@ const menuLabelAttrs = Object.fromEntries(
 </header>
 
 <script>
-  import { LOCALES } from '@/lib/i18n-config';
-  import { currentLocale } from '@/scripts/language-toggle';
+  import { setStatefulLabel } from '@/scripts/language-toggle';
 
   const header = document.querySelector<HTMLElement>('[data-site-header]');
   const toggle = header?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
@@ -102,14 +90,7 @@ const menuLabelAttrs = Object.fromEntries(
     const setOpen = (open: boolean) => {
       header.toggleAttribute('data-menu-open', open);
       toggle.setAttribute('aria-expanded', String(open));
-      // Keep the bilingual label set in sync so a language switch stays correct.
-      const state = open ? 'close' : 'open';
-      for (const locale of LOCALES) {
-        const label = toggle.getAttribute(`data-label-${state}-${locale}`);
-        if (label) toggle.setAttribute(`data-i18n-aria-label-${locale}`, label);
-      }
-      const current = toggle.getAttribute(`data-i18n-aria-label-${currentLocale()}`);
-      if (current) toggle.setAttribute('aria-label', current);
+      setStatefulLabel(toggle, open ? 'close' : 'open');
     };
 
     toggle.addEventListener('click', () => setOpen(!header.hasAttribute('data-menu-open')));

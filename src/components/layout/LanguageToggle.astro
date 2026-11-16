@@ -1,0 +1,23 @@
+---
+/**
+ * Shows the alternate language; switches instantly without a reload.
+ */
+import { LOCALES, i18nAttrs, t } from '@/lib/i18n';
+---
+
+<button
+  type="button"
+  class="lang-button"
+  data-language-toggle
+  data-requires-js
+  {...i18nAttrs({ 'aria-label': 'toggles.language.label' })}
+>
+  {LOCALES.map((locale) => {
+    const target = locale === 'ar' ? 'en' : 'ar';
+    return (
+      <span data-lang={locale} lang={target} aria-hidden="true">
+        {t(locale, 'toggles.language.short')}
+      </span>
+    );
+  })}
+</button>

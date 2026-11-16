@@ -57,6 +57,25 @@ export function i18nAttrs(attrs: Record<string, TranslationKey>): Record<string,
 }
 
 /**
+ * Labels that depend on UI state (menu open/closed, theme mode) in every locale.
+ * Renders data-label-<state>-<locale> plus the initial state's i18n attributes;
+ * the client switches state with setStatefulLabel().
+ */
+export function statefulLabelAttrs(
+  states: Record<string, TranslationKey>,
+  initial: string,
+  attrNames: string[] = ['aria-label'],
+): Record<string, string> {
+  const initialKey = states[initial];
+  if (!initialKey) throw new Error(`Unknown initial label state "${initial}"`);
+  const result = i18nAttrs(Object.fromEntries(attrNames.map((name) => [name, initialKey])));
+  for (const [state, key] of Object.entries(states)) {
+    for (const locale of LOCALES) result[`data-label-${state}-${locale}`] = t(locale, key);
+  }
+  return result;
+}
+
+/**
  * Blocking inline script for <head>: sets lang/dir before first paint.
  * Order: stored choice > browser languages (Accept-Language) > Arabic.
  */
