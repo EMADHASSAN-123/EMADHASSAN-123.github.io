@@ -157,6 +157,39 @@
       }
     }
   },
+  "certifications": {
+    "intro": "External credentials, each with its original file.",
+    "view": "View certificate",
+    "newTab": "(opens in a new tab)",
+    "idLabel": "Certificate ID",
+    "scrollLabel": "Certificates, scrollable horizontally",
+    "items": {
+      "gmai": {
+        "issuer": "Green Media AI (GMAI) — Sharjah, UAE",
+        "type": "Applied program graduation",
+        "details": "Graduated from the GREEN IMPACT MAKERS program after successfully defending the applied project “Creating a GEM from Scratch”; 6 training hours.",
+        "badge": "With distinction"
+      },
+      "introAi": {
+        "issuer": "Dr. Ibrahim Sobh",
+        "type": "Self-paced course with a final quiz",
+        "details": "Covers ML foundations, neural networks, generative AI, LLMs, prompt engineering, RAG, AI agents, MCP and skills, fine-tuning, and the limitations and risks of AI.",
+        "badge": "Score: 12 / 12 (100%)"
+      },
+      "promptEng": {
+        "issuer": "Continuing Education Center",
+        "type": "Workshop attendance",
+        "details": "Prompt engineering workshop.",
+        "badge": ""
+      },
+      "freelancing": {
+        "issuer": "Alhababi Business for E-Services & Entrepreneurship — UK",
+        "type": "Online course attendance",
+        "details": "3 hours; trainer: Eng. Kamal Alhababi.",
+        "badge": ""
+      }
+    }
+  },
   "sections": {
     "methodology": "Methodology",
     "expertise": "Expertise",

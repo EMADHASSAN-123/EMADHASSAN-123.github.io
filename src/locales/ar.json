@@ -157,6 +157,39 @@
       }
     }
   },
+  "certifications": {
+    "intro": "اعتمادات خارجية، ولكل شهادة ملفها الأصلي.",
+    "view": "عرض الشهادة",
+    "newTab": "(يفتح في تبويب جديد)",
+    "idLabel": "رقم التحقق",
+    "scrollLabel": "قائمة الشهادات، قابلة للتمرير أفقياً",
+    "items": {
+      "gmai": {
+        "issuer": "مؤسسة جرين ميديا إيه آي (GMAI) — الشارقة، الإمارات",
+        "type": "شهادة تخرج من برنامج تطبيقي",
+        "details": "تخرّج من برنامج GREEN IMPACT MAKERS بعد الدفاع بنجاح عن المشروع التطبيقي Creating a GEM from Scratch، بواقع 6 ساعات تدريبية.",
+        "badge": "بمرتبة التميّز"
+      },
+      "introAi": {
+        "issuer": "Dr. Ibrahim Sobh",
+        "type": "دورة ذاتية مع اختبار نهائي",
+        "details": "تغطي: ML foundations، Neural Networks، Generative AI، LLMs، Prompt Engineering، RAG، AI Agents، MCP & Skills، Fine-tuning، وحدود الذكاء الاصطناعي ومخاطره.",
+        "badge": "الدرجة: 12 / 12 (100%)"
+      },
+      "promptEng": {
+        "issuer": "Continuing Education Center",
+        "type": "حضور ورشة عمل",
+        "details": "ورشة «هندسة الأوامر».",
+        "badge": ""
+      },
+      "freelancing": {
+        "issuer": "الحبابي بزنس للخدمات الإلكترونية وريادة الأعمال — بريطانيا",
+        "type": "حضور دورة أونلاين",
+        "details": "3 ساعات؛ المدرب: م. كمال الحبابي.",
+        "badge": ""
+      }
+    }
+  },
   "sections": {
     "methodology": "المنهجية",
     "expertise": "التخصصات",
