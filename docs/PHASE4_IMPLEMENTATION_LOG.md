@@ -211,6 +211,7 @@
 ## الخطوة 6 — محطة Methodology
 
 - **التاريخ:** 16 نوفمبر 2026
+- **Commit:** `b41f5d4` — `feat: build methodology station as an engineering pipeline`
 - **الحالة:** منفذة — بانتظار الاعتماد.
 
 ### ما تم
