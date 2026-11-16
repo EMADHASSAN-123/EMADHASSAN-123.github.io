@@ -964,7 +964,16 @@ html:not([data-theme]) [data-requires-js] {
     text-anchor: start;
   }
 
-  .arch-sketch__links line {
+  .arch-sketch .arch-sketch__caption--end {
+    text-anchor: end;
+  }
+
+  .arch-sketch__links path {
+    fill: none;
+  }
+
+  .arch-sketch__links line,
+  .arch-sketch__links path {
     stroke: rgb(var(--color-accent-primary) / 0.7);
     stroke-width: 1;
   }
