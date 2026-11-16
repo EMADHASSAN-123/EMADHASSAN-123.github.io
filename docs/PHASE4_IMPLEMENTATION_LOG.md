@@ -172,6 +172,7 @@
 ## الخطوة 5 — محطة Hero
 
 - **التاريخ:** 16 نوفمبر 2026
+- **Commit:** `11c3eb5` — `feat: build hero station with portrait lab card`
 - **الحالة:** منفذة — بانتظار الاعتماد.
 
 ### ما تم
