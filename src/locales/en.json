@@ -35,6 +35,22 @@
       "light": "Theme is light — switch to automatic"
     }
   },
+  "hero": {
+    "role": "Software & Applied AI Engineer",
+    "statement": "I design systems and build solutions that bring together software, artificial intelligence, and infrastructure.",
+    "coreAreas": "Core areas",
+    "inProgress": "in progress",
+    "ctaProjects": "Explore the projects",
+    "ctaContact": "Get in touch",
+    "photoAlt": "Portrait of Emad Ali Mohammed Hassan",
+    "card": {
+      "locationLabel": "Based in",
+      "location": "Taiz, Yemen",
+      "degreeLabel": "Degree",
+      "degree": "Bachelor in IT Engineering",
+      "university": "Taiz University, 2024/2025"
+    }
+  },
   "sections": {
     "methodology": "Methodology",
     "expertise": "Expertise",

@@ -35,6 +35,22 @@
       "light": "المظهر فاتح — التبديل إلى التلقائي"
     }
   },
+  "hero": {
+    "role": "Software & Applied AI Engineer",
+    "statement": "أصمِّم أنظمة وأبني حلولاً تجمع البرمجيات، الذكاء الاصطناعي، والبنية التحتية.",
+    "coreAreas": "مجالات العمل الأساسية",
+    "inProgress": "قيد التطوير",
+    "ctaProjects": "استكشف المشاريع",
+    "ctaContact": "تواصل معي",
+    "photoAlt": "صورة شخصية لعماد علي محمد حسان",
+    "card": {
+      "locationLabel": "المقر",
+      "location": "تعز، اليمن",
+      "degreeLabel": "المؤهل",
+      "degree": "بكالوريوس هندسة تقنية المعلومات",
+      "university": "جامعة تعز، 2024/2025"
+    }
+  },
   "sections": {
     "methodology": "المنهجية",
     "expertise": "التخصصات",

@@ -206,3 +206,218 @@ html:not([data-theme]) [data-requires-js] {
     color: rgb(var(--color-text-primary));
   }
 }
+
+/* ===== Buttons ===== */
+@layer components {
+  .btn-lg {
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    font-size: 1rem;
+  }
+
+  /* Primary CTA — hover inverts the colors (PHASE2_IA section 7.4). */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    border: 1px solid rgb(var(--color-accent-primary));
+    border-radius: 0.375rem;
+    background-color: rgb(var(--color-accent-primary));
+    color: rgb(var(--color-on-accent));
+    font-weight: 600;
+    transition:
+      background-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
+  }
+
+  .btn-primary:hover,
+  .btn-primary:focus-visible {
+    background-color: transparent;
+    color: rgb(var(--color-accent-primary));
+  }
+}
+
+/* ===== Hero ===== */
+@layer components {
+  /* Dot grid that fades out around the portrait side. */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: radial-gradient(
+      rgb(var(--color-border-strong) / 0.45) 1px,
+      transparent 1.5px
+    );
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse 60% 70% at 78% 45%, #000 0%, transparent 75%);
+  }
+
+  [dir='rtl'] .hero-grid {
+    mask-image: radial-gradient(ellipse 60% 70% at 22% 45%, #000 0%, transparent 75%);
+  }
+
+  .core-areas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem 1.5rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-primary));
+  }
+
+  /* Each area is drawn as a small diagram node. */
+  .core-area {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .core-area::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    flex-shrink: 0;
+    border: 1.5px solid rgb(var(--color-accent-primary));
+    background-color: rgb(var(--color-accent-primary));
+  }
+
+  /* An area still in development is an outlined, unfilled node. */
+  .core-area--progress::before {
+    background-color: transparent;
+    border-style: dashed;
+  }
+
+  /* ----- Lab ID card ----- */
+  .lab-card {
+    position: relative;
+  }
+
+  .lab-card__body {
+    border: 1px solid rgb(var(--color-border-strong) / 0.6);
+    border-radius: 0.25rem;
+    background-color: rgb(var(--color-surface));
+    padding: 0.75rem;
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .lab-card__photo {
+    overflow: hidden;
+    border-radius: 0.125rem;
+    background-color: rgb(var(--color-bg-secondary));
+  }
+
+  .lab-card__facts {
+    display: grid;
+    gap: 0.875rem;
+    padding: 1rem 0.25rem 0.25rem;
+    font-size: 0.8rem;
+  }
+
+  .lab-card__facts > div {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.75rem;
+  }
+
+  .lab-card__facts dt {
+    color: rgb(var(--color-text-muted));
+  }
+
+  .lab-card__facts dd {
+    color: rgb(var(--color-text-primary));
+  }
+
+  /* Data links leaving the card toward the outer page edge (large screens). */
+  .lab-card__links {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-start: calc(100% + 0.5rem);
+    width: 50vw;
+    display: none;
+    pointer-events: none;
+  }
+
+  @media (min-width: 1024px) {
+    .lab-card__links {
+      display: block;
+    }
+  }
+
+  .lab-card__links span {
+    position: absolute;
+    inset-inline: 0;
+    height: 1px;
+    background-color: rgb(var(--color-accent-primary) / 0.28);
+  }
+
+  .lab-card__links span:nth-child(1) {
+    top: 24%;
+  }
+
+  .lab-card__links span:nth-child(2) {
+    top: 71%;
+  }
+
+  .lab-card__links span::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    inset-inline-start: -3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 9999px;
+    background-color: rgb(var(--color-accent-primary));
+  }
+
+  /* Registration marks at the four corners, like a calibrated frame. */
+  .lab-card__corner {
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    border-color: rgb(var(--color-accent-primary));
+    border-style: solid;
+    border-width: 0;
+    animation: lab-card-corner var(--duration-slow) var(--ease-standard) 120ms both;
+  }
+
+  .lab-card__corner--ts {
+    top: -0.5rem;
+    inset-inline-start: -0.5rem;
+    border-top-width: 2px;
+    border-inline-start-width: 2px;
+  }
+
+  .lab-card__corner--te {
+    top: -0.5rem;
+    inset-inline-end: -0.5rem;
+    border-top-width: 2px;
+    border-inline-end-width: 2px;
+  }
+
+  .lab-card__corner--bs {
+    bottom: -0.5rem;
+    inset-inline-start: -0.5rem;
+    border-bottom-width: 2px;
+    border-inline-start-width: 2px;
+  }
+
+  .lab-card__corner--be {
+    bottom: -0.5rem;
+    inset-inline-end: -0.5rem;
+    border-bottom-width: 2px;
+    border-inline-end-width: 2px;
+  }
+
+  @keyframes lab-card-corner {
+    from {
+      opacity: 0;
+      translate: 0 0;
+      scale: 0.4;
+    }
+    to {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+}
