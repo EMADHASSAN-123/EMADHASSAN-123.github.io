@@ -105,6 +105,7 @@
 ## الخطوة 3 — BaseLayout + Header + Footer + i18n core + الخطوط
 
 - **التاريخ:** 16 نوفمبر 2026
+- **Commit:** `e1a866d` — `feat: add base layout, header, footer, i18n core and self-hosted fonts`
 - **الحالة:** منفذة — بانتظار الاعتماد.
 
 ### ما تم
