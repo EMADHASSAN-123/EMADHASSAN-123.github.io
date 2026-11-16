@@ -313,6 +313,7 @@
 ## الخطوة 9 — محطة Certifications
 
 - **التاريخ:** 16 نوفمبر 2026
+- **Commit:** `74e56bd` — `feat: build certifications station with tiered certificate cards`
 - **الحالة:** منفذة — بانتظار الاعتماد.
 
 ### ما تم
