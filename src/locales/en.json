@@ -190,6 +190,49 @@
       }
     }
   },
+  "interests": {
+    "text": "I am heading toward applied AI solution engineering: applications built on LLMs and RAG, and intelligent agents with clear responsibilities and tools. In parallel, I am deepening my understanding of software architecture, cloud infrastructure and operations, because an intelligent system is only complete when it can be run, monitored and improved.",
+    "note": "These are areas I am learning and developing in, not delivered experience yet."
+  },
+  "contact": {
+    "intro": "A direct channel or a detailed message, whichever suits you.",
+    "channelsTitle": "Direct channels",
+    "formTitle": "Send a message",
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "call": "Call directly",
+      "linkedin": "LinkedIn",
+      "facebook": "Facebook",
+      "email": "Email",
+      "emailPending": "Coming soon"
+    },
+    "newTab": "(opens in a new tab)",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Project details or question",
+      "honeypot": "Leave this field empty"
+    },
+    "submit": "Send message",
+    "sending": "Sending…",
+    "privacy": "Your message is stored securely and never shared.",
+    "privacyLink": "Privacy policy",
+    "errors": {
+      "required": "This field is required.",
+      "name": "Enter a name between 2 and 100 characters.",
+      "email": "Enter a valid email, like name@example.com.",
+      "subject": "Enter a subject between 3 and 150 characters.",
+      "message": "Enter a message between 10 and 5,000 characters."
+    },
+    "status": {
+      "success": "Your message was sent. I will reply to the email you entered.",
+      "invalid": "Check the highlighted fields and send again.",
+      "rateLimited": "Too many messages in a short time. Try again in 10 minutes.",
+      "failed": "The message could not be sent. Check your connection and try again, or use a direct channel.",
+      "notConnected": "The form is not connected yet. Please use a direct channel for now."
+    }
+  },
   "sections": {
     "methodology": "Methodology",
     "expertise": "Expertise",

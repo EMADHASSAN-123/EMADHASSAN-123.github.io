@@ -5,14 +5,9 @@ import Methodology from '@/components/sections/Methodology.astro';
 import Expertise from '@/components/sections/Expertise.astro';
 import Projects from '@/components/sections/Projects.astro';
 import Certifications from '@/components/sections/Certifications.astro';
-import T from '@/components/ui/T.astro';
-import { translations, type TranslationKey } from '@/lib/i18n';
-
-// Section anchors per PHASE2_IA section 4.1; content lands step by step.
-const sections: { id: string; key: TranslationKey }[] = [
-  { id: 'interests', key: 'sections.interests' },
-  { id: 'contact', key: 'sections.contact' },
-];
+import Interests from '@/components/sections/Interests.astro';
+import Contact from '@/components/sections/Contact.astro';
+import { translations } from '@/lib/i18n';
 ---
 
 <BaseLayout
@@ -25,11 +20,6 @@ const sections: { id: string; key: TranslationKey }[] = [
   <Expertise />
   <Projects />
   <Certifications />
-  {sections.map(({ id, key }) => (
-    <section id={id} class="container border-t border-border py-24">
-      <h2 class="text-2xl font-bold">
-        <T k={key} />
-      </h2>
-    </section>
-  ))}
+  <Interests />
+  <Contact />
 </BaseLayout>
