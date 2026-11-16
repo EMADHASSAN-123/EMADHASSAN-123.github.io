@@ -244,5 +244,60 @@
   "footer": {
     "privacy": "Privacy policy",
     "rights": "All rights reserved."
+  },
+  "caseStudy": {
+    "home": "Home",
+    "projects": "Projects",
+    "breadcrumb": "Breadcrumb",
+    "year": "Year",
+    "problem": "Problem and context",
+    "architecture": "Architecture",
+    "diagramLabel": "System architecture diagram",
+    "diagramHint": "Select any component in the diagram to see its role.",
+    "diagramListTitle": "System components in order",
+    "contribution": "My role and contribution",
+    "stack": "Technologies by layer",
+    "projectNav": "Project navigation",
+    "previous": "Previous project",
+    "next": "Next project",
+    "layers": {
+      "hardware": "Hardware",
+      "communication": "Communication",
+      "dataMl": "Data and machine learning",
+      "mobile": "Mobile app",
+      "tooling": "Development tools"
+    }
+  },
+  "caseStudies": {
+    "fuel-quality-detection": {
+      "pageTitle": "Fuel Quality Detection System — Emad Ali Mohammed Hassan",
+      "nameAr": "",
+      "problem1": "The goal: detect fuel quality and adulteration with a portable device, by reading the sample's spectral signature and classifying it with a machine learning model.",
+      "problem2": "Its engineering value lies in integrating several layers: hardware, embedded systems, software, data, machine learning, and edge AI.",
+      "contribution": {
+        "c01": "Analyzed the problem and defined the requirements.",
+        "c02": "Designed the overall system architecture.",
+        "c03": "Built a portable fuel quality detection system.",
+        "c04": "Integrated the AS7265X multispectral sensor (18 spectral channels).",
+        "c05": "Worked with the ESP32 and the electronic components.",
+        "c06": "Handled I²C and BLE communication.",
+        "c07": "Collected, prepared and analyzed the spectral data.",
+        "c08": "Applied data preprocessing and feature engineering.",
+        "c09": "Developed and evaluated machine learning models to classify fuel samples.",
+        "c10": "Developed a Flutter and Dart app to interact with the system.",
+        "c11": "Used SQLite to store the data."
+      },
+      "nodes": {
+        "sensor": "Multispectral sensor that provides 18 spectral channels to read the fuel sample.",
+        "mcu": "The portable device's microcontroller: it reads the sensor over I²C and sends the readings to the phone over BLE.",
+        "app": "The phone app (Flutter and Dart) for interacting with the system: it receives the readings over BLE and runs the analysis on the phone.",
+        "preprocessing": "The app preprocesses the spectral readings before passing them to the model.",
+        "model": "A machine learning model that runs locally on the phone in TensorFlow Lite format to classify the fuel sample.",
+        "storage": "An SQLite database on the phone that stores the data.",
+        "dataCollection": "Collecting, preparing and analyzing spectral data from fuel samples.",
+        "features": "Applying data preprocessing and feature engineering with Python and Jupyter.",
+        "training": "Developing and evaluating machine learning models to classify fuel samples with Scikit-learn."
+      }
+    }
   }
 }

@@ -1284,3 +1284,371 @@ html:not([data-theme]) [data-requires-js] {
     opacity: 0.7;
   }
 }
+
+/* ===== Case study pages ===== */
+@layer components {
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-muted));
+  }
+
+  .breadcrumb li + li::before {
+    content: '/';
+    margin-inline-end: 0.5rem;
+    color: rgb(var(--color-border-strong));
+  }
+
+  .project-status {
+    --status: var(--color-accent-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgb(var(--status));
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-primary));
+  }
+
+  .project-status[data-status='implemented'],
+  .project-status[data-status='live'] {
+    --status: var(--color-success);
+  }
+
+  .project-status[data-status='prototype'] {
+    --status: var(--color-info);
+  }
+
+  .project-status[data-status='in-analysis'] {
+    --status: var(--color-warning);
+    border-style: dashed;
+  }
+
+  .project-status__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: rgb(var(--status));
+  }
+
+  .case-study__title {
+    margin-top: 1.25rem;
+    max-width: 24ch;
+    font-size: 2.441rem;
+    font-weight: 700;
+    line-height: var(--leading-heading);
+    text-align: start;
+  }
+
+  [dir='rtl'] .case-study__title {
+    text-align: right;
+  }
+
+  @media (max-width: 639px) {
+    .case-study__title {
+      font-size: 1.953rem;
+    }
+  }
+
+  .case-study__title-ar {
+    margin-top: 0.75rem;
+    max-width: var(--layout-prose);
+    color: rgb(var(--color-text-secondary));
+  }
+
+  .case-section {
+    margin-top: 4.5rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgb(var(--color-border));
+  }
+
+  .case-section__title {
+    margin-bottom: 1.5rem;
+    font-size: 1.563rem;
+    font-weight: 700;
+  }
+
+  .contribution-list {
+    display: grid;
+    gap: 0.75rem;
+    max-width: var(--layout-prose);
+  }
+
+  .contribution-list li {
+    position: relative;
+    padding-inline-start: 1.25rem;
+  }
+
+  .contribution-list li::before {
+    content: '';
+    position: absolute;
+    top: 0.65em;
+    inset-inline-start: 0;
+    width: 0.4rem;
+    height: 0.4rem;
+    background-color: rgb(var(--color-accent-primary));
+  }
+
+  .stack-layers {
+    border-top: 1px solid rgb(var(--color-border));
+  }
+
+  .stack-layer {
+    display: grid;
+    gap: 0.5rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  .stack-layer dt {
+    font-weight: 500;
+  }
+
+  @media (min-width: 768px) {
+    .stack-layer {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  .case-study__nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgb(var(--color-border));
+  }
+
+  .case-study__nav-link {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 0.25rem;
+    font-weight: 600;
+    transition: border-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .case-study__nav-link--next {
+    text-align: end;
+  }
+
+  .case-study__nav-link:hover,
+  .case-study__nav-link:focus-visible {
+    border-color: rgb(var(--color-accent-primary));
+  }
+
+  .case-study__nav-label {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: rgb(var(--color-text-muted));
+  }
+}
+
+/* ===== Interactive diagram ===== */
+@layer components {
+  .diagram__canvas {
+    display: none;
+  }
+
+  .diagram__list ol {
+    display: grid;
+    gap: 0.5rem;
+    counter-reset: node;
+  }
+
+  .diagram__list details {
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 0.25rem;
+    background-color: rgb(var(--color-surface));
+  }
+
+  .diagram__list summary {
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    text-align: start;
+  }
+
+  [dir='rtl'] .diagram__list summary {
+    text-align: right;
+  }
+
+  .diagram__list details p {
+    padding: 0 1rem 1rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-secondary));
+  }
+
+  @media (min-width: 1024px) {
+    .diagram__canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .diagram__list {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+
+  .diagram__figure {
+    padding: 1rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 0.25rem;
+    background-color: rgb(var(--color-bg-secondary));
+    background-image: radial-gradient(
+      rgb(var(--color-border-strong) / 0.25) 1px,
+      transparent 1.5px
+    );
+    background-size: 20px 20px;
+  }
+
+  .diagram-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    direction: ltr;
+    font-family: var(--font-latin);
+  }
+
+  .diagram__panel {
+    position: sticky;
+    top: calc(var(--header-height) + 1.5rem);
+    min-height: 10rem;
+    padding: 1.25rem;
+    border: 1px solid rgb(var(--color-border));
+    border-inline-start: 3px solid rgb(var(--color-accent-primary));
+    border-radius: 0.25rem;
+    background-color: rgb(var(--color-surface));
+  }
+
+  .diagram__hint {
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-muted));
+  }
+
+  .diagram__detail-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: start;
+  }
+
+  [dir='rtl'] .diagram__detail-name {
+    text-align: right;
+  }
+
+  .diagram__detail-text {
+    margin-top: 0.75rem;
+    color: rgb(var(--color-text-secondary));
+  }
+
+  /* SVG parts */
+  .diagram-group rect {
+    fill: none;
+    stroke: rgb(var(--color-border-strong) / 0.7);
+    stroke-dasharray: 5 4;
+  }
+
+  .diagram-group text {
+    fill: rgb(var(--color-text-muted));
+    font-size: 13px;
+  }
+
+  .diagram-node {
+    cursor: pointer;
+    outline: none;
+  }
+
+  .diagram-node rect {
+    fill: rgb(var(--color-surface));
+    stroke: rgb(var(--color-accent-primary));
+    stroke-width: 1.25;
+    transition:
+      stroke-width var(--duration-fast) var(--ease-standard),
+      filter var(--duration-fast) var(--ease-standard);
+  }
+
+  .diagram-node--offline rect {
+    stroke: rgb(var(--color-border-strong));
+    stroke-dasharray: 4 3;
+  }
+
+  .diagram-node text {
+    fill: rgb(var(--color-text-primary));
+    font-size: 15px;
+    font-weight: 500;
+    text-anchor: middle;
+    pointer-events: none;
+  }
+
+  /* Hover / focus / selected: soft glow, no scaling (PHASE2_IA section 7.4). */
+  .diagram-node:hover rect,
+  .diagram-node:focus-visible rect,
+  .diagram-node.is-selected rect {
+    stroke: rgb(var(--color-accent-primary));
+    stroke-width: 2.5;
+    stroke-dasharray: none;
+    filter: drop-shadow(0 0 6px rgb(var(--color-accent-primary) / 0.45));
+  }
+
+  .diagram-node.is-selected rect {
+    fill: rgb(var(--color-surface-elevated));
+  }
+
+  .diagram-edge line,
+  .diagram-edge path {
+    fill: none;
+    stroke: rgb(var(--color-accent-primary) / 0.45);
+    stroke-width: 1.5;
+    transition: stroke var(--duration-fast) var(--ease-standard);
+  }
+
+  .diagram-edge--offline line,
+  .diagram-edge--offline path {
+    stroke-dasharray: 5 4;
+  }
+
+  .diagram-edge text {
+    fill: rgb(var(--color-text-muted));
+    font-size: 12px;
+    text-anchor: middle;
+  }
+
+  .diagram-edge .diagram-edge__label--start {
+    text-anchor: start;
+  }
+
+  .diagram-edge.is-connected line,
+  .diagram-edge.is-connected path {
+    stroke: rgb(var(--color-accent-primary));
+    stroke-width: 2;
+  }
+
+  .diagram-edge.is-connected text {
+    fill: rgb(var(--color-text-primary));
+  }
+
+  .diagram-arrowhead {
+    fill: rgb(var(--color-accent-primary) / 0.8);
+  }
+
+  /* Progressive reveal (script sets data-reveal; without JS all is visible). */
+  [data-reveal] [data-step] {
+    transition: opacity var(--duration-slow) var(--ease-standard) var(--step-delay, 0ms);
+  }
+
+  [data-reveal='pending'] [data-step] {
+    opacity: 0;
+  }
+}

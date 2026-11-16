@@ -1,0 +1,90 @@
+<svg viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg" class="diagram-svg" focusable="false">
+  <defs>
+    <marker id="fq-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 8 4 0 8Z" class="diagram-arrowhead" />
+    </marker>
+  </defs>
+
+  <!-- Groups -->
+  <g class="diagram-group" data-step="0">
+    <rect x="16" y="24" width="488" height="148" rx="10" />
+    <text x="32" y="48">Portable device</text>
+  </g>
+  <g class="diagram-group" data-step="0">
+    <rect x="536" y="24" width="408" height="352" rx="10" />
+    <text x="552" y="48">Phone</text>
+  </g>
+  <g class="diagram-group diagram-group--offline" data-step="0">
+    <rect x="16" y="204" width="488" height="172" rx="10" />
+    <text x="32" y="228">Model development (offline)</text>
+  </g>
+
+  <!-- Runtime flow: device to phone -->
+  <g class="diagram-node" data-node="sensor" data-step="1" tabindex="0" role="button" aria-pressed="false">
+    <rect x="40" y="80" width="180" height="64" rx="6" />
+    <text x="130" y="117">AS7265X Sensor</text>
+  </g>
+  <g class="diagram-edge" data-from="sensor" data-to="mcu" data-step="2">
+    <line x1="220" y1="112" x2="298" y2="112" marker-end="url(#fq-arrow)" />
+    <text x="259" y="102">I²C</text>
+  </g>
+  <g class="diagram-node" data-node="mcu" data-step="3" tabindex="0" role="button" aria-pressed="false">
+    <rect x="300" y="80" width="180" height="64" rx="6" />
+    <text x="390" y="117">ESP32 MCU</text>
+  </g>
+  <g class="diagram-edge" data-from="mcu" data-to="app" data-step="4">
+    <line x1="480" y1="112" x2="658" y2="112" marker-end="url(#fq-arrow)" />
+    <text x="569" y="102">BLE</text>
+  </g>
+  <g class="diagram-node" data-node="app" data-step="5" tabindex="0" role="button" aria-pressed="false">
+    <rect x="660" y="80" width="200" height="64" rx="6" />
+    <text x="760" y="117">Flutter App</text>
+  </g>
+  <g class="diagram-edge" data-from="app" data-to="preprocessing" data-step="6">
+    <path d="M760 144V180H640V210" marker-end="url(#fq-arrow)" />
+    <text x="700" y="198">Spectral readings</text>
+  </g>
+  <g class="diagram-node" data-node="preprocessing" data-step="7" tabindex="0" role="button" aria-pressed="false">
+    <rect x="560" y="212" width="160" height="60" rx="6" />
+    <text x="640" y="247">Preprocessing</text>
+  </g>
+  <g class="diagram-edge" data-from="preprocessing" data-to="model" data-step="8">
+    <line x1="720" y1="242" x2="758" y2="242" marker-end="url(#fq-arrow)" />
+  </g>
+  <g class="diagram-node" data-node="model" data-step="9" tabindex="0" role="button" aria-pressed="false">
+    <rect x="760" y="212" width="164" height="60" rx="6" />
+    <text x="842" y="247">ML Model (TFLite)</text>
+  </g>
+  <g class="diagram-edge" data-from="model" data-to="storage" data-step="10">
+    <line x1="842" y1="272" x2="842" y2="298" marker-end="url(#fq-arrow)" />
+    <text x="852" y="290" class="diagram-edge__label--start">Results</text>
+  </g>
+  <g class="diagram-node" data-node="storage" data-step="11" tabindex="0" role="button" aria-pressed="false">
+    <rect x="760" y="300" width="164" height="56" rx="6" />
+    <text x="842" y="333">SQLite Storage</text>
+  </g>
+
+  <!-- Offline model development -->
+  <g class="diagram-node diagram-node--offline" data-node="dataCollection" data-step="12" tabindex="0" role="button" aria-pressed="false">
+    <rect x="36" y="256" width="140" height="60" rx="6" />
+    <text x="106" y="282"><tspan x="106">Spectral data</tspan><tspan x="106" dy="18">collection</tspan></text>
+  </g>
+  <g class="diagram-edge" data-from="dataCollection" data-to="features" data-step="13">
+    <line x1="176" y1="286" x2="194" y2="286" marker-end="url(#fq-arrow)" />
+  </g>
+  <g class="diagram-node diagram-node--offline" data-node="features" data-step="14" tabindex="0" role="button" aria-pressed="false">
+    <rect x="196" y="256" width="140" height="60" rx="6" />
+    <text x="266" y="282"><tspan x="266">Feature</tspan><tspan x="266" dy="18">engineering</tspan></text>
+  </g>
+  <g class="diagram-edge" data-from="features" data-to="training" data-step="15">
+    <line x1="336" y1="286" x2="354" y2="286" marker-end="url(#fq-arrow)" />
+  </g>
+  <g class="diagram-node diagram-node--offline" data-node="training" data-step="16" tabindex="0" role="button" aria-pressed="false">
+    <rect x="356" y="256" width="128" height="60" rx="6" />
+    <text x="420" y="282"><tspan x="420">Training &amp;</tspan><tspan x="420" dy="18">evaluation</tspan></text>
+  </g>
+  <g class="diagram-edge diagram-edge--offline" data-from="training" data-to="model" data-step="17">
+    <path d="M484 300H740V262H758" marker-end="url(#fq-arrow)" />
+    <text x="620" y="292">Trained model</text>
+  </g>
+</svg>

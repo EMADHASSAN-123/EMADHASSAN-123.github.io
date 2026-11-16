@@ -1,0 +1,109 @@
+---
+/**
+ * Case-study page frame (PHASE2_IA section 6.1): breadcrumb and status badge,
+ * bilingual title with summary and year, the page's sections (slot), and
+ * previous / next navigation in the approved display order.
+ */
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import T from '@/components/ui/T.astro';
+import { i18nAttrs, t, translations, type TranslationKey } from '@/lib/i18n';
+import { withBase } from '@/lib/site';
+
+interface Props {
+  id: CollectionEntry<'projects'>['id'];
+  year: string;
+}
+
+const { id, year } = Astro.props;
+const entry = await getEntry('projects', id);
+if (!entry) throw new Error(`Unknown project "${id}"`);
+const project = entry.data;
+
+const ordered = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const index = ordered.findIndex((p) => p.id === id);
+const previous = ordered[index - 1];
+const next = ordered[index + 1];
+
+const key = (field: string) => `caseStudies.${id}.${field}` as TranslationKey;
+---
+
+<BaseLayout
+  title={translations(key('pageTitle'))}
+  description={translations(`projects.items.${id}.description` as TranslationKey)}
+  noindex
+>
+  <article class="case-study">
+    <header class="case-study__header container pt-12">
+      <nav {...i18nAttrs({ 'aria-label': 'caseStudy.breadcrumb' })}>
+        <ol class="breadcrumb">
+          <li>
+            <a href={withBase('/')} class="nav-link">
+              <T k="caseStudy.home" />
+            </a>
+          </li>
+          <li>
+            <a href={withBase('/#projects')} class="nav-link">
+              <T k="caseStudy.projects" />
+            </a>
+          </li>
+          <li aria-current="page">
+            <span lang="en" dir="ltr">
+              {project.shortName}
+            </span>
+          </li>
+        </ol>
+      </nav>
+
+      <p class="project-status mt-8" data-status={project.status}>
+        <span class="project-status__dot" aria-hidden="true"></span>
+        <T k={`projects.status.${project.status}`} />
+      </p>
+
+      <h1 class="case-study__title" lang="en" dir="ltr">
+        {project.name}
+      </h1>
+      <p class="case-study__title-ar" data-lang="ar" lang="ar">
+        {t('ar', key('nameAr'))}
+      </p>
+
+      <p class="mt-6 max-w-prose text-lg text-text-secondary">
+        <T k={`projects.items.${id}.description` as TranslationKey} />
+      </p>
+      <p class="mt-3 text-sm text-text-muted">
+        <T k="caseStudy.year" />: <span dir="ltr">{year}</span>
+      </p>
+    </header>
+
+    <slot />
+
+    <nav class="case-study__nav container" {...i18nAttrs({ 'aria-label': 'caseStudy.projectNav' })}>
+      {previous ? (
+        <a href={withBase(`/projects/${previous.id}`)} class="case-study__nav-link" rel="prev">
+          <span class="case-study__nav-label">
+            <T k="caseStudy.previous" />
+          </span>
+          <span lang="en" dir="ltr">
+            {previous.data.shortName}
+          </span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {next && (
+        <a
+          href={withBase(`/projects/${next.id}`)}
+          class="case-study__nav-link case-study__nav-link--next"
+          rel="next"
+        >
+          <span class="case-study__nav-label">
+            <T k="caseStudy.next" />
+          </span>
+          <span lang="en" dir="ltr">
+            {next.data.shortName}
+          </span>
+        </a>
+      )}
+    </nav>
+  </article>
+</BaseLayout>
