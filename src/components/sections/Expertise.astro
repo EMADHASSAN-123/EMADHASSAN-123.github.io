@@ -145,7 +145,7 @@ const tiers = [
     </p>
 
     {tiers.map(({ id, groups }) => (
-      <div class:list={['skill-tier', `skill-tier--${id}`]}>
+      <div class="skill-tier" data-tier={id}>
         <div class="skill-tier__head">
           <span class="skill-node" aria-hidden="true" />
           <div>

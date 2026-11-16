@@ -2,5 +2,6 @@
   "order": 3,
   "name": "Content Management and Personal Blogging System",
   "shortName": "Content Management & Blog",
-  "status": "prototype"
+  "status": "prototype",
+  "stack": ["JavaScript", "Tailwind CSS", "TinyMCE", "Supabase"]
 }

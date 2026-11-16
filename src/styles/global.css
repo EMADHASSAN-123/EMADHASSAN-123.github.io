@@ -643,11 +643,11 @@ html:not([data-theme]) [data-requires-js] {
     border: 1.5px solid rgb(var(--color-accent-primary));
   }
 
-  .skill-tier--applied .skill-node {
+  .skill-tier[data-tier='applied'] .skill-node {
     background-color: rgb(var(--color-accent-primary));
   }
 
-  .skill-tier--learning .skill-node {
+  .skill-tier[data-tier='learning'] .skill-node {
     border-style: dashed;
   }
 
@@ -676,10 +676,10 @@ html:not([data-theme]) [data-requires-js] {
     color: rgb(var(--color-text-primary));
   }
 
-  .skill-tier--academic .tech-list,
-  .skill-tier--learning .tech-list,
-  .skill-tier--academic .skill-row__name,
-  .skill-tier--learning .skill-row__name {
+  .skill-tier[data-tier='academic'] .tech-list,
+  .skill-tier[data-tier='learning'] .tech-list,
+  .skill-tier[data-tier='academic'] .skill-row__name,
+  .skill-tier[data-tier='learning'] .skill-row__name {
     color: rgb(var(--color-text-secondary));
   }
 
@@ -731,12 +731,244 @@ html:not([data-theme]) [data-requires-js] {
       align-items: baseline;
     }
 
-    .skill-tier--applied .skill-row {
+    .skill-tier[data-tier='applied'] .skill-row {
       grid-template-columns: 17rem minmax(0, 1fr) 20rem;
     }
 
     .skill-row__evidence .skill-row__evidence-label {
       display: none;
     }
+  }
+}
+
+/* ===== Projects preview ===== */
+@layer components {
+  .projects-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .project-card--featured {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* Status → strip color. The label text always accompanies the color. */
+  .project-card {
+    --status: var(--color-accent-primary);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(var(--color-border));
+    border-top: 3px solid rgb(var(--status));
+    border-radius: 0.25rem;
+    background-color: rgb(var(--color-surface));
+    transition:
+      translate var(--duration-base) var(--ease-standard),
+      border-color var(--duration-base) var(--ease-standard);
+  }
+
+  .project-card[data-status='implemented'],
+  .project-card[data-status='live'] {
+    --status: var(--color-success);
+  }
+
+  .project-card[data-status='prototype'] {
+    --status: var(--color-info);
+  }
+
+  .project-card[data-status='in-analysis'] {
+    --status: var(--color-warning);
+    border-style: dashed;
+    border-top-style: solid;
+  }
+
+  /* Hover: slight lift + frame color (PHASE2_IA section 7.4). */
+  .project-card:hover,
+  .project-card:focus-within {
+    translate: 0 -3px;
+    border-color: rgb(var(--color-border-strong));
+    border-top-color: rgb(var(--status));
+  }
+
+  .project-card__status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.25rem 0;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-secondary));
+  }
+
+  .project-card__status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: rgb(var(--status));
+  }
+
+  .project-card__content {
+    display: grid;
+    flex: 1;
+    gap: 2rem;
+    padding: 0.75rem 1.25rem 1.5rem;
+  }
+
+  .project-card__text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card__name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: var(--leading-heading);
+    text-align: start;
+  }
+
+  [dir='rtl'] .project-card__name {
+    text-align: right;
+  }
+
+  .project-card__name-ar {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-muted));
+  }
+
+  .project-card__description {
+    margin-top: 0.875rem;
+    max-width: var(--layout-prose);
+    color: rgb(var(--color-text-secondary));
+  }
+
+  .project-card__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 1.25rem;
+  }
+
+  .project-card__stack li {
+    padding: 0.125rem 0.5rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-primary));
+  }
+
+  .project-card__stack-pending {
+    margin-top: 1.25rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-muted));
+  }
+
+  .project-card__link {
+    align-self: flex-start;
+    margin-top: auto;
+    padding-top: 1.5rem;
+    font-weight: 600;
+    color: rgb(var(--color-accent-primary));
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    text-decoration-color: rgb(var(--color-accent-primary) / 0.4);
+    transition: text-decoration-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .project-card__link:hover,
+  .project-card__link:focus-visible {
+    text-decoration-color: rgb(var(--color-accent-primary));
+  }
+
+  /* Card-wide click target without nesting interactive content. */
+  .project-card {
+    position: relative;
+  }
+
+  .project-card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .project-card--featured .project-card__content {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 3rem;
+    }
+  }
+
+  .project-card__visual {
+    display: none;
+    padding: 1.25rem;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 0.25rem;
+    background-color: rgb(var(--color-bg-primary));
+    background-image: radial-gradient(rgb(var(--color-border-strong) / 0.3) 1px, transparent 1.5px);
+    background-size: 16px 16px;
+  }
+
+  /* Too small to read on phones; the card text carries the same facts. */
+  @media (min-width: 640px) {
+    .project-card__visual {
+      display: block;
+    }
+  }
+
+  /* Simplified architecture sketch (theme-aware via tokens). */
+  .arch-sketch {
+    display: block;
+    width: 100%;
+    height: auto;
+    direction: ltr;
+    font-family: var(--font-latin);
+  }
+
+  .arch-sketch rect {
+    fill: rgb(var(--color-surface));
+    stroke: rgb(var(--color-accent-primary));
+    stroke-width: 1;
+  }
+
+  .arch-sketch__row--data rect {
+    stroke: rgb(var(--color-border-strong));
+    stroke-dasharray: 4 3;
+  }
+
+  .arch-sketch text {
+    fill: rgb(var(--color-text-primary));
+    font-size: 13px;
+    text-anchor: middle;
+  }
+
+  .arch-sketch__labels text,
+  .arch-sketch .arch-sketch__caption {
+    fill: rgb(var(--color-text-muted));
+    font-size: 11px;
+  }
+
+  .arch-sketch .arch-sketch__caption {
+    text-anchor: start;
+  }
+
+  .arch-sketch__links line {
+    stroke: rgb(var(--color-accent-primary) / 0.7);
+    stroke-width: 1;
+  }
+
+  .arch-sketch__arrowhead {
+    fill: rgb(var(--color-accent-primary) / 0.7);
   }
 }

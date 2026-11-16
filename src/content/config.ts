@@ -11,6 +11,8 @@ const projects = defineCollection({
     name: z.string(),
     shortName: z.string(),
     status: z.enum(['implemented', 'prototype', 'live', 'in-analysis']),
+    /** Key technologies for preview chips (4-5 max, PHASE2_IA section 5.5). */
+    stack: z.array(z.string()).max(5).default([]),
   }),
 });
 

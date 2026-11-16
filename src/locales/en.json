@@ -128,6 +128,35 @@
       "cloud": "Cloud & DevOps"
     }
   },
+  "projects": {
+    "intro": "Four engineering experiments, ordered by professional value, each with a case study.",
+    "caseStudy": "Case study",
+    "stackPending": "Stack to be decided",
+    "status": {
+      "implemented": "Implemented — working engineering model",
+      "live": "Live and in use",
+      "prototype": "Prototype",
+      "in-analysis": "In analysis and design"
+    },
+    "items": {
+      "fuel-quality-detection": {
+        "nameAr": "",
+        "description": "A portable device that detects fuel quality and adulteration using 18-channel multispectral sensing and machine learning, with a companion mobile app."
+      },
+      "alshifa-quran-website": {
+        "nameAr": "",
+        "description": "A responsive website for a real charity, from understanding its needs to launch; it gave more than 500 people access to the center's programs."
+      },
+      "content-management-blog": {
+        "nameAr": "",
+        "description": "A prototype content management system with a dashboard and TinyMCE editor, real-time comments and notifications, and GitHub, Google and email sign-in."
+      },
+      "alshifa-management-system": {
+        "nameAr": "",
+        "description": "A system for managing the center's branches, study circles, students and teachers, currently in analysis and first-release (MVP) design."
+      }
+    }
+  },
   "sections": {
     "methodology": "Methodology",
     "expertise": "Expertise",

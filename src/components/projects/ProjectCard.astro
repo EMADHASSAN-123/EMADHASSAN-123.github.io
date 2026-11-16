@@ -1,0 +1,73 @@
+---
+/**
+ * Project preview card (PHASE2_IA section 5.5): status strip, name (English,
+ * plus the Arabic descriptive name in the Arabic version), two-line
+ * description, up to five stack chips and a link to the case study.
+ * An optional `visual` slot holds a simplified architecture sketch.
+ */
+import type { CollectionEntry } from 'astro:content';
+import T from '@/components/ui/T.astro';
+import { t, type TranslationKey } from '@/lib/i18n';
+import { withBase } from '@/lib/site';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  featured?: boolean;
+}
+
+const { project, featured = false } = Astro.props;
+const { id, data } = project;
+const key = (field: string) => `projects.items.${id}.${field}` as TranslationKey;
+const headingId = `project-${id}`;
+---
+
+<article
+  class:list={['project-card', { 'project-card--featured': featured }]}
+  data-status={data.status}
+  aria-labelledby={headingId}
+>
+  <div class="project-card__status">
+    <span class="project-card__status-dot" aria-hidden="true"></span>
+    <T k={`projects.status.${data.status}`} />
+  </div>
+
+  <div class="project-card__content">
+    <div class="project-card__text">
+      <h3 id={headingId} class="project-card__name" lang="en" dir="ltr">
+        {data.name}
+      </h3>
+      <p class="project-card__name-ar" data-lang="ar" lang="ar">
+        {t('ar', key('nameAr'))}
+      </p>
+
+      <p class="project-card__description">
+        <T k={key('description')} />
+      </p>
+
+      {data.stack.length > 0 ? (
+        <ul class="project-card__stack">
+          {data.stack.map((tech) => (
+            <li lang="en" dir="ltr">
+              {tech}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="project-card__stack-pending">
+          <T k="projects.stackPending" />
+        </p>
+      )}
+
+      <a href={withBase(`/projects/${id}`)} class="project-card__link">
+        <T k="projects.caseStudy" />
+        <span class="sr-only"> — {data.name}</span>
+      </a>
+    </div>
+
+    {Astro.slots.has('visual') && (
+      <div class="project-card__visual" aria-hidden="true">
+        <slot name="visual" />
+      </div>
+    )}
+  </div>
+</article>
