@@ -1,0 +1,39 @@
+{
+  "site": {
+    "name": "Emad Ali Mohammed Hassan",
+    "shortName": "Emad Hassan"
+  },
+  "meta": {
+    "homeTitle": "Emad Ali Mohammed Hassan — Software & Applied AI Engineer",
+    "description": "IT engineer with an analytical, engineering mindset, focused on understanding systems, designing them, and building connected solutions."
+  },
+  "a11y": {
+    "skipToContent": "Skip to content"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "methodology": "Methodology",
+    "expertise": "Expertise",
+    "projects": "Projects",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "header": {
+    "cv": "CV",
+    "cvDownload": "Download CV (PDF)"
+  },
+  "sections": {
+    "methodology": "Methodology",
+    "expertise": "Expertise",
+    "projects": "Projects",
+    "certifications": "Certifications",
+    "interests": "Future interests",
+    "contact": "Contact"
+  },
+  "footer": {
+    "privacy": "Privacy policy",
+    "rights": "All rights reserved."
+  }
+}

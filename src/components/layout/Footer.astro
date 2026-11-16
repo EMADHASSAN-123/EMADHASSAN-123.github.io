@@ -1,0 +1,17 @@
+---
+import T from '@/components/ui/T.astro';
+import { withBase } from '@/lib/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-border">
+  <div class="container flex flex-col gap-6 py-10 text-sm text-text-secondary sm:flex-row sm:items-center sm:justify-between">
+    <p>
+      © {year} <T k="site.name" />. <T k="footer.rights" />
+    </p>
+    <a href={withBase('/privacy')} class="nav-link self-start sm:self-auto">
+      <T k="footer.privacy" />
+    </a>
+  </div>
+</footer>

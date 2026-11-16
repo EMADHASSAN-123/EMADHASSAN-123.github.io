@@ -92,10 +92,11 @@
 
 /* ===== Typography ===== */
 :root {
-  /* System stacks until the self-hosted fonts land in public/fonts/. */
-  --font-arabic: system-ui, 'Segoe UI', Tahoma, 'Noto Sans Arabic', 'Geeza Pro', sans-serif;
-  --font-latin: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  --font-arabic:
+    'IBM Plex Sans Arabic', 'Inter', system-ui, 'Segoe UI', Tahoma, 'Noto Sans Arabic', sans-serif;
+  --font-latin:
+    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --font-body: var(--font-arabic);
 
   --leading-body: 1.6;
@@ -111,6 +112,8 @@
   --layout-max-width: 1280px;
   --layout-gutter: 1.5rem;
   --layout-prose: 70ch;
+  --header-height: 4.5rem;
+  --header-height-compact: 3.5rem;
 }
 
 @media (min-width: 1024px) {

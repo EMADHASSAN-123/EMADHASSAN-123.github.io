@@ -1,0 +1,39 @@
+{
+  "site": {
+    "name": "عماد علي محمد حسان",
+    "shortName": "عماد حسان"
+  },
+  "meta": {
+    "homeTitle": "عماد علي محمد حسان — Software & Applied AI Engineer",
+    "description": "مهندس تقنية معلومات ذو تفكير تحليلي وهندسي، يهتم بفهم الأنظمة وتصميمها وبناء حلول مترابطة."
+  },
+  "a11y": {
+    "skipToContent": "انتقل إلى المحتوى"
+  },
+  "nav": {
+    "label": "التنقل الرئيسي",
+    "home": "الصفحة الرئيسية",
+    "methodology": "المنهجية",
+    "expertise": "التخصصات",
+    "projects": "المشاريع",
+    "contact": "التواصل",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة"
+  },
+  "header": {
+    "cv": "السيرة الذاتية",
+    "cvDownload": "تحميل السيرة الذاتية (PDF)"
+  },
+  "sections": {
+    "methodology": "المنهجية",
+    "expertise": "التخصصات",
+    "projects": "المشاريع",
+    "certifications": "الشهادات",
+    "interests": "الاهتمامات المستقبلية",
+    "contact": "التواصل"
+  },
+  "footer": {
+    "privacy": "سياسة الخصوصية",
+    "rights": "جميع الحقوق محفوظة."
+  }
+}

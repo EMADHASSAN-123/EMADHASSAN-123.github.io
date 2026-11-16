@@ -21,4 +21,11 @@ export default defineConfig({
     }),
     sitemap(),
   ],
+  vite: {
+    build: {
+      // Keep every script as an external file so the CSP can stay at script-src 'self'
+      // (the only inline script is the theme/lang bootstrap, allowed by hash).
+      assetsInlineLimit: 0,
+    },
+  },
 });
