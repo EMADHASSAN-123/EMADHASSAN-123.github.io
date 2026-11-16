@@ -144,6 +144,7 @@
 ## الخطوة 4 — Theme Toggle + Language Toggle
 
 - **التاريخ:** 16 نوفمبر 2026
+- **Commit:** `34c5f60` — `feat: add language and theme toggles to the header`
 - **الحالة:** منفذة — بانتظار الاعتماد.
 - **اعتماد سابق:** الاسم المختصر في Header ("عماد حسان / Emad Hassan") معتمد من صاحب المشروع.
 
