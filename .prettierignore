@@ -1,0 +1,11 @@
+dist/
+.astro/
+node_modules/
+package-lock.json
+public/
+assets/
+docs/
+/*.md
+!/README.md
+*.pdf
+*.PDF

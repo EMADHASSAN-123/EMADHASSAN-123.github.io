@@ -1,0 +1,131 @@
+/*
+ * Design tokens — single source of truth for color, type, layout and motion.
+ * Colors are stored as space-separated RGB channels so Tailwind can apply
+ * opacity modifiers: rgb(var(--color-x) / <alpha-value>).
+ *
+ * Contrast (WCAG AA) is verified for every text token against
+ * bg-primary, bg-secondary and surface in both themes.
+ * See docs/PHASE4_IMPLEMENTATION_LOG.md (step 2) for the measured ratios.
+ */
+
+/* ===== Dark theme (primary / default) ===== */
+:root {
+  color-scheme: dark;
+
+  --color-bg-primary: 10 22 40; /* #0A1628 */
+  --color-bg-secondary: 15 20 25; /* #0F1419 */
+  --color-surface: 21 34 53; /* #152235 */
+  --color-surface-elevated: 28 43 69; /* #1C2B45 */
+  --color-border: 36 52 79; /* #24344F — decorative dividers */
+  --color-border-strong: 100 121 160; /* #6479A0 — form controls, >= 3:1 */
+
+  --color-accent-primary: 56 189 248; /* #38BDF8 — Electric Blue */
+  --color-accent-secondary: 103 232 249; /* #67E8F9 — Cyan */
+  --color-on-accent: 10 22 40; /* text placed on accent backgrounds */
+
+  --color-text-primary: 241 245 249; /* #F1F5F9 */
+  --color-text-secondary: 148 163 184; /* #94A3B8 */
+  --color-text-muted: 132 147 168; /* #8493A8 */
+
+  /* Status colors — badges and form feedback only */
+  --color-success: 16 185 129; /* #10B981 */
+  --color-warning: 245 158 11; /* #F59E0B */
+  --color-error: 248 113 113; /* #F87171 */
+  --color-info: var(--color-accent-primary);
+
+  --shadow-elevated: 0 8px 24px -12px rgb(0 0 0 / 0.6);
+}
+
+/* ===== Light theme (secondary) ===== */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --color-bg-primary: 250 251 252; /* #FAFBFC */
+  --color-bg-secondary: 241 245 249; /* #F1F5F9 */
+  --color-surface: 255 255 255; /* #FFFFFF */
+  --color-surface-elevated: 255 255 255; /* #FFFFFF — elevation via shadow */
+  --color-border: 226 232 240; /* #E2E8F0 */
+  --color-border-strong: 124 140 163; /* #7C8CA3 */
+
+  --color-accent-primary: 3 105 161; /* #0369A1 */
+  --color-accent-secondary: 14 116 144; /* #0E7490 */
+  --color-on-accent: 255 255 255;
+
+  --color-text-primary: 15 23 42; /* #0F172A */
+  --color-text-secondary: 71 85 105; /* #475569 */
+  --color-text-muted: 91 107 128; /* #5B6B80 */
+
+  --color-success: 4 120 87; /* #047857 */
+  --color-warning: 180 83 9; /* #B45309 */
+  --color-error: 185 28 28; /* #B91C1C */
+
+  --shadow-elevated: 0 8px 24px -12px rgb(15 23 42 / 0.18);
+}
+
+/* No-JS fallback: follow the system preference when no theme was resolved. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+
+    --color-bg-primary: 250 251 252;
+    --color-bg-secondary: 241 245 249;
+    --color-surface: 255 255 255;
+    --color-surface-elevated: 255 255 255;
+    --color-border: 226 232 240;
+    --color-border-strong: 124 140 163;
+
+    --color-accent-primary: 3 105 161;
+    --color-accent-secondary: 14 116 144;
+    --color-on-accent: 255 255 255;
+
+    --color-text-primary: 15 23 42;
+    --color-text-secondary: 71 85 105;
+    --color-text-muted: 91 107 128;
+
+    --color-success: 4 120 87;
+    --color-warning: 180 83 9;
+    --color-error: 185 28 28;
+
+    --shadow-elevated: 0 8px 24px -12px rgb(15 23 42 / 0.18);
+  }
+}
+
+/* ===== Typography ===== */
+:root {
+  --font-arabic:
+    'IBM Plex Sans Arabic', 'Inter', system-ui, 'Segoe UI', Tahoma, 'Noto Sans Arabic', sans-serif;
+  --font-latin:
+    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-body: var(--font-arabic);
+
+  --leading-body: 1.6;
+  --leading-heading: 1.3;
+}
+
+:root[lang='en'] {
+  --font-body: var(--font-latin);
+}
+
+/* ===== Layout ===== */
+:root {
+  --layout-max-width: 1280px;
+  --layout-gutter: 1.5rem;
+  --layout-prose: 70ch;
+  --header-height: 4.5rem;
+  --header-height-compact: 3.5rem;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --layout-gutter: 2rem;
+  }
+}
+
+/* ===== Motion ===== */
+:root {
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 280ms; /* upper bound: every interaction stays under 300ms */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}

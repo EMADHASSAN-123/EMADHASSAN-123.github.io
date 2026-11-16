@@ -1,0 +1,18 @@
+---
+/**
+ * Renders a translation in every locale; CSS shows only the active one.
+ */
+import { LOCALES, t, type TranslationKey } from '@/lib/i18n';
+
+interface Props {
+  k: TranslationKey;
+}
+
+const { k } = Astro.props;
+---
+
+{LOCALES.map((locale) => (
+  <span data-lang={locale} lang={locale}>
+    {t(locale, k)}
+  </span>
+))}

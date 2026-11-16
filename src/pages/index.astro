@@ -1,0 +1,32 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import Methodology from '@/components/sections/Methodology.astro';
+import T from '@/components/ui/T.astro';
+import { translations, type TranslationKey } from '@/lib/i18n';
+
+// Section anchors per PHASE2_IA section 4.1; content lands step by step.
+const sections: { id: string; key: TranslationKey }[] = [
+  { id: 'expertise', key: 'sections.expertise' },
+  { id: 'projects', key: 'sections.projects' },
+  { id: 'certifications', key: 'sections.certifications' },
+  { id: 'interests', key: 'sections.interests' },
+  { id: 'contact', key: 'sections.contact' },
+];
+---
+
+<BaseLayout
+  title={translations('meta.homeTitle')}
+  description={translations('meta.description')}
+  noindex
+>
+  <Hero />
+  <Methodology />
+  {sections.map(({ id, key }) => (
+    <section id={id} class="container border-t border-border py-24">
+      <h2 class="text-2xl font-bold">
+        <T k={key} />
+      </h2>
+    </section>
+  ))}
+</BaseLayout>

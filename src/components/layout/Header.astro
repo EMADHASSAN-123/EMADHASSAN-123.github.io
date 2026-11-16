@@ -1,0 +1,117 @@
+---
+import LanguageToggle from '@/components/layout/LanguageToggle.astro';
+import ThemeToggle from '@/components/layout/ThemeToggle.astro';
+import CvButton from '@/components/ui/CvButton.astro';
+import T from '@/components/ui/T.astro';
+import { i18nAttrs, statefulLabelAttrs, type TranslationKey } from '@/lib/i18n';
+import { withBase } from '@/lib/site';
+
+const links: { id: string; key: TranslationKey }[] = [
+  { id: 'methodology', key: 'nav.methodology' },
+  { id: 'expertise', key: 'nav.expertise' },
+  { id: 'projects', key: 'nav.projects' },
+  { id: 'contact', key: 'nav.contact' },
+];
+
+const menuLabel = statefulLabelAttrs({ open: 'nav.openMenu', close: 'nav.closeMenu' }, 'open');
+---
+
+<header
+  class="site-header group sticky top-0 z-40 border-b border-border bg-bg-primary/85 backdrop-blur-md"
+  data-site-header
+>
+  <div class="container flex h-[var(--header-current-height)] items-center gap-8 transition-[height] duration-base ease-standard">
+    <a
+      href={withBase('/')}
+      class="shrink-0 text-base font-bold tracking-tight text-text-primary hover:text-accent-primary"
+      {...i18nAttrs({ 'aria-label': 'nav.home' })}
+    >
+      <T k="site.shortName" />
+    </a>
+
+    <nav
+      id="primary-nav"
+      class="primary-nav absolute inset-x-0 top-full hidden border-b border-border bg-bg-primary group-data-[menu-open]:block md:static md:block md:border-0 md:bg-transparent"
+      {...i18nAttrs({ 'aria-label': 'nav.label' })}
+    >
+      <ul class="container flex flex-col gap-1 py-4 md:flex-row md:gap-6 md:p-0">
+        {links.map(({ id, key }) => (
+          <li>
+            <a href={withBase(`/#${id}`)} class="nav-link block py-2 md:py-1">
+              <T k={key} />
+            </a>
+          </li>
+        ))}
+        <li class="pt-3 sm:hidden">
+          <CvButton />
+        </li>
+      </ul>
+    </nav>
+
+    <div class="ms-auto flex items-center gap-1">
+      <LanguageToggle />
+      <ThemeToggle />
+      <CvButton class="ms-2 hidden sm:inline-flex" />
+      <button
+        type="button"
+        class="icon-button md:hidden"
+        aria-controls="primary-nav"
+        aria-expanded="false"
+        data-menu-toggle
+        data-requires-js
+        {...menuLabel}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="22"
+          height="22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path class="group-data-[menu-open]:hidden" d="M4 7h16M4 12h16M4 17h16"></path>
+          <path class="hidden group-data-[menu-open]:block" d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { setStatefulLabel } from '@/scripts/language-toggle';
+
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const toggle = header?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const nav = header?.querySelector<HTMLElement>('#primary-nav');
+
+  if (header && toggle && nav) {
+    const setOpen = (open: boolean) => {
+      header.toggleAttribute('data-menu-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      setStatefulLabel(toggle, open ? 'close' : 'open');
+    };
+
+    toggle.addEventListener('click', () => setOpen(!header.hasAttribute('data-menu-open')));
+    nav.addEventListener('click', (event) => {
+      if ((event.target as Element).closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && header.hasAttribute('data-menu-open')) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    window.matchMedia('(min-width: 768px)').addEventListener('change', () => setOpen(false));
+
+    // Compact header once the page scrolls past the top.
+    const sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;height:1px;width:1px;';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(([entry]) => {
+      header.toggleAttribute('data-scrolled', !entry?.isIntersecting);
+    }).observe(sentinel);
+  }
+</script>

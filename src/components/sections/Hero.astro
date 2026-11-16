@@ -1,0 +1,126 @@
+---
+/**
+ * Hero station (PHASE2_IA section 5.2): identity, core areas, dual CTA and the
+ * portrait in a "lab ID card" frame over a light architectural background.
+ */
+import { Picture } from 'astro:assets';
+import T from '@/components/ui/T.astro';
+import profile from '@/assets/images/profile.jpg';
+import { i18nAttrs, t } from '@/lib/i18n';
+import { withBase } from '@/lib/site';
+
+// PROJECT_CONTEXT section 2.1. Cloud & DevOps is an area still being developed
+// (PHASE2_IA section 2.2), so it is labelled as such.
+const coreAreas = [
+  { name: 'Software Engineering' },
+  { name: 'System Architecture' },
+  { name: 'Applied AI Engineering' },
+  { name: 'Digital Solutions Engineering' },
+  { name: 'Cloud & DevOps', inProgress: true },
+];
+---
+
+<section id="hero" class="hero relative isolate overflow-hidden">
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <div class="container grid min-h-[calc(100svh-var(--header-height))] items-center gap-14 py-16 lg:grid-cols-12 lg:gap-8">
+    <div class="lg:col-span-7">
+      <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">
+        <T k="site.name" />
+      </h1>
+      <p class="mt-2 text-lg text-text-muted" aria-hidden="true">
+        <span data-lang="ar" lang="en">
+          {t('en', 'site.name')}
+        </span>
+        <span data-lang="en" lang="ar">
+          {t('ar', 'site.name')}
+        </span>
+      </p>
+
+      <p class="mt-6 text-lg font-medium text-accent-primary sm:text-xl" lang="en" dir="ltr">
+        <span class="hero-role">{t('en', 'hero.role')}</span>
+      </p>
+
+      <p class="mt-4 max-w-prose text-lg text-text-secondary">
+        <T k="hero.statement" />
+      </p>
+
+      <ul class="core-areas mt-8" {...i18nAttrs({ 'aria-label': 'hero.coreAreas' })}>
+        {coreAreas.map(({ name, inProgress }) => (
+          <li class:list={['core-area', { 'core-area--progress': inProgress }]}>
+            <span lang="en" dir="ltr">
+              {name}
+            </span>
+            {inProgress && (
+              <span class="text-text-muted">
+                (<T k="hero.inProgress" />)
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a href={withBase('/#projects')} class="btn-primary">
+          <T k="hero.ctaProjects" />
+        </a>
+        <a href={withBase('/#contact')} class="btn-outline btn-lg">
+          <T k="hero.ctaContact" />
+        </a>
+      </div>
+    </div>
+
+    <figure class="lab-card mx-auto w-full max-w-[17rem] sm:max-w-[19rem] lg:col-span-4 lg:col-start-9 lg:max-w-none">
+      <div class="lab-card__links" aria-hidden="true">
+        <span></span>
+        <span></span>
+      </div>
+      <span class="lab-card__corner lab-card__corner--ts" aria-hidden="true"></span>
+      <span class="lab-card__corner lab-card__corner--te" aria-hidden="true"></span>
+      <span class="lab-card__corner lab-card__corner--bs" aria-hidden="true"></span>
+      <span class="lab-card__corner lab-card__corner--be" aria-hidden="true"></span>
+
+      <div class="lab-card__body">
+        <div class="lab-card__photo">
+          <Picture
+            src={profile}
+            widths={[320, 480, 640, 800]}
+            sizes="(min-width: 1024px) 24rem, (min-width: 640px) 19rem, 17rem"
+            formats={['webp']}
+            fallbackFormat="jpg"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="block aspect-[2/3] h-auto w-full object-cover"
+            {...i18nAttrs({ alt: 'hero.photoAlt' })}
+            alt={t('ar', 'hero.photoAlt')}
+          />
+        </div>
+
+        <figcaption>
+          <dl class="lab-card__facts">
+            <div>
+              <dt>
+                <T k="hero.card.locationLabel" />
+              </dt>
+              <dd>
+                <T k="hero.card.location" />
+              </dd>
+            </div>
+            <div>
+              <dt>
+                <T k="hero.card.degreeLabel" />
+              </dt>
+              <dd>
+                <T k="hero.card.degree" />
+                <span class="block text-text-secondary">
+                  <T k="hero.card.university" />
+                </span>
+              </dd>
+            </div>
+          </dl>
+        </figcaption>
+      </div>
+    </figure>
+  </div>
+</section>
