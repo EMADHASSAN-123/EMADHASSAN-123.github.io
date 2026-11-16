@@ -1,5 +1,6 @@
 ---
 import '@/styles/global.css';
+import { THEME_BOOTSTRAP_SCRIPT } from '@/lib/theme';
 ---
 
 <!doctype html>
@@ -8,11 +9,14 @@ import '@/styles/global.css';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
+    <script is:inline set:html={THEME_BOOTSTRAP_SCRIPT} />
     <title>Walking Skeleton</title>
   </head>
-  <body>
-    <main class="p-6">
-      <p>Walking skeleton — layout and content are implemented in later steps.</p>
+  <body class="min-h-screen bg-bg-primary text-text-primary">
+    <main class="container py-12">
+      <p class="max-w-prose text-text-secondary">
+        Walking skeleton — layout and content are implemented in later steps.
+      </p>
     </main>
   </body>
 </html>
