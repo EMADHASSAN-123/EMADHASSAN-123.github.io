@@ -2,7 +2,8 @@
 /**
  * Projects preview station (PHASE2_IA section 5.5). Display order 1 → 3 → 2 → 4
  * comes from the `order` field. Project 1 is featured with a simplified
- * architecture sketch limited to documented facts (PROJECT_CONTEXT 5.2).
+ * architecture sketch limited to documented facts (PROJECT_CONTEXT 5.2;
+ * on-device inference in the Flutter app and SQLite on the phone, per owner).
  */
 import { getCollection } from 'astro:content';
 import ProjectCard from '@/components/projects/ProjectCard.astro';
@@ -39,6 +40,7 @@ const [featured, ...rest] = projects;
               </marker>
             </defs>
 
+            <!-- Device: sensor to microcontroller to phone app -->
             <g class="arch-sketch__row">
               <rect x="4" y="30" width="112" height="44" rx="4" />
               <text x="60" y="57">
@@ -56,6 +58,7 @@ const [featured, ...rest] = projects;
             <g class="arch-sketch__links">
               <line x1="116" y1="52" x2="162" y2="52" marker-end="url(#arch-arrow)" />
               <line x1="276" y1="52" x2="322" y2="52" marker-end="url(#arch-arrow)" />
+              <line x1="380" y1="74" x2="380" y2="134" marker-end="url(#arch-arrow)" />
             </g>
             <g class="arch-sketch__labels">
               <text x="140" y="22">
@@ -64,28 +67,33 @@ const [featured, ...rest] = projects;
               <text x="300" y="22">
                 BLE
               </text>
+              <text x="60" y="92">
+                18 channels
+              </text>
             </g>
 
-            <text x="4" y="122" class="arch-sketch__caption" text-anchor="start">
-              Spectral data (18 channels)
+            <!-- On the phone: on-device classification and local storage -->
+            <rect class="arch-sketch__group" x="150" y="104" width="286" height="108" rx="6" />
+            <text x="162" y="124" class="arch-sketch__caption">
+              On the phone
             </text>
             <g class="arch-sketch__row arch-sketch__row--data">
-              <rect x="4" y="136" width="112" height="40" rx="4" />
-              <text x="60" y="161">
-                Preprocessing
+              <rect x="324" y="136" width="112" height="44" rx="4" />
+              <text x="380" y="163">
+                TFLite model
               </text>
-              <rect x="164" y="136" width="112" height="40" rx="4" />
-              <text x="220" y="161">
-                Features
-              </text>
-              <rect x="324" y="136" width="112" height="40" rx="4" />
-              <text x="380" y="161">
-                Classification
+              <rect x="164" y="136" width="112" height="44" rx="4" />
+              <text x="220" y="163">
+                SQLite
               </text>
             </g>
             <g class="arch-sketch__links">
-              <line x1="116" y1="156" x2="162" y2="156" marker-end="url(#arch-arrow)" />
-              <line x1="276" y1="156" x2="322" y2="156" marker-end="url(#arch-arrow)" />
+              <line x1="324" y1="158" x2="278" y2="158" marker-end="url(#arch-arrow)" />
+            </g>
+            <g class="arch-sketch__labels">
+              <text x="301" y="198">
+                results
+              </text>
             </g>
           </svg>
         </ProjectCard>

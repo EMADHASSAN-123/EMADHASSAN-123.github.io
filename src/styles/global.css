@@ -942,7 +942,8 @@ html:not([data-theme]) [data-requires-js] {
     stroke-width: 1;
   }
 
-  .arch-sketch__row--data rect {
+  .arch-sketch .arch-sketch__group {
+    fill: none;
     stroke: rgb(var(--color-border-strong));
     stroke-dasharray: 4 3;
   }
