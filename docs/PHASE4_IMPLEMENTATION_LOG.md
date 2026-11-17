@@ -678,6 +678,7 @@
 ## الخطوة 16 — GitHub Actions (النشر) + CSP
 
 - **التاريخ:** 17 نوفمبر 2026
+- **Commit:** `e3d4afe` — `ci: add GitHub Pages deploy workflow and production CSP`
 - **الحالة:** منفذة ومختبرة — **الإطلاق الفعلي بانتظار اعتماد صاحب المشروع** (الدمج في `main`).
 
 ### ما تم
