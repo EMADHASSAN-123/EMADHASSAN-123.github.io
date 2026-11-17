@@ -2704,3 +2704,49 @@ html:not([data-theme]) [data-requires-js] {
     background-size: 100% 2px;
   }
 }
+
+/* ===== Expertise: two-part board (technical / professional) ===== */
+@layer components {
+  .board-part {
+    margin-top: 4rem;
+  }
+
+  .board-part + .board-part {
+    padding-top: 3.5rem;
+    border-top: 1px dashed rgb(var(--color-border-strong) / 0.5);
+  }
+
+  .board-part__title {
+    font-size: 1.953rem;
+    font-weight: 700;
+  }
+
+  .board-part__note {
+    max-width: var(--layout-prose);
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-muted));
+  }
+
+  .board-part .board {
+    margin-top: 2.5rem;
+  }
+
+  .board__framework {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: rgb(var(--color-text-muted));
+    text-align: start;
+  }
+
+  [dir='rtl'] .board__framework,
+  [dir='rtl'] .skill__std {
+    text-align: right;
+  }
+
+  .skill__std {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-secondary));
+  }
+}
