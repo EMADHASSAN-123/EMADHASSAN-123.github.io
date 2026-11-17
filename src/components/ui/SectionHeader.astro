@@ -1,0 +1,27 @@
+---
+/**
+ * Unified section heading: semantic icon + title + a short twisted-pair rule
+ * (the structured-cabling identity). The intro paragraph stays in the section.
+ */
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
+import T from '@/components/ui/T.astro';
+import type { TranslationKey } from '@/lib/i18n';
+
+interface Props {
+  title: TranslationKey;
+  icon: IconName;
+  pair?: 'orange' | 'green' | 'blue' | 'brown';
+}
+
+const { title, icon, pair = 'orange' } = Astro.props;
+---
+
+<div class="section-head" data-pair={pair}>
+  <span class="section-head__icon">
+    <Icon name={icon} size={22} />
+  </span>
+  <h2 class="section-head__title">
+    <T k={title} />
+  </h2>
+</div>
+<div class="twist section-head__rule" data-pair={pair} aria-hidden="true"></div>

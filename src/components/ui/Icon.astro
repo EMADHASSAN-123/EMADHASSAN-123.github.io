@@ -1,0 +1,79 @@
+---
+/**
+ * Semantic icon from Lucide (ISC), embedded at build time — no runtime cost.
+ * Decorative by default (aria-hidden); pass `label` when the icon carries meaning alone.
+ */
+import user from 'lucide-static/icons/user.svg?raw';
+import workflow from 'lucide-static/icons/workflow.svg?raw';
+import layers from 'lucide-static/icons/layers.svg?raw';
+import boxes from 'lucide-static/icons/boxes.svg?raw';
+import award from 'lucide-static/icons/award.svg?raw';
+import mail from 'lucide-static/icons/mail.svg?raw';
+import phone from 'lucide-static/icons/phone.svg?raw';
+import messageCircle from 'lucide-static/icons/message-circle.svg?raw';
+import linkedin from 'lucide-static/icons/linkedin.svg?raw';
+import facebook from 'lucide-static/icons/facebook.svg?raw';
+import fileText from 'lucide-static/icons/file-text.svg?raw';
+import externalLink from 'lucide-static/icons/external-link.svg?raw';
+import mapPin from 'lucide-static/icons/map-pin.svg?raw';
+import graduationCap from 'lucide-static/icons/graduation-cap.svg?raw';
+import languages from 'lucide-static/icons/languages.svg?raw';
+import codeXml from 'lucide-static/icons/code-xml.svg?raw';
+import brainCircuit from 'lucide-static/icons/brain-circuit.svg?raw';
+import database from 'lucide-static/icons/database.svg?raw';
+import cpu from 'lucide-static/icons/cpu.svg?raw';
+import compass from 'lucide-static/icons/compass.svg?raw';
+import lightbulb from 'lucide-static/icons/lightbulb.svg?raw';
+import shieldCheck from 'lucide-static/icons/shield-check.svg?raw';
+import arrowUpRight from 'lucide-static/icons/arrow-up-right.svg?raw';
+
+const icons = {
+  user: user,
+  workflow: workflow,
+  layers: layers,
+  boxes: boxes,
+  award: award,
+  mail: mail,
+  phone: phone,
+  'message-circle': messageCircle,
+  linkedin: linkedin,
+  facebook: facebook,
+  'file-text': fileText,
+  'external-link': externalLink,
+  'map-pin': mapPin,
+  'graduation-cap': graduationCap,
+  languages: languages,
+  'code-xml': codeXml,
+  'brain-circuit': brainCircuit,
+  database: database,
+  cpu: cpu,
+  compass: compass,
+  lightbulb: lightbulb,
+  'shield-check': shieldCheck,
+  'arrow-up-right': arrowUpRight,
+} as const;
+
+export type IconName = keyof typeof icons;
+
+interface Props {
+  name: IconName;
+  size?: number;
+  class?: string;
+  label?: string;
+}
+
+const { name, size = 20, class: className = '', label } = Astro.props;
+const svg = icons[name]
+  .replace(/<!--[\s\S]*?-->/, '')
+  .replace(/\swidth="24"/, ` width="${size}"`)
+  .replace(/\sheight="24"/, ` height="${size}"`)
+  .replace(/class="([^"]*)"/, `class="$1 icon ${className}"`)
+  .replace(
+    '<svg',
+    label
+      ? `<svg role="img" aria-label="${label.replace(/"/g, '&quot;')}"`
+      : '<svg aria-hidden="true" focusable="false"',
+  );
+---
+
+<Fragment set:html={svg} />

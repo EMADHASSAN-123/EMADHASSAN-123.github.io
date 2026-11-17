@@ -2591,3 +2591,116 @@ html:not([data-theme]) [data-requires-js] {
     font-size: 1.05rem;
   }
 }
+
+/* ===== Section heading (icon + title + twisted rule) ===== */
+@layer components {
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-head__icon {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid rgb(var(--pair) / 0.6);
+    border-radius: 0.5rem;
+    background-color: rgb(var(--pair) / 0.1);
+    color: rgb(var(--pair));
+  }
+
+  .section-head__title {
+    font-size: 1.953rem;
+    font-weight: 700;
+    line-height: var(--leading-heading);
+  }
+
+  @media (min-width: 768px) {
+    .section-head__title {
+      font-size: 2.441rem;
+    }
+  }
+
+  .section-head__rule {
+    width: 5.5rem;
+    margin-top: 0.875rem;
+    margin-inline-start: 3.25rem;
+  }
+
+  .icon {
+    flex-shrink: 0;
+  }
+}
+
+/* ===== Icons inside components ===== */
+@layer components {
+  .console__link,
+  .service__name,
+  .board__title,
+  .cert-card__link,
+  .project-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .console__link {
+    display: flex;
+  }
+
+  .instance__facts dt {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .service__name .icon,
+  .board__title .icon {
+    color: rgb(var(--pair));
+  }
+
+  .contact-channel__icon {
+    color: rgb(var(--color-accent-primary));
+  }
+
+  /* Directional arrow mirrors in RTL. */
+  [dir='rtl'] .project-card__link .icon {
+    transform: scaleX(-1);
+  }
+
+  /* Project status as a port LED, matching the console. */
+  .project-card[data-status='implemented'] .project-card__status-dot,
+  .project-card[data-status='live'] .project-card__status-dot {
+    box-shadow: 0 0 8px rgb(var(--color-success) / 0.7);
+  }
+
+  .project-card[data-status='in-analysis'] .project-card__status-dot {
+    border: 1.5px dashed rgb(var(--color-warning));
+    background-color: transparent;
+  }
+}
+
+/* ===== Header path indicator ===== */
+@layer components {
+  .site-header__progress {
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 2px;
+    background-color: rgb(var(--color-accent-primary));
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  [dir='rtl'] .site-header__progress {
+    transform-origin: right;
+  }
+
+  .nav-link.is-current {
+    color: rgb(var(--color-text-primary));
+    background-size: 100% 2px;
+  }
+}

@@ -9,10 +9,17 @@ interface Props {
 }
 
 const { k } = Astro.props;
+const ARABIC = /[\u0600-\u06FF]/;
 ---
 
-{LOCALES.map((locale) => (
-  <span data-lang={locale} lang={locale}>
-    {t(locale, k)}
-  </span>
-))}
+{LOCALES.map((locale) => {
+  const value = t(locale, k);
+  // Technical terms and proper names stay in English in the Arabic version
+  // (PHASE2_IA 10.1): mark them as English so screen readers pronounce them correctly.
+  const lang = locale === 'ar' && !ARABIC.test(value) ? 'en' : locale;
+  return (
+    <span data-lang={locale} lang={lang}>
+      {value}
+    </span>
+  );
+})}

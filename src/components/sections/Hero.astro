@@ -8,6 +8,7 @@
  */
 import { Picture } from 'astro:assets';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
 import T from '@/components/ui/T.astro';
 import profile from '@/assets/images/profile.jpg';
 import { i18nAttrs, t, type TranslationKey } from '@/lib/i18n';
@@ -15,19 +16,19 @@ import { withBase } from '@/lib/site';
 
 type ProjectData = CollectionEntry<'projects'>['data'];
 
-const sections: { id: string; key: TranslationKey }[] = [
-  { id: 'hero', key: 'console.profile' },
-  { id: 'methodology', key: 'sections.methodology' },
-  { id: 'expertise', key: 'sections.expertise' },
-  { id: 'projects', key: 'sections.projects' },
-  { id: 'certifications', key: 'sections.certifications' },
-  { id: 'contact', key: 'sections.contact' },
+const sections: { id: string; key: TranslationKey; icon: IconName }[] = [
+  { id: 'hero', key: 'console.profile', icon: 'user' },
+  { id: 'methodology', key: 'sections.methodology', icon: 'workflow' },
+  { id: 'expertise', key: 'sections.expertise', icon: 'layers' },
+  { id: 'projects', key: 'sections.projects', icon: 'boxes' },
+  { id: 'certifications', key: 'sections.certifications', icon: 'award' },
+  { id: 'contact', key: 'sections.contact', icon: 'mail' },
 ];
 
 const services = [
-  { id: 'software', pair: 'blue' },
-  { id: 'data', pair: 'orange' },
-  { id: 'databases', pair: 'green' },
+  { id: 'software', pair: 'blue', icon: 'code-xml' },
+  { id: 'data', pair: 'orange', icon: 'brain-circuit' },
+  { id: 'databases', pair: 'green', icon: 'database' },
 ] as const;
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
@@ -59,12 +60,13 @@ const led: Record<ProjectData['status'], string> = {
       <div class="console__body">
         <nav class="console__side" {...i18nAttrs({ 'aria-label': 'console.sidebarLabel' })}>
           <ul>
-            {sections.map(({ id, key }, index) => (
+            {sections.map(({ id, key, icon }, index) => (
               <li>
                 <a
                   href={withBase(`/#${id}`)}
                   class:list={['console__link', { 'is-current': index === 0 }]}
                 >
+                  <Icon name={icon} size={16} />
                   <T k={key} />
                 </a>
               </li>
@@ -110,6 +112,7 @@ const led: Record<ProjectData['status'], string> = {
           <dl class="instance__facts">
             <div>
               <dt>
+                <Icon name="map-pin" size={14} />
                 <T k="console.fields.location" />
               </dt>
               <dd>
@@ -118,6 +121,7 @@ const led: Record<ProjectData['status'], string> = {
             </div>
             <div>
               <dt>
+                <Icon name="graduation-cap" size={14} />
                 <T k="console.fields.education" />
               </dt>
               <dd>
@@ -129,6 +133,7 @@ const led: Record<ProjectData['status'], string> = {
             </div>
             <div>
               <dt>
+                <Icon name="languages" size={14} />
                 <T k="console.fields.languages" />
               </dt>
               <dd>
@@ -147,9 +152,10 @@ const led: Record<ProjectData['status'], string> = {
                 <T k="console.servicesTitle" />
               </h2>
               <ul class="services">
-                {services.map(({ id, pair }) => (
+                {services.map(({ id, pair, icon }) => (
                   <li class="service" data-pair={pair}>
                     <p class="service__name">
+                      <Icon name={icon} size={18} />
                       <T k={`hero.domains.${id}.name` as TranslationKey} />
                     </p>
                     <p class="service__text">

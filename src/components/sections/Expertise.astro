@@ -7,6 +7,8 @@
  * compact strip, as required by CLAUDE.md section 2.
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
 import T from '@/components/ui/T.astro';
 import type { TranslationKey } from '@/lib/i18n';
 import { withBase } from '@/lib/site';
@@ -23,10 +25,11 @@ interface Skill {
   evidence: Evidence[];
 }
 
-const groups: { id: string; pair: Pair; skills: Skill[] }[] = [
+const groups: { id: string; pair: Pair; icon: IconName; skills: Skill[] }[] = [
   {
     id: 'software',
     pair: 'blue',
+    icon: 'code-xml',
     skills: [
       {
         id: 'frontend',
@@ -51,6 +54,7 @@ const groups: { id: string; pair: Pair; skills: Skill[] }[] = [
   {
     id: 'data',
     pair: 'orange',
+    icon: 'brain-circuit',
     skills: [
       {
         id: 'dataprep',
@@ -72,6 +76,7 @@ const groups: { id: string; pair: Pair; skills: Skill[] }[] = [
   {
     id: 'databases',
     pair: 'green',
+    icon: 'database',
     skills: [
       {
         id: 'supabase',
@@ -96,6 +101,7 @@ const groups: { id: string; pair: Pair; skills: Skill[] }[] = [
   {
     id: 'embedded',
     pair: 'brown',
+    icon: 'cpu',
     skills: [
       {
         id: 'iot',
@@ -107,6 +113,7 @@ const groups: { id: string; pair: Pair; skills: Skill[] }[] = [
   {
     id: 'design',
     pair: 'white',
+    icon: 'compass',
     skills: [
       {
         id: 'analysis',
@@ -145,18 +152,17 @@ const k = (path: string) => path as TranslationKey;
 
 <section id="expertise" class="border-t border-border py-24">
   <div class="container">
-    <h2 class="text-3xl font-bold">
-      <T k="sections.expertise" />
-    </h2>
+    <SectionHeader title="sections.expertise" icon="layers" pair="orange" />
     <p class="mt-3 max-w-prose text-lg text-text-secondary">
       <T k="expertise.intro" />
     </p>
 
     <div class="board">
-      {groups.map(({ id, pair, skills }) => (
+      {groups.map(({ id, pair, icon, skills }) => (
         <section class="board__group" data-pair={pair} aria-labelledby={`skills-${id}`}>
           <div class="board__head">
             <h3 id={`skills-${id}`} class="board__title">
+              <Icon name={icon} size={22} />
               <T k={k(`expertise.groupsApplied.${id}`)} />
             </h3>
             <div class="twist" aria-hidden="true" />
