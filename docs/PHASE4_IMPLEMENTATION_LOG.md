@@ -590,3 +590,133 @@
 1. إنشاء مشروع Supabase مجاني.
 2. تنفيذ أوامر `supabase/functions/contact-submit/README.md` من جهازه (`db push`، `secrets set`، `functions deploy`).
 3. تزويد قيمة `PUBLIC_CONTACT_FUNCTION_URL` (رابط عام، ليس سراً).
+
+---
+
+## تحديث — ربط Supabase بالمستودع (GitHub Integration)
+
+- **التاريخ:** 17 نوفمبر 2026
+- **ما فعله صاحب المشروع:** أنشأ مشروع Supabase وربطه بالمستودع `videomontage675-design/personal-website`، مع Working directory = `.`، وتفعيل "Deploy to production".
+- **الأثر (حسب وثائق Supabase الرسمية):**
+  - عند الدمج في فرع الإنتاج: تُطبَّق ملفات `supabase/migrations/` الجديدة، وتُنشر Edge Functions المعرّفة في `supabase/config.toml`. لا حاجة لـ CLI.
+  - التكامل مع GitHub متاح في الخطة المجانية؛ **Branching (بيئات معاينة لكل PR) يتطلب خطة Pro**، فيبقى معطَّلاً التزاماً بمبدأ "No Paid Dependencies".
+  - الأسرار (`IP_HASH_SALT`، `ALLOWED_ORIGIN`) لا يضبطها التكامل؛ تُضاف من Dashboard ← Edge Functions ← Secrets.
+- **حالة النشر:** عمل المرحلة 4 كله على فرع العمل، لا على `main`. **لن يُطبَّق شيء على Supabase قبل الدمج في `main`**، والدمج قرار يتطلب اعتماد صاحب المشروع (`CLAUDE.md` § 7).
+- حُدِّث `supabase/functions/contact-submit/README.md` بخيار النشر عبر التكامل (A) بجانب CLI (B).
+
+---
+
+## تحقق — حالة الدمج في `main` (17 نوفمبر 2026)
+
+- صاحب المشروع يدمج عمل فرع `eng-emadhassan/zealous-thompson-pafugh` في `main` عبر Pull Requests على GitHub:
+  - PR #1 (حتى الخطوة 6): دُمج 16 نوفمبر.
+  - PR #2 (حتى الخطوة 12): دُمج 16 نوفمبر.
+  - PR #3 (حتى الخطوة 14، يشمل `supabase/`): دُمج 17 نوفمبر.
+- **`main` يحتوي الآن الـ Migration و Edge Function**، فتكامل Supabase يطبقهما عند الدمج. صاحب المشروع أكد نجاح التكامل.
+- لا يوجد بعد Workflow نشر GitHub Pages (الخطوة 16)، فلا شيء منشور للعامة من الموقع.
+- دُمج `origin/main` في فرع العمل لمزامنة سجل الدمج (بلا تغيير في المحتوى).
+
+---
+
+## نقل المستودع وتثبيت عنوان الموقع (17 نوفمبر 2026)
+
+- **قرار صاحب المشروع:** نُقل المستودع من `videomontage675-design/personal-website` إلى حسابه وأُعيدت تسميته: **`EMADHASSAN-123/EMADHASSAN-123.github.io`**.
+- **عنوان الموقع النهائي:** `https://emadhassan-123.github.io` (Root user site، بلا `base`). يحقق قرار `CLAUDE.md` § 4 (`<username>.github.io`).
+- انتقلت الفروع كاملة (`main` عند `7a9a3ea`، وفرع العمل عند `d93d1d3`).
+- ثبّت صاحب المشروع تطبيق Claude GitHub على هذا المستودع فقط.
+- **`ALLOWED_ORIGIN` في Supabase:** `https://emadhassan-123.github.io`.
+
+### حادثة: بناء GitHub Pages التلقائي (Jekyll)
+
+- عند إعادة التسمية فعّل GitHub تلقائياً Pages بوضع "Deploy from a branch" (Jekyll على `main`).
+- فشل التشغيل `pages build and deployment #1` لأن Jekyll قرأ ترويسات ملفات `.astro` كـ YAML front matter.
+- **الفشل منع نشر ملفات المستودع الخام** (الكود، `docs/`، `CLAUDE.md`) على العنوان العام قبل اعتماد الإطلاق.
+- **الإجراء المطلوب من صاحب المشروع:** Settings ← Pages ← Build and deployment ← Source = **GitHub Actions**. لا يُنشر شيء حتى يُضاف Workflow النشر (الخطوة 16) ويُعتمد الإطلاق.
+- **تحديث:** أعاد صاحب المشروع ربط تكامل Supabase بالمستودع `EMADHASSAN-123/EMADHASSAN-123.github.io` (17 نوفمبر 2026).
+
+---
+
+## الخطوة 17 — تحسين الظهور في محركات البحث (SEO)
+
+- **التاريخ:** 17 نوفمبر 2026
+- **Commit:** `504070d` — `feat: add technical SEO foundation for indexing and sharing`
+- **الحالة:** منفذة — بانتظار الاعتماد.
+- **التوثيق الكامل (الفحص، ما تم، السبب، التحقق، إجراءات ما بعد الإطلاق):** `docs/PHASE4_SEO.md`.
+
+### الملخص
+
+- **فحص قراءة فقط قبل التنفيذ** (`technical-seo-code-audit`): 8 مشكلات، أخطرها `noindex` على كل الصفحات، وعنوان موقع غير معرَّف يعطّل خريطة الموقع.
+- **إعدادات:** `site` = `https://emadhassan-123.github.io`؛ `trailingSlash: 'always'` مع توحيد كل الروابط الداخلية على `/path/`؛ استبعاد 404 من خريطة الموقع.
+- **الفهرسة:** إزالة `noindex` من الصفحات الست؛ إبقاؤه على 404.
+- **ملفات جديدة:** `src/lib/seo.ts` (JSON-LD)، `src/pages/robots.txt.ts`، `public/og-image.png`، `public/favicon.svg`، `public/favicon-48.png`، `public/apple-touch-icon.png`، `docs/PHASE4_SEO.md`.
+- **`BaseLayout`:** canonical، Open Graph وTwitter، الأيقونات، `theme-color`، ودعم JSON-LD لكل صفحة.
+- **البيانات المنظمة:** `Person` + `WebSite` في الرئيسية؛ `CreativeWork` + `BreadcrumbList` في صفحات المشاريع.
+
+### قرارات مستقلة
+
+| القرار | المبرر |
+|--------|--------|
+| عنوان الموقع افتراضي في الإعدادات بدل متغير إلزامي | العنوان عام وثابت؛ غيابه كان يعطّل خريطة الموقع بصمت. يبقى قابلاً للتجاوز بـ `PUBLIC_SITE_URL`. |
+| `og-image.png` في `public/` (لا `src/assets/` كما في `PHASE3_ARCH` § 9.1) | يحتاج عنواناً ثابتاً مطلقاً في `og:image`؛ ملفات `src/assets` تأخذ أسماء متغيرة بالتجزئة. |
+| صورة مشاركة واحدة لكل الصفحات | `PHASE3_ARCH` § 9.1 يسمح بـ "واحدة أو واحدة لكل صفحة"؛ البساطة أولاً. |
+| استبعاد Cloud & DevOps من `knowsAbout` | "قيد التطوير" وليس خبرة مثبتة (`PHASE2_IA` § 2.2). |
+| بلا `dateCreated` للمشاريع | السنة الأكاديمية 2024/2025 لا تحدد سنة إنشاء دقيقة؛ تجنب الاختلاق. |
+| أيقونة الموقع: عقدة مربعة بإطار Accent وقلب ممتلئ | نفس رمز "عقدة الخبرة المطبقة" في الموقع؛ لا شعار جديد مخترع. |
+
+### عقبة
+
+- فحص Lighthouse رفضته سياسة أمان الجلسة (تنزيل أداة وتشغيل المتصفح دون sandbox). عُوِّض بفحوص البناء والمتصفح المذكورة في `docs/PHASE4_SEO.md` § 3. يُجرى Lighthouse في المرحلة 5.
+
+---
+
+## اعتماد الخطوة 17
+
+- **التاريخ:** 17 نوفمبر 2026 — معتمدة من صاحب المشروع.
+
+---
+
+## الخطوة 16 — GitHub Actions (النشر) + CSP
+
+- **التاريخ:** 17 نوفمبر 2026
+- **Commit:** `e3d4afe` — `ci: add GitHub Pages deploy workflow and production CSP`
+- **الحالة:** منفذة ومختبرة — **الإطلاق الفعلي بانتظار اعتماد صاحب المشروع** (الدمج في `main`).
+
+### ما تم
+
+- **`.github/workflows/deploy.yml`** (`PHASE3_ARCH` § 7.1) مع إضافات:
+  - **على Pull Request إلى `main`:** فحص فقط (lint + format + type check + build)، بلا نشر. فحص قبل الدمج يمنع نشر نسخة معطوبة.
+  - **على الدفع إلى `main` (أو يدوياً):** build ثم deploy إلى GitHub Pages.
+  - صلاحيات دنيا: `contents: read` عامة، و `pages: write` + `id-token: write` لوظيفة النشر فقط.
+  - Node من `.nvmrc` (20) مع cache لـ npm.
+  - المتغيرات العامة الاختيارية: `PUBLIC_CONTACT_FUNCTION_URL`، `PUBLIC_UMAMI_URL`، `PUBLIC_UMAMI_SITE_ID`. غيابها يعطل الميزة المرتبطة دون إفشال البناء.
+- **CSP كوسم meta في الإنتاج فقط** (`PHASE3_ARCH` § 10.2):
+  `default-src 'self'; script-src 'self' 'sha256-…'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' <أصل دالة التواصل>; object-src 'none'; base-uri 'self'; form-action 'self'`
+  - hash سكربت Bootstrap يُحسب تلقائياً وقت البناء، فلا يتعطل عند تعديل السكربت.
+  - أصل `connect-src` يُستخرج من `PUBLIC_CONTACT_FUNCTION_URL`.
+- **`docs/DEPLOY_CHECKLIST.md`:** قائمة الإطلاق (`engineering:deploy-checklist`): قبل الدمج، الإطلاق، التحقق، والتراجع.
+
+### التحقق
+
+- YAML الـ Workflow صالح (وظيفتان: build، deploy).
+- **CSP:** بناء إنتاجي مع رابط دالة تجريبي:
+  - **5 صفحات بلا أي مخالفة CSP**؛ السكربت المضمَّن يعمل (الوضع يُطبَّق)، والخطوط والصور تُحمَّل، والأزرار والمخطط يعملان.
+  - **طلب النموذج إلى أصل الدالة مسموح** (وصل الطلب؛ فشل الشبكة متوقع لرابط تجريبي، وظهرت رسالة الفشل الصحيحة).
+  - **اختبار سلبي:** سكربت مضمَّن محقون **لم يُنفَّذ**، وطلب `fetch` إلى نطاق خارجي **حُجب**.
+
+### قرارات مستقلة
+
+| القرار | المبرر |
+|--------|--------|
+| فحص على كل PR دون نشر | يكشف الأخطاء قبل الدمج؛ مجاني في المستودعات العامة. |
+| `img-src 'self' data:` بدل `https:` | لا صور خارجية في الموقع؛ أضيق صلاحية ممكنة. |
+| حذف `frame-ancestors` | يُتجاهل عند إرساله في وسم meta (يعمل في الترويسات فقط، وGitHub Pages لا يسمح بها). |
+| إضافة `object-src 'none'`، `base-uri 'self'`، `form-action 'self'` | تقوية قياسية بلا أثر على الوظائف. |
+| CSP في الإنتاج فقط | خادم التطوير يحقن سكربتات مضمَّنة لإعادة التحميل الفوري. |
+| حذف `PUBLIC_SUPABASE_URL` و `PUBLIC_SUPABASE_ANON_KEY` من الـ Workflow | غير مستخدمين (الخطوة 14: الدالة بلا JWT). |
+
+---
+
+## اعتماد الخطوة 16
+
+- **التاريخ:** 17 نوفمبر 2026 — معتمدة من صاحب المشروع، مع طلب فتح Pull Request إلى `main`.
+- **الإطلاق:** يتم عند دمج صاحب المشروع للـ PR (`docs/DEPLOY_CHECKLIST.md`).

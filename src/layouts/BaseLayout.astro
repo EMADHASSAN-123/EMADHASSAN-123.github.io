@@ -1,22 +1,69 @@
 ---
+import { createHash } from 'node:crypto';
 import '@/styles/global.css';
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import T from '@/components/ui/T.astro';
-import { DEFAULT_LOCALE, DIRECTIONS, LANG_BOOTSTRAP_SCRIPT, type Translations } from '@/lib/i18n';
+import {
+  DEFAULT_LOCALE,
+  DIRECTIONS,
+  LANG_BOOTSTRAP_SCRIPT,
+  t,
+  type Translations,
+} from '@/lib/i18n';
 import { THEME_BOOTSTRAP_SCRIPT } from '@/lib/theme';
 import { withBase } from '@/lib/site';
+import { OG_IMAGE, serializeJsonLd } from '@/lib/seo';
 
 interface Props {
   title: Translations;
   description: Translations;
   noindex?: boolean;
+  /** Open Graph type: 'website' for the home page, 'article' for case studies. */
+  ogType?: 'website' | 'article';
+  /** schema.org nodes for this page (rendered as one JSON-LD @graph). */
+  jsonLd?: Record<string, unknown>[];
 }
 
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, ogType = 'website', jsonLd = [] } = Astro.props;
+
+// Absolute URLs from the configured site (astro.config.mjs).
+const site = Astro.site ?? new URL('https://emadhassan-123.github.io');
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const ogImageUrl = new URL(withBase(OG_IMAGE.path), site).href;
 
 // One inline script → one CSP hash. Must stay first in <head> to avoid a flash.
 const bootstrapScript = THEME_BOOTSTRAP_SCRIPT + LANG_BOOTSTRAP_SCRIPT;
+
+/*
+ * Content Security Policy (PHASE3_ARCH section 10.2), delivered as a meta tag
+ * because GitHub Pages cannot set response headers. Production builds only:
+ * the dev server injects inline scripts for hot reload.
+ * - script-src: own files plus the single inline bootstrap, allowed by hash.
+ *   JSON-LD and JSON data blocks are not executed, so CSP does not apply.
+ * - connect-src: the contact Edge Function origin (and analytics, later).
+ * frame-ancestors cannot be set from a meta tag, so it is not listed.
+ */
+const bootstrapHash = createHash('sha256').update(bootstrapScript).digest('base64');
+const originOf = (url: string | undefined) => {
+  try {
+    return url ? new URL(url).origin : '';
+  } catch {
+    return '';
+  }
+};
+const contactOrigin = originOf(import.meta.env.PUBLIC_CONTACT_FUNCTION_URL);
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' 'sha256-${bootstrapHash}'`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  `connect-src 'self'${contactOrigin ? ` ${contactOrigin}` : ''}`,
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join('; ');
 
 const preloadFonts = [
   'fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2',
@@ -28,15 +75,42 @@ const preloadFonts = [
 <html lang={DEFAULT_LOCALE} dir={DIRECTIONS[DEFAULT_LOCALE]}>
   <head>
     <meta charset="utf-8" />
+    {import.meta.env.PROD && <meta http-equiv="Content-Security-Policy" content={csp} />}
     <script is:inline set:html={bootstrapScript} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-title-ar={title.ar} data-title-en={title.en}>{title[DEFAULT_LOCALE]}</title>
     <meta name="description" content={description[DEFAULT_LOCALE]} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <link rel="canonical" href={canonicalUrl} />
+    )}
+
+    <!-- Social sharing (Open Graph / Twitter) -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={t(DEFAULT_LOCALE, 'site.name')} />
+    <meta property="og:title" content={title[DEFAULT_LOCALE]} />
+    <meta property="og:description" content={description[DEFAULT_LOCALE]} />
+    {!noindex && <meta property="og:url" content={canonicalUrl} />}
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content={String(OG_IMAGE.width)} />
+    <meta property="og:image:height" content={String(OG_IMAGE.height)} />
+    <meta property="og:image:alt" content={title.en} />
+    <meta property="og:locale" content="ar_AR" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Icons and browser UI -->
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={withBase('/favicon-48.png')} type="image/png" sizes="48x48" />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <meta name="theme-color" content="#0A1628" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FAFBFC" media="(prefers-color-scheme: light)" />
     <meta name="color-scheme" content="dark light" />
     {preloadFonts.map((href) => (
       <link rel="preload" href={withBase(href)} as="font" type="font/woff2" crossorigin />
     ))}
+    {jsonLd.length > 0 && <script type="application/ld+json" set:html={serializeJsonLd(jsonLd)} />}
   </head>
   <body class="flex min-h-screen flex-col bg-bg-primary text-text-primary antialiased">
     <a href="#main" class="skip-link">
