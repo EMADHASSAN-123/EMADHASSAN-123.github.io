@@ -1,0 +1,8 @@
+# Supabase CLI configuration. Only non-default settings are listed;
+# `supabase link` connects this folder to the hosted project.
+project_id = "personal-website"
+
+[functions.contact-submit]
+# Public endpoint: the form sends no Supabase JWT. Protection comes from
+# the function itself (exact-origin CORS, honeypot, validation, rate limit).
+verify_jwt = false
