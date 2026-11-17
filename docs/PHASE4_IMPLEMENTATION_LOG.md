@@ -603,3 +603,15 @@
   - الأسرار (`IP_HASH_SALT`، `ALLOWED_ORIGIN`) لا يضبطها التكامل؛ تُضاف من Dashboard ← Edge Functions ← Secrets.
 - **حالة النشر:** عمل المرحلة 4 كله على فرع العمل، لا على `main`. **لن يُطبَّق شيء على Supabase قبل الدمج في `main`**، والدمج قرار يتطلب اعتماد صاحب المشروع (`CLAUDE.md` § 7).
 - حُدِّث `supabase/functions/contact-submit/README.md` بخيار النشر عبر التكامل (A) بجانب CLI (B).
+
+---
+
+## تحقق — حالة الدمج في `main` (17 نوفمبر 2026)
+
+- صاحب المشروع يدمج عمل فرع `eng-emadhassan/zealous-thompson-pafugh` في `main` عبر Pull Requests على GitHub:
+  - PR #1 (حتى الخطوة 6): دُمج 16 نوفمبر.
+  - PR #2 (حتى الخطوة 12): دُمج 16 نوفمبر.
+  - PR #3 (حتى الخطوة 14، يشمل `supabase/`): دُمج 17 نوفمبر.
+- **`main` يحتوي الآن الـ Migration و Edge Function**، فتكامل Supabase يطبقهما عند الدمج. صاحب المشروع أكد نجاح التكامل.
+- لا يوجد بعد Workflow نشر GitHub Pages (الخطوة 16)، فلا شيء منشور للعامة من الموقع.
+- دُمج `origin/main` في فرع العمل لمزامنة سجل الدمج (بلا تغيير في المحتوى).
