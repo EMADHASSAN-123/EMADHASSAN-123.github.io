@@ -1,4 +1,5 @@
 ---
+import { createHash } from 'node:crypto';
 import '@/styles/global.css';
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
@@ -34,6 +35,36 @@ const ogImageUrl = new URL(withBase(OG_IMAGE.path), site).href;
 // One inline script → one CSP hash. Must stay first in <head> to avoid a flash.
 const bootstrapScript = THEME_BOOTSTRAP_SCRIPT + LANG_BOOTSTRAP_SCRIPT;
 
+/*
+ * Content Security Policy (PHASE3_ARCH section 10.2), delivered as a meta tag
+ * because GitHub Pages cannot set response headers. Production builds only:
+ * the dev server injects inline scripts for hot reload.
+ * - script-src: own files plus the single inline bootstrap, allowed by hash.
+ *   JSON-LD and JSON data blocks are not executed, so CSP does not apply.
+ * - connect-src: the contact Edge Function origin (and analytics, later).
+ * frame-ancestors cannot be set from a meta tag, so it is not listed.
+ */
+const bootstrapHash = createHash('sha256').update(bootstrapScript).digest('base64');
+const originOf = (url: string | undefined) => {
+  try {
+    return url ? new URL(url).origin : '';
+  } catch {
+    return '';
+  }
+};
+const contactOrigin = originOf(import.meta.env.PUBLIC_CONTACT_FUNCTION_URL);
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' 'sha256-${bootstrapHash}'`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  `connect-src 'self'${contactOrigin ? ` ${contactOrigin}` : ''}`,
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join('; ');
+
 const preloadFonts = [
   'fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2',
   'fonts/inter-latin-wght-normal.woff2',
@@ -44,6 +75,7 @@ const preloadFonts = [
 <html lang={DEFAULT_LOCALE} dir={DIRECTIONS[DEFAULT_LOCALE]}>
   <head>
     <meta charset="utf-8" />
+    {import.meta.env.PROD && <meta http-equiv="Content-Security-Policy" content={csp} />}
     <script is:inline set:html={bootstrapScript} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-title-ar={title.ar} data-title-en={title.en}>{title[DEFAULT_LOCALE]}</title>

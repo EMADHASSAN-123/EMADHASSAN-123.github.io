@@ -1,0 +1,66 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint and formatting
+        run: |
+          npm run lint
+          npm run format:check
+
+      - name: Build site (type check + static build)
+        env:
+          # Public values only (they end up in the client bundle). Unset values
+          # leave the related feature disabled instead of failing the build.
+          PUBLIC_CONTACT_FUNCTION_URL: ${{ secrets.PUBLIC_CONTACT_FUNCTION_URL }}
+          PUBLIC_UMAMI_URL: ${{ secrets.PUBLIC_UMAMI_URL }}
+          PUBLIC_UMAMI_SITE_ID: ${{ secrets.PUBLIC_UMAMI_SITE_ID }}
+        run: npm run build
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  # Pull requests only build and check; deployment happens from main.
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
