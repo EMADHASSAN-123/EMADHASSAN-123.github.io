@@ -387,5 +387,32 @@
         "roles": "Managing roles and permissions."
       }
     }
+  },
+  "notFound": {
+    "pageTitle": "Page not found — Emad Ali Mohammed Hassan",
+    "description": "The requested page does not exist.",
+    "heading": "This page does not exist",
+    "text": "The link you opened does not lead to any part of this site. The address may have changed or been mistyped.",
+    "terminalLabel": "Error message",
+    "home": "Home page",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "privacy": {
+    "pageTitle": "Privacy policy — Emad Ali Mohammed Hassan",
+    "description": "What this site collects, how contact messages are stored, and your rights.",
+    "updated": "Last updated: 17 November 2026",
+    "intro": "This is a personal professional site. It collects as little data as possible, shows no ads, and uses no third-party trackers.",
+    "analyticsTitle": "Visitor statistics",
+    "analyticsText": "The site uses Umami, a privacy-friendly open-source analytics tool, to count visits and see which pages are read most. It uses no cookies, does not store IP addresses, and does not track you across other sites. The data is aggregate only: page, referrer, country, and device and browser type.",
+    "formTitle": "Contact form messages",
+    "formText": "When you send a message, the details you enter (name, email, subject and message) are stored with the message language in a protected Supabase database. Only I can read them; they are never shared and are used only to reply to you.",
+    "formSecurity": "To protect the form from automated spam, the browser type and a one-way hash of your IP address are also stored. The address cannot be recovered from the hash, and it is used only to limit how many messages can be sent.",
+    "channelsTitle": "Direct channels",
+    "channelsText": "If you contact me through WhatsApp, LinkedIn, Facebook or email, the conversation is covered by that service's own privacy policy.",
+    "hostingTitle": "Hosting",
+    "hostingText": "The site is hosted on GitHub Pages, which may log technical data for security under its own policy. Fonts are served from this site, not loaded from external services.",
+    "rightsTitle": "Your rights",
+    "rightsText": "You can ask to see or delete your message at any time by writing to:"
   }
 }

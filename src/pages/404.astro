@@ -1,0 +1,56 @@
+---
+/**
+ * Custom 404 (PHASE2_IA section 9.1): simplified terminal-error style.
+ * GitHub Pages serves this file for any missing path.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import T from '@/components/ui/T.astro';
+import { i18nAttrs, translations } from '@/lib/i18n';
+import { withBase } from '@/lib/site';
+---
+
+<BaseLayout
+  title={translations('notFound.pageTitle')}
+  description={translations('notFound.description')}
+  noindex
+>
+  <section class="container py-24">
+    <pre
+      class="terminal"
+      dir="ltr"
+      {...i18nAttrs({ 'aria-label': 'notFound.terminalLabel' })}
+    ><span class="terminal__prompt">&gt;</span> GET <span data-requested-path>/lost-page</span>
+<span class="terminal__error">404 — NODE NOT FOUND IN GRAPH</span></pre>
+
+    <h1 class="mt-10 text-3xl font-bold">
+      <T k="notFound.heading" />
+    </h1>
+    <p class="mt-3 max-w-prose text-lg text-text-secondary">
+      <T k="notFound.text" />
+    </p>
+
+    <ul class="mt-8 flex flex-wrap gap-3">
+      <li>
+        <a href={withBase('/')} class="btn-primary">
+          <T k="notFound.home" />
+        </a>
+      </li>
+      <li>
+        <a href={withBase('/#projects')} class="btn-outline btn-lg">
+          <T k="notFound.projects" />
+        </a>
+      </li>
+      <li>
+        <a href={withBase('/#contact')} class="btn-outline btn-lg">
+          <T k="notFound.contact" />
+        </a>
+      </li>
+    </ul>
+  </section>
+</BaseLayout>
+
+<script>
+  // Show the path the visitor actually requested (textContent: no HTML injection).
+  const target = document.querySelector('[data-requested-path]');
+  if (target) target.textContent = decodeURIComponent(window.location.pathname).slice(0, 120);
+</script>

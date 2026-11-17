@@ -1,0 +1,63 @@
+---
+/**
+ * Privacy policy (PROJECT_CONTEXT section 9.8, PHASE2_IA section 9.2):
+ * analytics, contact-form storage (matching the contact_messages schema),
+ * direct channels, hosting, and the visitor's rights.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import T from '@/components/ui/T.astro';
+import { translations, type TranslationKey } from '@/lib/i18n';
+import { CONTACT } from '@/lib/site';
+
+const sections: { title: TranslationKey; body: TranslationKey[] }[] = [
+  { title: 'privacy.analyticsTitle', body: ['privacy.analyticsText'] },
+  { title: 'privacy.formTitle', body: ['privacy.formText', 'privacy.formSecurity'] },
+  { title: 'privacy.channelsTitle', body: ['privacy.channelsText'] },
+  { title: 'privacy.hostingTitle', body: ['privacy.hostingText'] },
+];
+---
+
+<BaseLayout
+  title={translations('privacy.pageTitle')}
+  description={translations('privacy.description')}
+  noindex
+>
+  <article class="container py-16">
+    <h1 class="text-4xl font-bold">
+      <T k="footer.privacy" />
+    </h1>
+    <p class="mt-3 text-sm text-text-muted">
+      <T k="privacy.updated" />
+    </p>
+    <p class="mt-8 max-w-prose text-lg">
+      <T k="privacy.intro" />
+    </p>
+
+    {sections.map(({ title, body }) => (
+      <section class="privacy-section">
+        <h2 class="text-xl font-bold">
+          <T k={title} />
+        </h2>
+        {body.map((b) => (
+          <p class="mt-3 max-w-prose text-text-secondary">
+            <T k={b} />
+          </p>
+        ))}
+      </section>
+    ))}
+
+    <section class="privacy-section">
+      <h2 class="text-xl font-bold">
+        <T k="privacy.rightsTitle" />
+      </h2>
+      <p class="mt-3 max-w-prose text-text-secondary">
+        <T k="privacy.rightsText" />{' '}
+        {CONTACT.email && (
+          <a href={`mailto:${CONTACT.email}`} class="nav-link" dir="ltr">
+            {CONTACT.email}
+          </a>
+        )}
+      </p>
+    </section>
+  </article>
+</BaseLayout>

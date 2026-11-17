@@ -1690,3 +1690,37 @@ html:not([data-theme]) [data-requires-js] {
     text-anchor: end;
   }
 }
+
+/* ===== 404 terminal & privacy ===== */
+@layer components {
+  .terminal {
+    max-width: 40rem;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    border: 1px solid rgb(var(--color-border));
+    border-inline-start: 3px solid rgb(var(--color-error));
+    border-radius: 0.25rem;
+    background-color: rgb(var(--color-bg-secondary));
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.9;
+    color: rgb(var(--color-text-primary));
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .terminal__prompt {
+    color: rgb(var(--color-accent-primary));
+  }
+
+  .terminal__error {
+    color: rgb(var(--color-error));
+    font-weight: 600;
+  }
+
+  .privacy-section {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgb(var(--color-border));
+  }
+}
