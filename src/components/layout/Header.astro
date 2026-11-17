@@ -77,6 +77,7 @@ const menuLabel = statefulLabelAttrs({ open: 'nav.openMenu', close: 'nav.closeMe
       </button>
     </div>
   </div>
+  <span class="site-header__progress" aria-hidden="true" data-scroll-progress></span>
 </header>
 
 <script>
@@ -114,4 +115,47 @@ const menuLabel = statefulLabelAttrs({ open: 'nav.openMenu', close: 'nav.closeMe
       header.toggleAttribute('data-scrolled', !entry?.isIntersecting);
     }).observe(sentinel);
   }
+
+  // Path indicator: scroll progress + current section (top bar and console sidebar).
+  const progress = document.querySelector<HTMLElement>('[data-scroll-progress]');
+  const update = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (progress) progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+  };
+  let ticking = false;
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    },
+    { passive: true },
+  );
+  update();
+
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.nav-link, .console__link')];
+  const sectionsById = new Map(
+    [...document.querySelectorAll<HTMLElement>('main section[id]')].map((el) => [el.id, el]),
+  );
+  const markCurrent = (id: string) => {
+    links.forEach((link) => {
+      const current = link.hash === `#${id}`;
+      link.classList.toggle('is-current', current);
+      if (current) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  };
+  const spy = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.filter((e) => e.isIntersecting);
+      const last = visible[visible.length - 1];
+      if (last) markCurrent(last.target.id);
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  sectionsById.forEach((el) => spy.observe(el));
 </script>

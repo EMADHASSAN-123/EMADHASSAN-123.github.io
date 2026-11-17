@@ -4,6 +4,8 @@
  * contact form. The form posts to the contact-submit Edge Function when
  * PUBLIC_CONTACT_FUNCTION_URL is configured.
  */
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
 import T from '@/components/ui/T.astro';
 import { CONTACT_LIMITS } from '@/lib/contact';
 import { LOCALES, t, type TranslationKey } from '@/lib/i18n';
@@ -53,15 +55,12 @@ const channels: Channel[] = [
   },
 ];
 
-const icons: Record<Channel['icon'], string> = {
-  chat: 'M4 19.5 5.3 15A7.5 7.5 0 1 1 9 18.7Z M9 9.5c.3 1.8 1.7 3.2 3.5 3.5l1-1 2 .8-.3 1.6c-3.7.3-6.9-2.9-6.6-6.6L10.2 7.5l.8 2Z',
-  phone:
-    'M5 4h3l1.5 4-2 1.2a10 10 0 0 0 7.3 7.3l1.2-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z',
-  linkedin:
-    'M4 4h16v16H4Z M8 10.5V16 M8 7.75v.01 M11.5 16v-5.5 M11.5 13c0-1.5 1-2.5 2.25-2.5S16 11.5 16 13v3',
-  facebook:
-    'M4 4h16v16H4Z M15.5 4v0 M13 20v-7.5h3 M13 12.5V10.5c0-1.4.8-2.25 2.25-2.25H16.5 M10.5 12.5h2.5',
-  mail: 'M3.5 6h17v12h-17Z M3.5 6.5 12 13l8.5-6.5',
+const icons: Record<Channel['icon'], IconName> = {
+  chat: 'message-circle',
+  phone: 'phone',
+  linkedin: 'linkedin',
+  facebook: 'facebook',
+  mail: 'mail',
 };
 
 const fields = [
@@ -96,9 +95,7 @@ const endpoint = import.meta.env.PUBLIC_CONTACT_FUNCTION_URL ?? '';
 
 <section id="contact" class="border-t border-border py-24">
   <div class="container">
-    <h2 class="text-3xl font-bold">
-      <T k="sections.contact" />
-    </h2>
+    <SectionHeader title="sections.contact" icon="mail" pair="orange" />
     <p class="mt-3 max-w-prose text-lg text-text-secondary">
       <T k="contact.intro" />
     </p>
@@ -112,24 +109,11 @@ const endpoint = import.meta.env.PUBLIC_CONTACT_FUNCTION_URL ?? '';
           {channels.map(({ key, href, value, icon, external }) => {
             const body = (
               <>
-                <svg
-                  class="contact-channel__icon"
-                  viewBox="0 0 24 24"
-                  width="22"
-                  height="22"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d={icons[icon]} />
-                </svg>
+                <Icon name={icons[icon]} size={22} class="contact-channel__icon" />
                 <span class="contact-channel__label">
                   <T k={key} />
                 </span>
-                <span class="contact-channel__value" dir="ltr">
+                <span class="contact-channel__value" dir="ltr" lang="en">
                   {href ? value : <T k="contact.channels.emailPending" />}
                 </span>
               </>

@@ -6,6 +6,7 @@
  * An optional `visual` slot holds a simplified architecture sketch.
  */
 import type { CollectionEntry } from 'astro:content';
+import Icon from '@/components/ui/Icon.astro';
 import T from '@/components/ui/T.astro';
 import { t, type TranslationKey } from '@/lib/i18n';
 import { withBase } from '@/lib/site';
@@ -60,7 +61,11 @@ const headingId = `project-${id}`;
 
       <a href={withBase(`/projects/${id}/`)} class="project-card__link">
         <T k="projects.caseStudy" />
-        <span class="sr-only"> — {data.name}</span>
+        <Icon name="arrow-up-right" size={16} />
+        <span class="sr-only" lang="en">
+          {' '}
+          — {data.name}
+        </span>
       </a>
     </div>
 

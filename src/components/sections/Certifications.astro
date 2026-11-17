@@ -5,6 +5,8 @@
  * framed more prominently than tier 2 (workshop / course attendance).
  * Files are verbatim copies in public/certifications/.
  */
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Icon from '@/components/ui/Icon.astro';
 import T from '@/components/ui/T.astro';
 import { LOCALES, i18nAttrs, type TranslationKey } from '@/lib/i18n';
 import { withBase } from '@/lib/site';
@@ -80,9 +82,7 @@ const key = (id: Certificate['id'], field: string) =>
 
 <section id="certifications" class="border-t border-border py-24">
   <div class="container">
-    <h2 class="text-3xl font-bold">
-      <T k="sections.certifications" />
-    </h2>
+    <SectionHeader title="sections.certifications" icon="award" pair="brown" />
     <p class="mt-3 max-w-prose text-lg text-text-secondary">
       <T k="certifications.intro" />
     </p>
@@ -133,7 +133,7 @@ const key = (id: Certificate['id'], field: string) =>
                 <span class="text-text-muted">
                   <T k="certifications.idLabel" />:
                 </span>{' '}
-                <span class="font-mono" dir="ltr">
+                <span class="font-mono" dir="ltr" lang="en">
                   {certificateId}
                 </span>
               </p>
@@ -150,6 +150,7 @@ const key = (id: Certificate['id'], field: string) =>
             rel="noopener"
             class="cert-card__link"
           >
+            <Icon name="file-text" size={16} />
             <T k="certifications.view" />
             <span class="sr-only">
               {' '}
