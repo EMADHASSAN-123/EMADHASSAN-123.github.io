@@ -720,3 +720,13 @@
 
 - **التاريخ:** 17 نوفمبر 2026 — معتمدة من صاحب المشروع، مع طلب فتح Pull Request إلى `main`.
 - **الإطلاق:** يتم عند دمج صاحب المشروع للـ PR (`docs/DEPLOY_CHECKLIST.md`).
+
+---
+
+## الإطلاق — 17 نوفمبر 2026
+
+- **دُمج PR #4 في `main`** بطلب صريح من صاحب المشروع (commit الدمج `b6c521c`)، مثبَّتاً على آخر commit مفحوص (`0cff73f`).
+- **Workflow "Deploy to GitHub Pages" (run #2):** `build` ✅، `deploy` ✅.
+- **سجل النشر في GitHub:** deployment للبيئة `github-pages` على `b6c521c` بحالة **success**، والعنوان: `https://emadhassan-123.github.io/`.
+- لم يعمل بناء Jekyll القديم بعد الدمج، مما يدل على أن مصدر Pages صار GitHub Actions.
+- **حدود التحقق:** عنوان الموقع غير متاح من شبكة جلسة التطوير؛ التحقق البصري والوظيفي على الموقع المنشور يجريه صاحب المشروع وفق `docs/DEPLOY_CHECKLIST.md`.
