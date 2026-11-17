@@ -84,3 +84,12 @@
 5. **المتابعة:** مراجعة تقرير Search Console بعد 2–4 أسابيع (`search-console-data-review`).
 
 > **ملاحظة صريحة:** الإعداد التقني يجعل الموقع قابلاً للفهرسة بالكامل، لكن ترتيبه في النتائج يحدده Google ولا يمكن ضمانه.
+
+---
+
+## 6. التحقق في Google Search Console (17 نوفمبر 2026)
+
+- **أُضيف وسم التحقق** الذي قدّمه صاحب المشروع في `<head>` لكل الصفحات (`src/layouts/BaseLayout.astro`):
+  `google-site-verification` = `dcRpNstQE9p6g-vmV1No0bOpRwHKr956B9CY2cKXaaw`.
+- الوسم رمز عام لإثبات الملكية وليس سراً، ويجب أن يبقى في الموقع حتى يستمر التحقق.
+- **بعد النشر:** يضغط صاحب المشروع "Verify" في Search Console، ثم يرسل `sitemap-index.xml` (Sitemaps → Add a new sitemap).

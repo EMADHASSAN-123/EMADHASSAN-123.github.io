@@ -92,6 +92,8 @@ const preloadFonts = [
     {import.meta.env.PROD && <meta http-equiv="Content-Security-Policy" content={csp} />}
     <script is:inline set:html={bootstrapScript} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Search Console ownership (public token, not a secret). -->
+    <meta name="google-site-verification" content="dcRpNstQE9p6g-vmV1No0bOpRwHKr956B9CY2cKXaaw" />
     <title data-title-ar={title.ar} data-title-en={title.en}>{title[locale]}</title>
     <meta name="description" content={description[locale]} />
     {noindex ? (
