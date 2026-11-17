@@ -24,6 +24,8 @@ export default defineConfig({
     sitemap({
       // The 404 page must never be listed.
       filter: (page) => !page.includes('/404'),
+      // Arabic at '/path/', English at '/en/path/': list both with hreflang alternates.
+      i18n: { defaultLocale: 'ar', locales: { ar: 'ar', en: 'en' } },
     }),
   ],
   vite: {

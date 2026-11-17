@@ -9,11 +9,14 @@ import {
   DEFAULT_LOCALE,
   DIRECTIONS,
   LANG_BOOTSTRAP_SCRIPT,
+  LOCALES,
+  localizePath,
+  stripBase,
   t,
   type Translations,
 } from '@/lib/i18n';
 import { THEME_BOOTSTRAP_SCRIPT } from '@/lib/theme';
-import { withBase } from '@/lib/site';
+import { pageLocale, withBase } from '@/lib/site';
 import { OG_IMAGE, serializeJsonLd } from '@/lib/seo';
 
 interface Props {
@@ -31,6 +34,16 @@ const { title, description, noindex = false, ogType = 'website', jsonLd = [] } =
 // Absolute URLs from the configured site (astro.config.mjs).
 const site = Astro.site ?? new URL('https://emadhassan-123.github.io');
 const canonicalUrl = new URL(Astro.url.pathname, site).href;
+
+// Each indexable page exists per language: '/path/' (Arabic) and '/en/path/' (English).
+const locale = noindex ? DEFAULT_LOCALE : pageLocale(Astro.url);
+const otherLocale = LOCALES.find((l) => l !== locale) ?? DEFAULT_LOCALE;
+const neutralPath = stripBase(Astro.url.pathname, import.meta.env.BASE_URL);
+const alternates = LOCALES.map((l) => ({
+  hreflang: l,
+  href: new URL(withBase(localizePath(neutralPath, l)), site).href,
+}));
+const OG_LOCALES = { ar: 'ar_AR', en: 'en_US' } as const;
 const ogImageUrl = new URL(withBase(OG_IMAGE.path), site).href;
 
 // One inline script → one CSP hash. Must stay first in <head> to avoid a flash.
@@ -73,32 +86,38 @@ const preloadFonts = [
 ---
 
 <!doctype html>
-<html lang={DEFAULT_LOCALE} dir={DIRECTIONS[DEFAULT_LOCALE]}>
+<html lang={locale} dir={DIRECTIONS[locale]} data-localized={noindex ? undefined : ''}>
   <head>
     <meta charset="utf-8" />
     {import.meta.env.PROD && <meta http-equiv="Content-Security-Policy" content={csp} />}
     <script is:inline set:html={bootstrapScript} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-title-ar={title.ar} data-title-en={title.en}>{title[DEFAULT_LOCALE]}</title>
-    <meta name="description" content={description[DEFAULT_LOCALE]} />
+    <title data-title-ar={title.ar} data-title-en={title.en}>{title[locale]}</title>
+    <meta name="description" content={description[locale]} />
     {noindex ? (
       <meta name="robots" content="noindex" />
     ) : (
-      <link rel="canonical" href={canonicalUrl} />
+      <>
+        <link rel="canonical" href={canonicalUrl} />
+        {alternates.map((a) => (
+          <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+        ))}
+        <link rel="alternate" hreflang="x-default" href={alternates[0]?.href} />
+      </>
     )}
 
     <!-- Social sharing (Open Graph / Twitter) -->
     <meta property="og:type" content={ogType} />
-    <meta property="og:site_name" content={t(DEFAULT_LOCALE, 'site.name')} />
-    <meta property="og:title" content={title[DEFAULT_LOCALE]} />
-    <meta property="og:description" content={description[DEFAULT_LOCALE]} />
+    <meta property="og:site_name" content={t(locale, 'site.name')} />
+    <meta property="og:title" content={title[locale]} />
+    <meta property="og:description" content={description[locale]} />
     {!noindex && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content={String(OG_IMAGE.width)} />
     <meta property="og:image:height" content={String(OG_IMAGE.height)} />
-    <meta property="og:image:alt" content={title.en} />
-    <meta property="og:locale" content="ar_AR" />
-    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:image:alt" content={title[locale]} />
+    <meta property="og:locale" content={OG_LOCALES[locale]} />
+    <meta property="og:locale:alternate" content={OG_LOCALES[otherLocale]} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Icons and browser UI -->

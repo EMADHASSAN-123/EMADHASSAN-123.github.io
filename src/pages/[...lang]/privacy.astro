@@ -4,10 +4,13 @@
  * analytics, contact-form storage (matching the contact_messages schema),
  * direct channels, hosting, and the visitor's rights.
  */
+import { localeStaticPaths } from '@/lib/locale-paths';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import T from '@/components/ui/T.astro';
 import { translations, type TranslationKey } from '@/lib/i18n';
 import { CONTACT } from '@/lib/site';
+
+export const getStaticPaths = localeStaticPaths;
 
 const sections: { title: TranslationKey; body: TranslationKey[] }[] = [
   { title: 'privacy.analyticsTitle', body: ['privacy.analyticsText'] },

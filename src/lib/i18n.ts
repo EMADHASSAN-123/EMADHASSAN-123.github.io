@@ -76,9 +76,16 @@ export function statefulLabelAttrs(
 }
 
 /**
- * Blocking inline script for <head>: sets lang/dir before first paint.
- * Order: stored choice > browser languages (Accept-Language) > Arabic.
+ * Blocking inline script for <head>, before first paint.
+ * Localized pages (<html data-localized>) are served per language: '/...' Arabic,
+ * '/en/...' English. A stored explicit choice that differs from the page switches
+ * the language and rewrites the address to the matching URL (no reload).
+ * Crawlers have no stored choice, so they always get the language of the URL.
+ * Non-localized pages (404) use the stored choice, else the path prefix.
  */
-export const LANG_BOOTSTRAP_SCRIPT = `(function(){var l;try{l=localStorage.getItem(${JSON.stringify(
+const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
+export const LANG_BOOTSTRAP_SCRIPT = `(function(){var d=document.documentElement,B=${JSON.stringify(
+  BASE_PATH,
+)},p=location.pathname,r=B&&p.indexOf(B)===0?p.slice(B.length):p,u=r==="/en"||r.indexOf("/en/")===0,l;try{l=localStorage.getItem(${JSON.stringify(
   LOCALE_STORAGE_KEY,
-)})}catch(e){}if(l!=="ar"&&l!=="en"){l="ar";var n=navigator.languages||[navigator.language||""];for(var i=0;i<n.length;i++){var c=String(n[i]).toLowerCase().slice(0,2);if(c==="ar"||c==="en"){l=c;break}}}var d=document.documentElement;d.setAttribute("lang",l);d.setAttribute("dir",l==="ar"?"rtl":"ltr");})();`;
+)})}catch(e){}if(!d.hasAttribute("data-localized")){if(l!=="ar"&&l!=="en")l=u?"en":"ar"}else{if((l!=="ar"&&l!=="en")||l===d.getAttribute("lang"))return;try{history.replaceState(history.state,"",B+(l==="en"?"/en"+r:r.slice(3)||"/")+location.search+location.hash)}catch(e){}}d.setAttribute("lang",l);d.setAttribute("dir",l==="ar"?"rtl":"ltr")})();`;

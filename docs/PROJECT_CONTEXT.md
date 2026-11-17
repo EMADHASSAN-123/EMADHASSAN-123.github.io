@@ -628,7 +628,7 @@
 | 1 | Framework أمامي | Astro 4.x (Islands Architecture + Zero-JS by default) |
 | 2 | لغة التطوير | TypeScript |
 | 3 | UI Libraries | لا مكتبات UI عامة (كل العناصر Vanilla) |
-| 4 | i18n | Custom lightweight + JSON + Dot notation + DOM toggle |
+| 4 | i18n | Custom lightweight + JSON + Dot notation + DOM toggle. **تعديل معتمد (17 نوفمبر 2026):** رابط لكل لغة (`/` عربي، `/en/` إنجليزي) مع `hreflang`، ويبقى التبديل بلا إعادة تحميل. التفاصيل: `PHASE3_ARCH` § 2.3 |
 | 5 | SVG التفاعلي | Pure SVG + Vanilla TypeScript (لا D3) |
 | 6 | Umami Hosting | Vercel Hobby + Postgres على Supabase |
 | 7 | ملفات الشهادات | `public/certifications/` محلياً |

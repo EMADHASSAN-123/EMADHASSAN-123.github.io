@@ -9,7 +9,7 @@ import type { CollectionEntry } from 'astro:content';
 import Icon from '@/components/ui/Icon.astro';
 import T from '@/components/ui/T.astro';
 import { t, type TranslationKey } from '@/lib/i18n';
-import { withBase } from '@/lib/site';
+import { pageHref } from '@/lib/site';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -59,7 +59,7 @@ const headingId = `project-${id}`;
         </p>
       )}
 
-      <a href={withBase(`/projects/${id}/`)} class="project-card__link">
+      <a href={pageHref(Astro.url, `/projects/${id}/`)} class="project-card__link">
         <T k="projects.caseStudy" />
         <Icon name="arrow-up-right" size={16} />
         <span class="sr-only" lang="en">
