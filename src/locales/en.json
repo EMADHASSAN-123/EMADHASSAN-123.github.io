@@ -469,5 +469,20 @@
     "hostingText": "The site is hosted on GitHub Pages, which may log technical data for security under its own policy. Fonts are served from this site, not loaded from external services.",
     "rightsTitle": "Your rights",
     "rightsText": "You can ask to see or delete your message at any time by writing to:"
+  },
+  "console": {
+    "breadcrumb": "profile",
+    "sidebarLabel": "Site sections",
+    "fields": {
+      "location": "Location",
+      "education": "Education",
+      "languages": "Languages"
+    },
+    "languages": "Arabic (primary), English (B2)",
+    "servicesTitle": "Services: areas of work",
+    "resourcesTitle": "Resources: projects",
+    "resource": "Resource",
+    "status": "Status",
+    "profile": "Profile"
   }
 }

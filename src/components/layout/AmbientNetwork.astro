@@ -1,0 +1,92 @@
+---
+/**
+ * Site-wide ambient background: an abstract edge network (cloud regions as
+ * nodes, faint links, small packets travelling slowly between them).
+ * Owner-approved (17 Nov 2026): slow (60–120s cycles) and faint motion,
+ * SVG-native motion (scales with the drawing), paused when the tab is
+ * hidden (src/scripts/ambient.ts), and packets removed under
+ * prefers-reduced-motion (CSS, so it also holds without JavaScript). Decorative: hidden from assistive technology.
+ * Positions are generated deterministically at build time.
+ */
+const W = 1440;
+const H = 900;
+
+// Small seeded PRNG so every build produces the same layout.
+let seed = 20261117;
+const rand = () => {
+  seed = (seed * 1664525 + 1013904223) % 4294967296;
+  return seed / 4294967296;
+};
+
+// Nodes on a jittered grid (even coverage, no clumps).
+const cols = 7;
+const rows = 5;
+const nodes: { x: number; y: number }[] = [];
+for (let r = 0; r < rows; r += 1) {
+  for (let c = 0; c < cols; c += 1) {
+    if (rand() < 0.18) continue; // leave some gaps
+    nodes.push({
+      x: Math.round((c + 0.5) * (W / cols) + (rand() - 0.5) * (W / cols) * 0.7),
+      y: Math.round((r + 0.5) * (H / rows) + (rand() - 0.5) * (H / rows) * 0.7),
+    });
+  }
+}
+
+// Each node links to its two nearest neighbours.
+const dist = (a: { x: number; y: number }, b: { x: number; y: number }) =>
+  Math.hypot(a.x - b.x, a.y - b.y);
+const edges = new Set<string>();
+nodes.forEach((a, i) => {
+  nodes
+    .map((b, j) => ({ j, d: dist(a, b) }))
+    .filter(({ j }) => j !== i)
+    .sort((p, q) => p.d - q.d)
+    .slice(0, 2)
+    .forEach(({ j }) => edges.add([Math.min(i, j), Math.max(i, j)].join('-')));
+});
+const links = [...edges].map((key) => key.split('-').map(Number) as [number, number]);
+
+// Packets travel along multi-hop routes (random walks over the links).
+const neighbours = (i: number) => links.flatMap(([a, b]) => (a === i ? [b] : b === i ? [a] : []));
+const pairs = ['orange', 'green', 'blue', 'brown'] as const;
+const packets = Array.from({ length: 8 }, (_, p) => {
+  let current = Math.floor(rand() * nodes.length);
+  const route = [current];
+  for (let hop = 0; hop < 5; hop += 1) {
+    const options = neighbours(current).filter((n) => !route.includes(n));
+    if (options.length === 0) break;
+    current = options[Math.floor(rand() * options.length)]!;
+    route.push(current);
+  }
+  const path = route.map((n, k) => `${k === 0 ? 'M' : 'L'}${nodes[n]!.x} ${nodes[n]!.y}`).join(' ');
+  const duration = 60 + Math.round(rand() * 60);
+  return { path, duration, delay: -Math.round(rand() * duration), pair: pairs[p % pairs.length] };
+});
+---
+
+<div class="ambient" aria-hidden="true">
+  <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice">
+    <g class="ambient__links">
+      {links.map(([a, b]) => (
+        <line x1={nodes[a]!.x} y1={nodes[a]!.y} x2={nodes[b]!.x} y2={nodes[b]!.y} />
+      ))}
+    </g>
+    <g class="ambient__nodes">
+      {nodes.map(({ x, y }) => (
+        <rect x={x - 3} y={y - 3} width="6" height="6" rx="1" />
+      ))}
+    </g>
+    <g class="ambient__packets">
+      {packets.map(({ path, duration, delay, pair }) => (
+        <circle r="2.5" data-pair={pair}>
+          <animateMotion
+            path={path}
+            dur={`${duration}s`}
+            begin={`${delay}s`}
+            repeatCount="indefinite"
+          />
+        </circle>
+      ))}
+    </g>
+  </svg>
+</div>

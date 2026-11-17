@@ -1,11 +1,10 @@
 ---
 /**
- * Hero station — "the hub". Visual concept: structured cabling.
- * The owner is the hub (faceplate with portrait, name and title). Three
- * twisted-pair cables run from its ports to the three areas of work, each in
- * its T568B pair color, and each area lists the projects that prove it.
- * Cables are drawn by src/scripts/hero-cables.ts; without JS the layout and
- * content stay complete, only the cable lines are absent.
+ * Hero station — a cloud-console style profile (owner-approved, 17 Nov 2026).
+ * An original console layout (not a copy of any provider's UI) filled only
+ * with documented facts: identity, education, languages, the three areas of
+ * work as "services", and the four projects as "resources" with their real
+ * statuses. No invented metrics. The sidebar is real in-page navigation.
  */
 import { Picture } from 'astro:assets';
 import { getCollection, type CollectionEntry } from 'astro:content';
@@ -14,141 +13,204 @@ import profile from '@/assets/images/profile.jpg';
 import { i18nAttrs, t, type TranslationKey } from '@/lib/i18n';
 import { withBase } from '@/lib/site';
 
-type DomainId = 'software' | 'data' | 'databases';
+type ProjectData = CollectionEntry<'projects'>['data'];
 
-// Owner-approved areas (redesign, 17 Nov 2026) with documented evidence.
-const domains: {
-  id: DomainId;
-  pair: 'blue' | 'orange' | 'green';
-  projects: CollectionEntry<'projects'>['id'][];
-}[] = [
-  {
-    id: 'software',
-    pair: 'blue',
-    projects: ['alshifa-quran-website', 'content-management-blog', 'fuel-quality-detection'],
-  },
-  { id: 'data', pair: 'orange', projects: ['fuel-quality-detection', 'content-management-blog'] },
-  {
-    id: 'databases',
-    pair: 'green',
-    projects: [
-      'content-management-blog',
-      'alshifa-quran-website',
-      'fuel-quality-detection',
-      'alshifa-management-system',
-    ],
-  },
+const sections: { id: string; key: TranslationKey }[] = [
+  { id: 'hero', key: 'console.profile' },
+  { id: 'methodology', key: 'sections.methodology' },
+  { id: 'expertise', key: 'sections.expertise' },
+  { id: 'projects', key: 'sections.projects' },
+  { id: 'certifications', key: 'sections.certifications' },
+  { id: 'contact', key: 'sections.contact' },
 ];
 
-const projects = new Map((await getCollection('projects')).map((p) => [p.id, p.data]));
+const services = [
+  { id: 'software', pair: 'blue' },
+  { id: 'data', pair: 'orange' },
+  { id: 'databases', pair: 'green' },
+] as const;
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const led: Record<ProjectData['status'], string> = {
+  implemented: 'up',
+  live: 'up',
+  prototype: 'staging',
+  'in-analysis': 'provisioning',
+};
 ---
 
-<section id="hero" class="hero" data-hero>
-  <svg class="hero__cables" aria-hidden="true" data-cables></svg>
-
-  <div class="container hero__grid">
-    <div class="hub" data-hub>
-      <div class="hub__face">
-        <div class="hub__photo">
-          <Picture
-            src={profile}
-            widths={[240, 360, 480]}
-            sizes="(min-width: 1024px) 11rem, 8.5rem"
-            formats={['webp']}
-            fallbackFormat="jpg"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            class="block aspect-[3/4] h-full w-full object-cover"
-            {...i18nAttrs({ alt: 'hero.photoAlt' })}
-            alt={t('ar', 'hero.photoAlt')}
-          />
-        </div>
-        <div class="hub__id">
-          <h1 class="hub__name">
-            <T k="site.name" />
-          </h1>
-          <p class="hub__name-alt" aria-hidden="true">
-            <span data-lang="ar" lang="en">
-              {t('en', 'site.name')}
-            </span>
-            <span data-lang="en" lang="ar">
-              {t('ar', 'site.name')}
-            </span>
-          </p>
-          <p class="hub__role">
-            <T k="hero.role" />
-          </p>
-        </div>
-        <ul class="hub__ports" aria-hidden="true">
-          {domains.map(({ id, pair }) => (
-            <li class="port" data-pair={pair} data-port={id}>
-              <span class="port__led" />
-            </li>
-          ))}
-        </ul>
+<section id="hero" class="hero-console" data-console>
+  <div class="container py-12 lg:py-16">
+    <div class="console">
+      <div class="console__bar">
+        <span class="console__dots" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+        <p class="console__crumb" dir="ltr" lang="en">
+          <span>emadhassan-123</span>
+          <span aria-hidden="true">/</span>
+          <span data-lang="en">profile</span>
+          <span data-lang="ar">الملف الشخصي</span>
+        </p>
       </div>
 
-      <p class="hero__statement">
-        <T k="hero.statement" />
-      </p>
-      <div class="hero__actions">
-        <a href={withBase('/#projects')} class="btn-primary">
-          <T k="hero.ctaProjects" />
-        </a>
-        <a href={withBase('/#contact')} class="btn-outline btn-lg">
-          <T k="hero.ctaContact" />
-        </a>
-      </div>
-    </div>
+      <div class="console__body">
+        <nav class="console__side" {...i18nAttrs({ 'aria-label': 'console.sidebarLabel' })}>
+          <ul>
+            {sections.map(({ id, key }, index) => (
+              <li>
+                <a
+                  href={withBase(`/#${id}`)}
+                  class:list={['console__link', { 'is-current': index === 0 }]}
+                >
+                  <T k={key} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-    <div class="domains">
-      <h2 class="domains__label">
-        <T k="hero.domainsLabel" />
-      </h2>
-      <ul class="domains__list">
-        {domains.map(({ id, pair, projects: ids }) => (
-          <li class="domain" data-pair={pair} data-plug={id} tabindex="0">
-            <div class="domain__head">
-              <span class="domain__led" aria-hidden="true" />
-              <h3 class="domain__name">
-                <T k={`hero.domains.${id}.name` as TranslationKey} />
-              </h3>
-              <span class="domain__count" aria-hidden="true">
-                {ids.length}
-              </span>
+        <div class="console__main">
+          <header class="instance">
+            <div class="instance__photo">
+              <Picture
+                src={profile}
+                widths={[200, 300, 400]}
+                sizes="(min-width: 1024px) 9rem, 6.5rem"
+                formats={['webp']}
+                fallbackFormat="jpg"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                class="block aspect-[3/4] h-full w-full object-cover"
+                {...i18nAttrs({ alt: 'hero.photoAlt' })}
+                alt={t('ar', 'hero.photoAlt')}
+              />
             </div>
-            <p class="domain__text">
-              <T k={`hero.domains.${id}.text` as TranslationKey} />
-            </p>
-            <ul class="domain__projects">
-              {ids.map((pid) => {
-                const project = projects.get(pid);
-                if (!project) throw new Error(`Unknown project "${pid}"`);
-                return (
-                  <li>
-                    <a
-                      href={withBase(`/projects/${pid}/`)}
-                      class:list={[
-                        'domain__project',
-                        { 'domain__project--design': project.status === 'in-analysis' },
-                      ]}
-                      lang="en"
-                      dir="ltr"
-                    >
-                      {project.shortName}
-                    </a>
+            <div class="min-w-0">
+              <h1 class="instance__name">
+                <T k="site.name" />
+              </h1>
+              <p class="instance__alt" aria-hidden="true">
+                <span data-lang="ar" lang="en">
+                  {t('en', 'site.name')}
+                </span>
+                <span data-lang="en" lang="ar">
+                  {t('ar', 'site.name')}
+                </span>
+              </p>
+              <p class="instance__role">
+                <T k="hero.role" />
+              </p>
+            </div>
+          </header>
+
+          <dl class="instance__facts">
+            <div>
+              <dt>
+                <T k="console.fields.location" />
+              </dt>
+              <dd>
+                <T k="hero.card.location" />
+              </dd>
+            </div>
+            <div>
+              <dt>
+                <T k="console.fields.education" />
+              </dt>
+              <dd>
+                <T k="hero.card.degree" />{' '}
+                <span class="text-text-muted">
+                  <T k="hero.card.university" />
+                </span>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                <T k="console.fields.languages" />
+              </dt>
+              <dd>
+                <T k="console.languages" />
+              </dd>
+            </div>
+          </dl>
+
+          <p class="console__statement">
+            <T k="hero.statement" />
+          </p>
+
+          <div class="console__panels">
+            <section class="panel" aria-labelledby="console-services">
+              <h2 id="console-services" class="panel__title">
+                <T k="console.servicesTitle" />
+              </h2>
+              <ul class="services">
+                {services.map(({ id, pair }) => (
+                  <li class="service" data-pair={pair}>
+                    <p class="service__name">
+                      <T k={`hero.domains.${id}.name` as TranslationKey} />
+                    </p>
+                    <p class="service__text">
+                      <T k={`hero.domains.${id}.text` as TranslationKey} />
+                    </p>
                   </li>
-                );
-              })}
-            </ul>
-          </li>
-        ))}
-      </ul>
+                ))}
+              </ul>
+            </section>
+
+            <section class="panel" aria-labelledby="console-resources">
+              <h2 id="console-resources" class="panel__title">
+                <T k="console.resourcesTitle" />
+              </h2>
+              <table class="resources">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <T k="console.resource" />
+                    </th>
+                    <th scope="col">
+                      <T k="console.status" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {projects.map(({ id, data }) => (
+                    <tr>
+                      <td>
+                        <a
+                          href={withBase(`/projects/${id}/`)}
+                          class="resources__link"
+                          lang="en"
+                          dir="ltr"
+                        >
+                          {data.shortName}
+                        </a>
+                      </td>
+                      <td>
+                        <span class="resources__status" data-led={led[data.status]}>
+                          <span class="resources__led" aria-hidden="true" />
+                          <T k={`projects.status.${data.status}` as TranslationKey} />
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+          </div>
+
+          <div class="console__actions">
+            <a href={withBase('/#projects')} class="btn-primary">
+              <T k="hero.ctaProjects" />
+            </a>
+            <a href={withBase('/#contact')} class="btn-outline btn-lg">
+              <T k="hero.ctaContact" />
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-
-<script>
-  import '@/scripts/hero-cables';
-</script>
