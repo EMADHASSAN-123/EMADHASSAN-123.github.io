@@ -93,3 +93,9 @@
   `google-site-verification` = `dcRpNstQE9p6g-vmV1No0bOpRwHKr956B9CY2cKXaaw`.
 - الوسم رمز عام لإثبات الملكية وليس سراً، ويجب أن يبقى في الموقع حتى يستمر التحقق.
 - **بعد النشر:** يضغط صاحب المشروع "Verify" في Search Console، ثم يرسل `sitemap-index.xml` (Sitemaps → Add a new sitemap).
+- **النتيجة (18 نوفمبر 2026):**
+  - خاصية `https://emadhassan-123.github.io/` موثّقة بطريقة HTML tag.
+  - أُرسلت `sitemap-index.xml` بنجاح.
+  - TEST LIVE URL للرئيسية: "URL is available to Google" و"Page can be indexed".
+  - طُلبت الفهرسة.
+  - خريطتا `/digital_space/` القديمتان ("Couldn't fetch") من موقع سابق، ويُستحسن حذفهما من Search Console.
