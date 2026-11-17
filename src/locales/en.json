@@ -1,10 +1,10 @@
 {
   "site": {
-    "name": "Emad Ali Mohammed Hassan",
+    "name": "Emad Hassan",
     "shortName": "Emad Hassan"
   },
   "meta": {
-    "homeTitle": "Emad Ali Mohammed Hassan — IT Engineer",
+    "homeTitle": "Emad Hassan — IT Engineer",
     "description": "IT engineer with an analytical, engineering mindset, focused on understanding systems, designing them, and building connected solutions."
   },
   "a11y": {
@@ -41,7 +41,7 @@
     "inProgress": "in progress",
     "ctaProjects": "Explore the projects",
     "ctaContact": "Get in touch",
-    "photoAlt": "Portrait of Emad Ali Mohammed Hassan",
+    "photoAlt": "Portrait of Emad Hassan",
     "card": {
       "locationLabel": "Based in",
       "location": "Taiz, Yemen",
@@ -64,7 +64,7 @@
         "text": "Designing tables and access policies, on-device storage, and data modeling for a management system."
       }
     },
-    "personal": "My work should keep serving the people it was made for, with or without me, and outlast me."
+    "personal": "Don't build what depends on you; build what others can keep building on."
   },
   "methodology": {
     "intro": "How I move from a problem to a solution, step by step.",
@@ -406,7 +406,7 @@
   },
   "caseStudies": {
     "fuel-quality-detection": {
-      "pageTitle": "Fuel Quality Detection System — Emad Ali Mohammed Hassan",
+      "pageTitle": "Fuel Quality Detection System — Emad Hassan",
       "nameAr": "",
       "problem1": "The goal: detect fuel quality and adulteration with a portable device, by reading the sample's spectral signature and classifying it with a machine learning model.",
       "problem2": "Its engineering value lies in integrating several layers: hardware, embedded systems, software, data, machine learning, and edge AI.",
@@ -436,7 +436,7 @@
       }
     },
     "alshifa-quran-website": {
-      "pageTitle": "Al Shifa Center Website — Emad Ali Mohammed Hassan",
+      "pageTitle": "Al Shifa Center Website — Emad Hassan",
       "nameAr": "",
       "problem1": "A responsive website for a real charity, built to extend its online reach and present its programs and services.",
       "problem2": "I owned the project end to end: from working with the organization to understand its needs, to launching the site for real use.",
@@ -463,7 +463,7 @@
       }
     },
     "content-management-blog": {
-      "pageTitle": "Content Management System — Emad Ali Mohammed Hassan",
+      "pageTitle": "Content Management System — Emad Hassan",
       "nameAr": "",
       "problem1": "A personal project to develop my skills in building web applications, systems and databases.",
       "problem2": "A prototype with core features, not a finished commercial product.",
@@ -489,7 +489,7 @@
       }
     },
     "alshifa-management-system": {
-      "pageTitle": "Al Shifa Management System — Emad Ali Mohammed Hassan",
+      "pageTitle": "Al Shifa Management System — Emad Hassan",
       "nameAr": "",
       "problem1": "A core management system under study and design, to organize Al Shifa Center's data and operations.",
       "problem2": "The studied scope covers 12 modules, from branches, study circles and students to reports and permissions.",
@@ -517,7 +517,7 @@
     }
   },
   "notFound": {
-    "pageTitle": "Page not found — Emad Ali Mohammed Hassan",
+    "pageTitle": "Page not found — Emad Hassan",
     "description": "The requested page does not exist.",
     "heading": "This page does not exist",
     "text": "The link you opened does not lead to any part of this site. The address may have changed or been mistyped.",
@@ -527,7 +527,7 @@
     "contact": "Contact"
   },
   "privacy": {
-    "pageTitle": "Privacy policy — Emad Ali Mohammed Hassan",
+    "pageTitle": "Privacy policy — Emad Hassan",
     "description": "What this site collects, how contact messages are stored, and your rights.",
     "updated": "Last updated: 17 November 2026",
     "intro": "This is a personal professional site. It collects as little data as possible, shows no ads, and uses no third-party trackers.",

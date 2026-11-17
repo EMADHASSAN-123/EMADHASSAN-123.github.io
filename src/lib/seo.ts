@@ -27,12 +27,8 @@ export function personJsonLd(site: URL, imageUrl: string): JsonLd {
     address: { '@type': 'PostalAddress', addressLocality: 'Taiz', addressCountry: 'YE' },
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Taiz University' },
     knowsLanguage: ['ar', 'en'],
-    knowsAbout: [
-      'Software Engineering',
-      'System Architecture',
-      'Applied AI Engineering',
-      'Digital Solutions Engineering',
-    ],
+    // The three areas shown in the hero, named by their SFIA 9 skills.
+    knowsAbout: ['Software development', 'Data science', 'Machine learning', 'Database design'],
     sameAs: [CONTACT.linkedinUrl, CONTACT.facebookUrl, GITHUB_PROFILE_URL],
   };
 }
