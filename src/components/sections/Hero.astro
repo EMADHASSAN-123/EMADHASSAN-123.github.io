@@ -95,19 +95,15 @@ const led: Record<ProjectData['status'], string> = {
               <h1 class="instance__name">
                 <T k="site.name" />
               </h1>
-              <p class="instance__alt" aria-hidden="true">
-                <span data-lang="ar" lang="en">
-                  {t('en', 'site.name')}
-                </span>
-                <span data-lang="en" lang="ar">
-                  {t('ar', 'site.name')}
-                </span>
-              </p>
               <p class="instance__role">
                 <T k="hero.role" />
               </p>
             </div>
           </header>
+
+          <p class="instance__personal">
+            <T k="hero.personal" />
+          </p>
 
           <dl class="instance__facts">
             <div>
@@ -141,10 +137,6 @@ const led: Record<ProjectData['status'], string> = {
               </dd>
             </div>
           </dl>
-
-          <p class="console__statement">
-            <T k="hero.statement" />
-          </p>
 
           <div class="console__panels">
             <section class="panel" aria-labelledby="console-services">

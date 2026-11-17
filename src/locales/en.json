@@ -37,7 +37,6 @@
   },
   "hero": {
     "role": "IT Engineer",
-    "statement": "I design systems and build solutions that bring together software, artificial intelligence, and infrastructure.",
     "coreAreas": "Core areas",
     "inProgress": "in progress",
     "ctaProjects": "Explore the projects",
@@ -64,7 +63,8 @@
         "name": "Databases",
         "text": "Designing tables and access policies, on-device storage, and data modeling for a management system."
       }
-    }
+    },
+    "personal": "I start by understanding the problem before choosing a solution, then design and build a connected system step by step."
   },
   "methodology": {
     "intro": "How I move from a problem to a solution, step by step.",
