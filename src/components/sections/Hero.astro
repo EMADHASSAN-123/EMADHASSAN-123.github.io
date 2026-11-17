@@ -1,66 +1,98 @@
 ---
 /**
- * Hero station (PHASE2_IA section 5.2): identity, core areas, dual CTA and the
- * portrait in a "lab ID card" frame over a light architectural background.
+ * Hero station — "the hub". Visual concept: structured cabling.
+ * The owner is the hub (faceplate with portrait, name and title). Three
+ * twisted-pair cables run from its ports to the three areas of work, each in
+ * its T568B pair color, and each area lists the projects that prove it.
+ * Cables are drawn by src/scripts/hero-cables.ts; without JS the layout and
+ * content stay complete, only the cable lines are absent.
  */
 import { Picture } from 'astro:assets';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import T from '@/components/ui/T.astro';
 import profile from '@/assets/images/profile.jpg';
-import { i18nAttrs, t } from '@/lib/i18n';
+import { i18nAttrs, t, type TranslationKey } from '@/lib/i18n';
 import { withBase } from '@/lib/site';
 
-// PROJECT_CONTEXT section 2.1. Cloud & DevOps is an area still being developed
-// (PHASE2_IA section 2.2), so it is labelled as such.
-const coreAreas = [
-  { name: 'Software Engineering' },
-  { name: 'System Architecture' },
-  { name: 'Applied AI Engineering' },
-  { name: 'Digital Solutions Engineering' },
-  { name: 'Cloud & DevOps', inProgress: true },
+type DomainId = 'software' | 'data' | 'databases';
+
+// Owner-approved areas (redesign, 17 Nov 2026) with documented evidence.
+const domains: {
+  id: DomainId;
+  pair: 'blue' | 'orange' | 'green';
+  projects: CollectionEntry<'projects'>['id'][];
+}[] = [
+  {
+    id: 'software',
+    pair: 'blue',
+    projects: ['alshifa-quran-website', 'content-management-blog', 'fuel-quality-detection'],
+  },
+  { id: 'data', pair: 'orange', projects: ['fuel-quality-detection', 'content-management-blog'] },
+  {
+    id: 'databases',
+    pair: 'green',
+    projects: [
+      'content-management-blog',
+      'alshifa-quran-website',
+      'fuel-quality-detection',
+      'alshifa-management-system',
+    ],
+  },
 ];
+
+const projects = new Map((await getCollection('projects')).map((p) => [p.id, p.data]));
 ---
 
-<section id="hero" class="hero relative isolate overflow-hidden">
-  <div class="hero-grid" aria-hidden="true"></div>
+<section id="hero" class="hero" data-hero>
+  <svg class="hero__cables" aria-hidden="true" data-cables></svg>
 
-  <div class="container grid min-h-[calc(100svh-var(--header-height))] items-center gap-14 py-16 lg:grid-cols-12 lg:gap-8">
-    <div class="lg:col-span-7">
-      <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">
-        <T k="site.name" />
-      </h1>
-      <p class="mt-2 text-lg text-text-muted" aria-hidden="true">
-        <span data-lang="ar" lang="en">
-          {t('en', 'site.name')}
-        </span>
-        <span data-lang="en" lang="ar">
-          {t('ar', 'site.name')}
-        </span>
-      </p>
+  <div class="container hero__grid">
+    <div class="hub" data-hub>
+      <div class="hub__face">
+        <div class="hub__photo">
+          <Picture
+            src={profile}
+            widths={[240, 360, 480]}
+            sizes="(min-width: 1024px) 11rem, 8.5rem"
+            formats={['webp']}
+            fallbackFormat="jpg"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="block aspect-[3/4] h-full w-full object-cover"
+            {...i18nAttrs({ alt: 'hero.photoAlt' })}
+            alt={t('ar', 'hero.photoAlt')}
+          />
+        </div>
+        <div class="hub__id">
+          <h1 class="hub__name">
+            <T k="site.name" />
+          </h1>
+          <p class="hub__name-alt" aria-hidden="true">
+            <span data-lang="ar" lang="en">
+              {t('en', 'site.name')}
+            </span>
+            <span data-lang="en" lang="ar">
+              {t('ar', 'site.name')}
+            </span>
+          </p>
+          <p class="hub__role">
+            <T k="hero.role" />
+          </p>
+        </div>
+        <ul class="hub__ports" aria-hidden="true">
+          {domains.map(({ id, pair }) => (
+            <li class="port" data-pair={pair} data-port={id}>
+              <span class="port__led" />
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      <p class="mt-6 text-lg font-medium text-accent-primary sm:text-xl" lang="en" dir="ltr">
-        <span class="hero-role">{t('en', 'hero.role')}</span>
-      </p>
-
-      <p class="mt-4 max-w-prose text-lg text-text-secondary">
+      <p class="hero__statement">
         <T k="hero.statement" />
       </p>
-
-      <ul class="core-areas mt-8" {...i18nAttrs({ 'aria-label': 'hero.coreAreas' })}>
-        {coreAreas.map(({ name, inProgress }) => (
-          <li class:list={['core-area', { 'core-area--progress': inProgress }]}>
-            <span lang="en" dir="ltr">
-              {name}
-            </span>
-            {inProgress && (
-              <span class="text-text-muted">
-                (<T k="hero.inProgress" />)
-              </span>
-            )}
-          </li>
-        ))}
-      </ul>
-
-      <div class="mt-10 flex flex-wrap gap-3">
+      <div class="hero__actions">
         <a href={withBase('/#projects')} class="btn-primary">
           <T k="hero.ctaProjects" />
         </a>
@@ -70,57 +102,53 @@ const coreAreas = [
       </div>
     </div>
 
-    <figure class="lab-card mx-auto w-full max-w-[17rem] sm:max-w-[19rem] lg:col-span-4 lg:col-start-9 lg:max-w-none">
-      <div class="lab-card__links" aria-hidden="true">
-        <span></span>
-        <span></span>
-      </div>
-      <span class="lab-card__corner lab-card__corner--ts" aria-hidden="true"></span>
-      <span class="lab-card__corner lab-card__corner--te" aria-hidden="true"></span>
-      <span class="lab-card__corner lab-card__corner--bs" aria-hidden="true"></span>
-      <span class="lab-card__corner lab-card__corner--be" aria-hidden="true"></span>
-
-      <div class="lab-card__body">
-        <div class="lab-card__photo">
-          <Picture
-            src={profile}
-            widths={[320, 480, 640, 800]}
-            sizes="(min-width: 1024px) 24rem, (min-width: 640px) 19rem, 17rem"
-            formats={['webp']}
-            fallbackFormat="jpg"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            class="block aspect-[2/3] h-auto w-full object-cover"
-            {...i18nAttrs({ alt: 'hero.photoAlt' })}
-            alt={t('ar', 'hero.photoAlt')}
-          />
-        </div>
-
-        <figcaption>
-          <dl class="lab-card__facts">
-            <div>
-              <dt>
-                <T k="hero.card.locationLabel" />
-              </dt>
-              <dd>
-                <T k="hero.card.location" />
-              </dd>
+    <div class="domains">
+      <h2 class="domains__label">
+        <T k="hero.domainsLabel" />
+      </h2>
+      <ul class="domains__list">
+        {domains.map(({ id, pair, projects: ids }) => (
+          <li class="domain" data-pair={pair} data-plug={id} tabindex="0">
+            <div class="domain__head">
+              <span class="domain__led" aria-hidden="true" />
+              <h3 class="domain__name">
+                <T k={`hero.domains.${id}.name` as TranslationKey} />
+              </h3>
+              <span class="domain__count" aria-hidden="true">
+                {ids.length}
+              </span>
             </div>
-            <div>
-              <dt>
-                <T k="hero.card.degreeLabel" />
-              </dt>
-              <dd>
-                <T k="hero.card.degree" />
-                <span class="block text-text-secondary">
-                  <T k="hero.card.university" />
-                </span>
-              </dd>
-            </div>
-          </dl>
-        </figcaption>
-      </div>
-    </figure>
+            <p class="domain__text">
+              <T k={`hero.domains.${id}.text` as TranslationKey} />
+            </p>
+            <ul class="domain__projects">
+              {ids.map((pid) => {
+                const project = projects.get(pid);
+                if (!project) throw new Error(`Unknown project "${pid}"`);
+                return (
+                  <li>
+                    <a
+                      href={withBase(`/projects/${pid}/`)}
+                      class:list={[
+                        'domain__project',
+                        { 'domain__project--design': project.status === 'in-analysis' },
+                      ]}
+                      lang="en"
+                      dir="ltr"
+                    >
+                      {project.shortName}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
 </section>
+
+<script>
+  import '@/scripts/hero-cables';
+</script>

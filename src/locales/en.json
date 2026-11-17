@@ -4,7 +4,7 @@
     "shortName": "Emad Hassan"
   },
   "meta": {
-    "homeTitle": "Emad Ali Mohammed Hassan — Software & Applied AI Engineer",
+    "homeTitle": "Emad Ali Mohammed Hassan — IT Engineer",
     "description": "IT engineer with an analytical, engineering mindset, focused on understanding systems, designing them, and building connected solutions."
   },
   "a11y": {
@@ -36,7 +36,7 @@
     }
   },
   "hero": {
-    "role": "Software & Applied AI Engineer",
+    "role": "IT Engineer",
     "statement": "I design systems and build solutions that bring together software, artificial intelligence, and infrastructure.",
     "coreAreas": "Core areas",
     "inProgress": "in progress",
@@ -49,6 +49,21 @@
       "degreeLabel": "Degree",
       "degree": "Bachelor in IT Engineering",
       "university": "Taiz University, 2024/2025"
+    },
+    "domainsLabel": "My areas of work, and the projects that prove them",
+    "domains": {
+      "software": {
+        "name": "Software",
+        "text": "Web interfaces, a mobile app, and a content dashboard with sign-in and real-time notifications."
+      },
+      "data": {
+        "name": "Data & machine learning",
+        "text": "Preparing real spectral data, training and evaluating classifiers, and running them on the phone."
+      },
+      "databases": {
+        "name": "Databases",
+        "text": "Designing tables and access policies, on-device storage, and data modeling for a management system."
+      }
     }
   },
   "methodology": {
@@ -90,7 +105,7 @@
     }
   },
   "expertise": {
-    "intro": "Grouped by evidence: what I have applied, what I have studied, and what I am learning now.",
+    "intro": "Each skill with the project where it was applied, and what I actually did with it.",
     "evidence": "Evidence",
     "inAnalysis": "in analysis and design",
     "tiers": {
@@ -126,7 +141,47 @@
       "aiops": "AIOps",
       "architecture": "Advanced software architecture",
       "cloud": "Cloud & DevOps"
-    }
+    },
+    "groupsApplied": {
+      "software": "Software",
+      "data": "Data & machine learning",
+      "databases": "Databases",
+      "embedded": "Embedded systems & IoT",
+      "design": "Systems analysis & design"
+    },
+    "skills": {
+      "frontend": "Front-end development",
+      "mobile": "Mobile apps",
+      "auth": "Authentication & real time",
+      "dataprep": "Data preparation & analysis",
+      "models": "Model development & evaluation",
+      "viz": "Data visualization",
+      "supabase": "Cloud database",
+      "sqlite": "On-device storage",
+      "modeling": "Database design & modeling",
+      "iot": "Sensors, microcontrollers & links",
+      "analysis": "Requirements analysis & system design"
+    },
+    "evidenceItems": {
+      "web_shifa": "Designed and built the site's interfaces, then launched it for real use.",
+      "web_cms": "Designed and built a content management dashboard and integrated the TinyMCE editor.",
+      "mobile_fuel": "Built a mobile app to interact with the fuel quality device.",
+      "auth_cms": "Implemented GitHub, Google and email sign-in, plus real-time comments and notifications.",
+      "data_fuel": "Collected, prepared and analyzed spectral data, applying preprocessing and feature engineering.",
+      "model_fuel": "Developed and evaluated classifiers for fuel samples; the model runs on the phone.",
+      "viz_cms": "Built a statistics system that shows blog activity with charts.",
+      "db_cms": "Designed the database tables and access policies, and managed users, posts and permissions.",
+      "db_shifa": "Used Supabase as the site's database and backend services.",
+      "db_fuel": "Stored the data on the phone with SQLite.",
+      "db_mis": "Designing the database and data model of a 12-module management system.",
+      "iot_fuel": "Integrated the AS7265X sensor (18 spectral channels) with an ESP32 over I²C and sent readings to the phone over BLE.",
+      "design_fuel": "Analyzed the problem, defined the requirements and designed the overall architecture.",
+      "design_cms": "Analyzed and documented the system requirements.",
+      "design_shifa": "Worked with the organization to understand its needs, analyzed requirements and defined the content.",
+      "design_mis": "Analyzing the system's requirements and functional scope."
+    },
+    "toolsLabel": "Everyday tools",
+    "otherTitle": "Beyond applied experience"
   },
   "projects": {
     "intro": "Four engineering experiments, ordered by professional value, each with a case study.",

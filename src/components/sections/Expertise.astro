@@ -1,138 +1,146 @@
 ---
 /**
- * Expertise station (PHASE2_IA section 5.4). Skills from PROJECT_CONTEXT
- * section 4, grouped by evidence into three visually distinct tiers:
- * applied (with the projects that prove each group), academic, learning.
- * No percentages, progress bars or ratings.
+ * Expertise station — evidence board (owner-approved redesign, 17 Nov 2026).
+ * Each applied skill shows where it was applied and what was actually done,
+ * using the documented contributions (PROJECT_CONTEXT sections 4.1 and 5).
+ * Academic knowledge (4.2) and learning (4.3) stay visibly separate, in a
+ * compact strip, as required by CLAUDE.md section 2.
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
 import T from '@/components/ui/T.astro';
-import { i18nAttrs, type TranslationKey } from '@/lib/i18n';
+import type { TranslationKey } from '@/lib/i18n';
 import { withBase } from '@/lib/site';
 
 type ProjectId = CollectionEntry<'projects'>['id'];
-
-interface SkillGroup {
-  key: TranslationKey;
-  items: string[];
-  evidence?: ProjectId[];
+type Pair = 'blue' | 'orange' | 'green' | 'brown' | 'white';
+interface Evidence {
+  project: ProjectId;
+  item: string;
+}
+interface Skill {
+  id: string;
+  stack: string[];
+  evidence: Evidence[];
 }
 
-// PROJECT_CONTEXT section 4.1 — applied experience backed by documented projects.
-const applied: SkillGroup[] = [
+const groups: { id: string; pair: Pair; skills: Skill[] }[] = [
   {
-    key: 'expertise.groups.frontend',
-    items: ['HTML5', 'CSS3', 'Tailwind CSS', 'JavaScript'],
-    evidence: ['content-management-blog', 'alshifa-quran-website'],
-  },
-  {
-    key: 'expertise.groups.data',
-    items: ['Supabase (PostgreSQL)', 'SQLite'],
-    evidence: ['fuel-quality-detection', 'content-management-blog', 'alshifa-quran-website'],
-  },
-  {
-    key: 'expertise.groups.appliedAi',
-    items: [
-      'Data Preprocessing',
-      'Feature Engineering',
-      'Classification',
-      'Model Training',
-      'Model Evaluation',
-      'Scikit-learn',
-      'TensorFlow Lite',
-    ],
-    evidence: ['fuel-quality-detection'],
-  },
-  {
-    key: 'expertise.groups.embedded',
-    items: ['ESP32', 'AS7265X Multispectral Sensor', 'I²C', 'BLE', 'Edge AI', 'Arduino IDE'],
-    evidence: ['fuel-quality-detection'],
-  },
-  {
-    key: 'expertise.groups.mobile',
-    items: ['Flutter', 'Dart'],
-    evidence: ['fuel-quality-detection'],
-  },
-  {
-    key: 'expertise.groups.auth',
-    items: ['GitHub / Google / Email Authentication', 'Access Policies'],
-    evidence: ['content-management-blog'],
-  },
-  {
-    key: 'expertise.groups.design',
-    items: ['Requirements Analysis', 'System Design', 'Database Design', 'Data Modeling'],
-    evidence: ['fuel-quality-detection', 'content-management-blog', 'alshifa-management-system'],
-  },
-  { key: 'expertise.groups.versioning', items: ['Git', 'GitHub'] },
-  {
-    key: 'expertise.groups.tools',
-    items: ['Jupyter', 'Anaconda', 'Google Workspace', 'Microsoft Office'],
-  },
-];
-
-// PROJECT_CONTEXT section 4.2 — academic knowledge, pending documented evidence.
-const academic: SkillGroup[] = [
-  {
-    key: 'expertise.groups.networking',
-    items: [
-      'TCP/IP',
-      'Network Configuration',
-      'Network Troubleshooting',
-      'Network Services',
-      'IT Infrastructure',
-      'Network Implementation & Management',
+    id: 'software',
+    pair: 'blue',
+    skills: [
+      {
+        id: 'frontend',
+        stack: ['HTML5', 'CSS3', 'Tailwind CSS', 'JavaScript'],
+        evidence: [
+          { project: 'alshifa-quran-website', item: 'web_shifa' },
+          { project: 'content-management-blog', item: 'web_cms' },
+        ],
+      },
+      {
+        id: 'mobile',
+        stack: ['Flutter', 'Dart'],
+        evidence: [{ project: 'fuel-quality-detection', item: 'mobile_fuel' }],
+      },
+      {
+        id: 'auth',
+        stack: ['Supabase', 'JavaScript'],
+        evidence: [{ project: 'content-management-blog', item: 'auth_cms' }],
+      },
     ],
   },
   {
-    key: 'expertise.groups.security',
-    items: ['Information Security', 'Network Security', 'Access Control', 'Data Protection'],
-  },
-  {
-    key: 'expertise.groups.backend',
-    items: ['PHP', 'Python (Back-End)', 'Full-Stack Web Development'],
-  },
-  {
-    key: 'expertise.groups.sdlc',
-    items: ['Software Development Life Cycle', 'Software Architecture (conceptual)'],
-  },
-];
-
-// PROJECT_CONTEXT section 4.3 — areas currently being learned.
-const learning: SkillGroup[] = [
-  { key: 'expertise.groups.aiEngineering', items: ['LLMs', 'RAG', 'Generative AI'] },
-  {
-    key: 'expertise.groups.agents',
-    items: [
-      'Agent Design',
-      'Responsibilities',
-      'Tools',
-      'Context',
-      'Planning',
-      'Memory',
-      'Coordination',
+    id: 'data',
+    pair: 'orange',
+    skills: [
+      {
+        id: 'dataprep',
+        stack: ['Python', 'Jupyter'],
+        evidence: [{ project: 'fuel-quality-detection', item: 'data_fuel' }],
+      },
+      {
+        id: 'models',
+        stack: ['Scikit-learn', 'TensorFlow Lite'],
+        evidence: [{ project: 'fuel-quality-detection', item: 'model_fuel' }],
+      },
+      {
+        id: 'viz',
+        stack: ['JavaScript'],
+        evidence: [{ project: 'content-management-blog', item: 'viz_cms' }],
+      },
     ],
   },
   {
-    key: 'expertise.groups.aiops',
-    items: ['Monitoring', 'Observability', 'Anomaly Detection', 'Root Cause Analysis'],
+    id: 'databases',
+    pair: 'green',
+    skills: [
+      {
+        id: 'supabase',
+        stack: ['Supabase', 'PostgreSQL'],
+        evidence: [
+          { project: 'content-management-blog', item: 'db_cms' },
+          { project: 'alshifa-quran-website', item: 'db_shifa' },
+        ],
+      },
+      {
+        id: 'sqlite',
+        stack: ['SQLite'],
+        evidence: [{ project: 'fuel-quality-detection', item: 'db_fuel' }],
+      },
+      {
+        id: 'modeling',
+        stack: ['Database Design', 'Data Modeling'],
+        evidence: [{ project: 'alshifa-management-system', item: 'db_mis' }],
+      },
+    ],
   },
   {
-    key: 'expertise.groups.architecture',
-    items: ['High-Level Architecture', 'Component Architecture', 'Detailed Design'],
+    id: 'embedded',
+    pair: 'brown',
+    skills: [
+      {
+        id: 'iot',
+        stack: ['ESP32', 'AS7265X', 'I²C', 'BLE', 'Edge AI', 'Arduino IDE'],
+        evidence: [{ project: 'fuel-quality-detection', item: 'iot_fuel' }],
+      },
+    ],
   },
   {
-    key: 'expertise.groups.cloud',
-    items: ['Cloud Infrastructure', 'Linux', 'DevOps', 'Service Management'],
+    id: 'design',
+    pair: 'white',
+    skills: [
+      {
+        id: 'analysis',
+        stack: ['Requirements Analysis', 'System Design'],
+        evidence: [
+          { project: 'fuel-quality-detection', item: 'design_fuel' },
+          { project: 'alshifa-quran-website', item: 'design_shifa' },
+          { project: 'content-management-blog', item: 'design_cms' },
+          { project: 'alshifa-management-system', item: 'design_mis' },
+        ],
+      },
+    ],
   },
 ];
 
-const projects = new Map((await getCollection('projects')).map((entry) => [entry.id, entry.data]));
+const tools = ['Git', 'GitHub', 'Jupyter', 'Anaconda', 'Google Workspace', 'Microsoft Office'];
 
-const tiers = [
-  { id: 'applied', groups: applied },
-  { id: 'academic', groups: academic },
-  { id: 'learning', groups: learning },
-] as const;
+// PROJECT_CONTEXT 4.2 and 4.3 — names only, clearly separated from applied work.
+const academic: TranslationKey[] = [
+  'expertise.groups.networking',
+  'expertise.groups.security',
+  'expertise.groups.backend',
+  'expertise.groups.sdlc',
+];
+const learning: TranslationKey[] = [
+  'expertise.groups.aiEngineering',
+  'expertise.groups.agents',
+  'expertise.groups.aiops',
+  'expertise.groups.architecture',
+  'expertise.groups.cloud',
+];
+
+const projects = new Map((await getCollection('projects')).map((p) => [p.id, p.data]));
+const k = (path: string) => path as TranslationKey;
 ---
 
 <section id="expertise" class="border-t border-border py-24">
@@ -144,75 +152,109 @@ const tiers = [
       <T k="expertise.intro" />
     </p>
 
-    {tiers.map(({ id, groups }) => (
-      <div class="skill-tier" data-tier={id}>
-        <div class="skill-tier__head">
-          <span class="skill-node" aria-hidden="true" />
-          <div>
-            <h3 class="text-xl font-bold">
-              <T k={`expertise.tiers.${id}.title`} />
+    <div class="board">
+      {groups.map(({ id, pair, skills }) => (
+        <section class="board__group" data-pair={pair} aria-labelledby={`skills-${id}`}>
+          <div class="board__head">
+            <h3 id={`skills-${id}`} class="board__title">
+              <T k={k(`expertise.groupsApplied.${id}`)} />
             </h3>
-            <p class="mt-1 max-w-prose text-sm text-text-secondary">
-              <T k={`expertise.tiers.${id}.description`} />
-            </p>
+            <div class="twist" aria-hidden="true" />
           </div>
-        </div>
 
-        <dl class="skill-rows">
-          {groups.map(({ key, items, evidence }) => (
-            <div class="skill-row">
-              <dt class="skill-row__name">
-                <T k={key} />
-              </dt>
-              <dd class="skill-row__items">
-                <ul class="tech-list">
-                  {items.map((item) => (
-                    <li lang="en" dir="ltr">
-                      {item}
-                    </li>
-                  ))}
+          <ul class="board__skills">
+            {skills.map((skill) => (
+              <li class="skill">
+                <div class="skill__label">
+                  <h4 class="skill__name">
+                    <T k={k(`expertise.skills.${skill.id}`)} />
+                  </h4>
+                  <p class="skill__stack" lang="en" dir="ltr">
+                    {skill.stack.join(' / ')}
+                  </p>
+                </div>
+                <ul class="skill__evidence">
+                  {skill.evidence.map(({ project: pid, item }) => {
+                    const project = projects.get(pid);
+                    if (!project) throw new Error(`Unknown project "${pid}"`);
+                    return (
+                      <li class="evidence">
+                        <a
+                          href={withBase(`/projects/${pid}/`)}
+                          class:list={[
+                            'evidence__project',
+                            { 'evidence__project--design': project.status === 'in-analysis' },
+                          ]}
+                          lang="en"
+                          dir="ltr"
+                        >
+                          {project.shortName}
+                        </a>
+                        <p class="evidence__text">
+                          <T k={k(`expertise.evidenceItems.${item}`)} />
+                        </p>
+                      </li>
+                    );
+                  })}
                 </ul>
-              </dd>
-              {id === 'applied' && (
-                <dd class="skill-row__evidence">
-                  {evidence && evidence.length > 0 && (
-                    <>
-                      <span class="skill-row__evidence-label">
-                        <T k="expertise.evidence" />
-                      </span>
-                      <ul class="evidence-list">
-                        {evidence.map((projectId) => {
-                          const project = projects.get(projectId);
-                          if (!project) throw new Error(`Unknown project "${projectId}"`);
-                          const inAnalysis = project.status === 'in-analysis';
-                          return (
-                            <li>
-                              <a
-                                href={withBase(`/projects/${projectId}/`)}
-                                class:list={[
-                                  'evidence-chip',
-                                  { 'evidence-chip--analysis': inAnalysis },
-                                ]}
-                                lang="en"
-                                dir="ltr"
-                                {...(inAnalysis
-                                  ? i18nAttrs({ title: 'expertise.inAnalysis' })
-                                  : {})}
-                              >
-                                {project.shortName}
-                              </a>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </>
-                  )}
-                </dd>
-              )}
-            </div>
-          ))}
-        </dl>
-      </div>
-    ))}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+
+    <p class="board__tools">
+      <span class="text-text-muted">
+        <T k="expertise.toolsLabel" />:
+      </span>
+      <span lang="en" dir="ltr">
+        {tools.join(' / ')}
+      </span>
+    </p>
+
+    <div class="beyond">
+      <h3 class="beyond__title">
+        <T k="expertise.otherTitle" />
+      </h3>
+      <dl class="beyond__rows">
+        <div class="beyond__row" data-tier="academic">
+          <dt>
+            <span class="skill-node" aria-hidden="true"></span>
+            <T k="expertise.tiers.academic.title" />
+          </dt>
+          <dd>
+            <ul class="beyond__list">
+              {academic.map((key) => (
+                <li>
+                  <T k={key} />
+                </li>
+              ))}
+            </ul>
+            <p class="beyond__note">
+              <T k="expertise.tiers.academic.description" />
+            </p>
+          </dd>
+        </div>
+        <div class="beyond__row" data-tier="learning">
+          <dt>
+            <span class="skill-node" aria-hidden="true"></span>
+            <T k="expertise.tiers.learning.title" />
+          </dt>
+          <dd>
+            <ul class="beyond__list">
+              {learning.map((key) => (
+                <li>
+                  <T k={key} />
+                </li>
+              ))}
+            </ul>
+            <p class="beyond__note">
+              <T k="expertise.tiers.learning.description" />
+            </p>
+          </dd>
+        </div>
+      </dl>
+    </div>
   </div>
 </section>

@@ -1,65 +1,79 @@
 /*
  * Design tokens — single source of truth for color, type, layout and motion.
- * Colors are stored as space-separated RGB channels so Tailwind can apply
- * opacity modifiers: rgb(var(--color-x) / <alpha-value>).
- *
- * Contrast (WCAG AA) is verified for every text token against
- * bg-primary, bg-secondary and surface in both themes.
- * See docs/PHASE4_IMPLEMENTATION_LOG.md (step 2) for the measured ratios.
+ * Visual concept: structured cabling. Colors are abstracted from the T568B
+ * Ethernet pair code (orange, green, blue, brown on a rack-dark ground with a
+ * cable-jacket off-white), and status colors from port link LEDs.
+ * Colors are RGB channels so Tailwind can apply opacity modifiers.
+ * Every text token meets WCAG AA (4.5:1) on bg, bg-secondary and surface in
+ * both themes (see docs/PHASE4_IMPLEMENTATION_LOG.md, redesign entry).
  */
 
 /* ===== Dark theme (primary / default) ===== */
 :root {
   color-scheme: dark;
 
-  --color-bg-primary: 10 22 40; /* #0A1628 */
-  --color-bg-secondary: 15 20 25; /* #0F1419 */
-  --color-surface: 21 34 53; /* #152235 */
-  --color-surface-elevated: 28 43 69; /* #1C2B45 */
-  --color-border: 36 52 79; /* #24344F — decorative dividers */
-  --color-border-strong: 100 121 160; /* #6479A0 — form controls, >= 3:1 */
+  --color-bg-primary: 21 23 26; /* #15171A rack */
+  --color-bg-secondary: 26 28 32; /* #1A1C20 */
+  --color-surface: 31 34 39; /* #1F2227 */
+  --color-surface-elevated: 39 43 49; /* #272B31 */
+  --color-border: 46 50 57; /* #2E3239 */
+  --color-border-strong: 106 112 121; /* #6A7079 — form controls, >= 3:1 */
 
-  --color-accent-primary: 56 189 248; /* #38BDF8 — Electric Blue */
-  --color-accent-secondary: 103 232 249; /* #67E8F9 — Cyan */
-  --color-on-accent: 10 22 40; /* text placed on accent backgrounds */
+  /* T568B pair colors: orange, green, blue, brown (+ white stripe = sheath) */
+  --color-pair-orange: 240 137 61; /* #F0893D */
+  --color-pair-green: 85 190 123; /* #55BE7B */
+  --color-pair-blue: 110 155 242; /* #6E9BF2 */
+  --color-pair-brown: 201 148 106; /* #C9946A */
+  --color-sheath: 236 231 220; /* #ECE7DC cable jacket */
 
-  --color-text-primary: 241 245 249; /* #F1F5F9 */
-  --color-text-secondary: 148 163 184; /* #94A3B8 */
-  --color-text-muted: 132 147 168; /* #8493A8 */
+  --color-accent-primary: var(--color-pair-orange);
+  --color-accent-secondary: var(--color-pair-blue);
+  --color-on-accent: 21 23 26;
 
-  /* Status colors — badges and form feedback only */
-  --color-success: 16 185 129; /* #10B981 */
-  --color-warning: 245 158 11; /* #F59E0B */
-  --color-error: 248 113 113; /* #F87171 */
-  --color-info: var(--color-accent-primary);
+  --color-text-primary: 236 231 220; /* #ECE7DC */
+  --color-text-secondary: 179 173 161; /* #B3ADA1 */
+  --color-text-muted: 148 142 131; /* #948E83 */
 
-  --shadow-elevated: 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  /* Port link LEDs: green = link up, amber = negotiating */
+  --color-success: 85 190 123; /* #55BE7B */
+  --color-warning: 232 178 58; /* #E8B23A */
+  --color-error: 240 122 106; /* #F07A6A */
+  --color-info: var(--color-pair-blue);
+
+  --shadow-elevated: 0 10px 30px -14px rgb(0 0 0 / 0.7);
 }
 
 /* ===== Light theme (secondary) ===== */
 :root[data-theme='light'] {
   color-scheme: light;
 
-  --color-bg-primary: 250 251 252; /* #FAFBFC */
-  --color-bg-secondary: 241 245 249; /* #F1F5F9 */
-  --color-surface: 255 255 255; /* #FFFFFF */
-  --color-surface-elevated: 255 255 255; /* #FFFFFF — elevation via shadow */
-  --color-border: 226 232 240; /* #E2E8F0 */
-  --color-border-strong: 124 140 163; /* #7C8CA3 */
+  --color-bg-primary: 242 243 241; /* #F2F3F1 */
+  --color-bg-secondary: 232 234 230; /* #E8EAE6 */
+  --color-surface: 255 255 255;
+  --color-surface-elevated: 255 255 255;
+  --color-border: 218 221 216; /* #DADDD8 */
+  --color-border-strong: 125 130 137; /* #7D8289 */
 
-  --color-accent-primary: 3 105 161; /* #0369A1 */
-  --color-accent-secondary: 14 116 144; /* #0E7490 */
+  --color-pair-orange: 169 79 22; /* #A94F16 */
+  --color-pair-green: 40 116 74; /* #28744A */
+  --color-pair-blue: 43 91 192; /* #2B5BC0 */
+  --color-pair-brown: 131 85 47; /* #83552F */
+  --color-sheath: 27 29 32;
+
+  --color-accent-primary: var(--color-pair-orange);
+  --color-accent-secondary: var(--color-pair-blue);
   --color-on-accent: 255 255 255;
 
-  --color-text-primary: 15 23 42; /* #0F172A */
-  --color-text-secondary: 71 85 105; /* #475569 */
-  --color-text-muted: 91 107 128; /* #5B6B80 */
+  --color-text-primary: 27 29 32; /* #1B1D20 */
+  --color-text-secondary: 71 76 84; /* #474C54 */
+  --color-text-muted: 91 96 104; /* #5B6068 */
 
-  --color-success: 4 120 87; /* #047857 */
-  --color-warning: 180 83 9; /* #B45309 */
-  --color-error: 185 28 28; /* #B91C1C */
+  --color-success: 40 116 74; /* #28744A */
+  --color-warning: 138 98 0; /* #8A6200 */
+  --color-error: 179 38 30; /* #B3261E */
+  --color-info: var(--color-pair-blue);
 
-  --shadow-elevated: 0 8px 24px -12px rgb(15 23 42 / 0.18);
+  --shadow-elevated: 0 10px 30px -14px rgb(27 29 32 / 0.2);
 }
 
 /* No-JS fallback: follow the system preference when no theme was resolved. */
@@ -67,26 +81,33 @@
   :root:not([data-theme]) {
     color-scheme: light;
 
-    --color-bg-primary: 250 251 252;
-    --color-bg-secondary: 241 245 249;
+    --color-bg-primary: 242 243 241; /* #F2F3F1 */
+    --color-bg-secondary: 232 234 230; /* #E8EAE6 */
     --color-surface: 255 255 255;
     --color-surface-elevated: 255 255 255;
-    --color-border: 226 232 240;
-    --color-border-strong: 124 140 163;
+    --color-border: 218 221 216; /* #DADDD8 */
+    --color-border-strong: 125 130 137; /* #7D8289 */
 
-    --color-accent-primary: 3 105 161;
-    --color-accent-secondary: 14 116 144;
+    --color-pair-orange: 169 79 22; /* #A94F16 */
+    --color-pair-green: 40 116 74; /* #28744A */
+    --color-pair-blue: 43 91 192; /* #2B5BC0 */
+    --color-pair-brown: 131 85 47; /* #83552F */
+    --color-sheath: 27 29 32;
+
+    --color-accent-primary: var(--color-pair-orange);
+    --color-accent-secondary: var(--color-pair-blue);
     --color-on-accent: 255 255 255;
 
-    --color-text-primary: 15 23 42;
-    --color-text-secondary: 71 85 105;
-    --color-text-muted: 91 107 128;
+    --color-text-primary: 27 29 32; /* #1B1D20 */
+    --color-text-secondary: 71 76 84; /* #474C54 */
+    --color-text-muted: 91 96 104; /* #5B6068 */
 
-    --color-success: 4 120 87;
-    --color-warning: 180 83 9;
-    --color-error: 185 28 28;
+    --color-success: 40 116 74; /* #28744A */
+    --color-warning: 138 98 0; /* #8A6200 */
+    --color-error: 179 38 30; /* #B3261E */
+    --color-info: var(--color-pair-blue);
 
-    --shadow-elevated: 0 8px 24px -12px rgb(15 23 42 / 0.18);
+    --shadow-elevated: 0 10px 30px -14px rgb(27 29 32 / 0.2);
   }
 }
 
