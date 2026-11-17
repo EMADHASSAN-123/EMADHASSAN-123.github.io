@@ -632,3 +632,4 @@
 - فشل التشغيل `pages build and deployment #1` لأن Jekyll قرأ ترويسات ملفات `.astro` كـ YAML front matter.
 - **الفشل منع نشر ملفات المستودع الخام** (الكود، `docs/`، `CLAUDE.md`) على العنوان العام قبل اعتماد الإطلاق.
 - **الإجراء المطلوب من صاحب المشروع:** Settings ← Pages ← Build and deployment ← Source = **GitHub Actions**. لا يُنشر شيء حتى يُضاف Workflow النشر (الخطوة 16) ويُعتمد الإطلاق.
+- **تحديث:** أعاد صاحب المشروع ربط تكامل Supabase بالمستودع `EMADHASSAN-123/EMADHASSAN-123.github.io` (17 نوفمبر 2026).
