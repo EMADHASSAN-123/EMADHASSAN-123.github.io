@@ -3,12 +3,15 @@
  * Case study — Project 2 (PROJECT_CONTEXT section 5.3): a prototype with
  * core features, explicitly not a finished commercial product.
  */
+import { localeStaticPaths } from '@/lib/locale-paths';
 import ProjectLayout from '@/layouts/ProjectLayout.astro';
 import InteractiveDiagram from '@/components/projects/InteractiveDiagram.astro';
 import TechStack from '@/components/projects/TechStack.astro';
 import T from '@/components/ui/T.astro';
 import diagramSvg from '@/assets/diagrams/content-management.svg?raw';
 import type { TranslationKey } from '@/lib/i18n';
+
+export const getStaticPaths = localeStaticPaths;
 
 const id = 'content-management-blog';
 const k = (path: string) => `caseStudies.${id}.${path}` as TranslationKey;

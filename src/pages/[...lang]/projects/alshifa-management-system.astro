@@ -4,11 +4,14 @@
  * analysis and design. Every module is drawn as proposed; the stack is
  * not decided yet.
  */
+import { localeStaticPaths } from '@/lib/locale-paths';
 import ProjectLayout from '@/layouts/ProjectLayout.astro';
 import InteractiveDiagram from '@/components/projects/InteractiveDiagram.astro';
 import T from '@/components/ui/T.astro';
 import diagramSvg from '@/assets/diagrams/alshifa-mis.svg?raw';
 import type { TranslationKey } from '@/lib/i18n';
+
+export const getStaticPaths = localeStaticPaths;
 
 const id = 'alshifa-management-system';
 const k = (path: string) => `caseStudies.${id}.${path}` as TranslationKey;

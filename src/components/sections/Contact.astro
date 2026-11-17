@@ -9,7 +9,7 @@ import Icon, { type IconName } from '@/components/ui/Icon.astro';
 import T from '@/components/ui/T.astro';
 import { CONTACT_LIMITS } from '@/lib/contact';
 import { LOCALES, t, type TranslationKey } from '@/lib/i18n';
-import { CONTACT, withBase } from '@/lib/site';
+import { CONTACT, pageHref } from '@/lib/site';
 
 type Channel = {
   key: TranslationKey;
@@ -209,7 +209,7 @@ const endpoint = import.meta.env.PUBLIC_CONTACT_FUNCTION_URL ?? '';
           <p class="form-status" role="status" aria-live="polite" data-form-status></p>
           <p class="mt-4 text-sm text-text-muted">
             <T k="contact.privacy" />
-            <a href={withBase('/privacy/')} class="nav-link">
+            <a href={pageHref(Astro.url, '/privacy/')} class="nav-link">
               <T k="contact.privacyLink" />
             </a>
           </p>

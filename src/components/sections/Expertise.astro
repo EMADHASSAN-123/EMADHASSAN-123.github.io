@@ -15,7 +15,7 @@ import Icon, { type IconName } from '@/components/ui/Icon.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import T from '@/components/ui/T.astro';
 import { t, type TranslationKey } from '@/lib/i18n';
-import { withBase } from '@/lib/site';
+import { pageHref } from '@/lib/site';
 
 type ProjectId = CollectionEntry<'projects'>['id'];
 type Pair = 'blue' | 'orange' | 'green' | 'brown' | 'white';
@@ -137,7 +137,7 @@ const technical: Group[] = [
   },
 ];
 
-const certs = withBase('/#certifications');
+const certs = pageHref(Astro.url, '/#certifications');
 const professional: Group[] = [
   {
     id: 'cognitive',
@@ -167,7 +167,9 @@ const professional: Group[] = [
     skills: [
       {
         id: 'flexibility',
-        evidence: [{ href: withBase('/#projects'), label: 'portfolio', item: 'flex_domains' }],
+        evidence: [
+          { href: pageHref(Astro.url, '/#projects'), label: 'portfolio', item: 'flex_domains' },
+        ],
       },
       { id: 'ownership', evidence: [{ project: 'alshifa-quran-website', item: 'own_shifa' }] },
     ],
@@ -276,7 +278,7 @@ const parts = [
                           return (
                             <li class="evidence">
                               <a
-                                href={withBase(`/projects/${ev.project}/`)}
+                                href={pageHref(Astro.url, `/projects/${ev.project}/`)}
                                 class:list={[
                                   'evidence__project',
                                   { 'evidence__project--design': project.status === 'in-analysis' },

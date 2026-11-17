@@ -1,6 +1,6 @@
 ---
 import T from '@/components/ui/T.astro';
-import { withBase } from '@/lib/site';
+import { pageHref } from '@/lib/site';
 
 const year = new Date().getFullYear();
 ---
@@ -10,7 +10,7 @@ const year = new Date().getFullYear();
     <p>
       © {year} <T k="site.name" />. <T k="footer.rights" />
     </p>
-    <a href={withBase('/privacy/')} class="nav-link self-start sm:self-auto">
+    <a href={pageHref(Astro.url, '/privacy/')} class="nav-link self-start sm:self-auto">
       <T k="footer.privacy" />
     </a>
   </div>

@@ -6,7 +6,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import T from '@/components/ui/T.astro';
 import { i18nAttrs, translations } from '@/lib/i18n';
-import { withBase } from '@/lib/site';
+import { pageHref } from '@/lib/site';
 ---
 
 <BaseLayout
@@ -31,17 +31,17 @@ import { withBase } from '@/lib/site';
 
     <ul class="mt-8 flex flex-wrap gap-3">
       <li>
-        <a href={withBase('/')} class="btn-primary">
+        <a href={pageHref(Astro.url, '/')} class="btn-primary">
           <T k="notFound.home" />
         </a>
       </li>
       <li>
-        <a href={withBase('/#projects')} class="btn-outline btn-lg">
+        <a href={pageHref(Astro.url, '/#projects')} class="btn-outline btn-lg">
           <T k="notFound.projects" />
         </a>
       </li>
       <li>
-        <a href={withBase('/#contact')} class="btn-outline btn-lg">
+        <a href={pageHref(Astro.url, '/#contact')} class="btn-outline btn-lg">
           <T k="notFound.contact" />
         </a>
       </li>

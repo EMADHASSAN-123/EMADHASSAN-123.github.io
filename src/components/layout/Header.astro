@@ -4,7 +4,7 @@ import ThemeToggle from '@/components/layout/ThemeToggle.astro';
 import CvButton from '@/components/ui/CvButton.astro';
 import T from '@/components/ui/T.astro';
 import { i18nAttrs, statefulLabelAttrs, type TranslationKey } from '@/lib/i18n';
-import { withBase } from '@/lib/site';
+import { pageHref } from '@/lib/site';
 
 const links: { id: string; key: TranslationKey }[] = [
   { id: 'methodology', key: 'nav.methodology' },
@@ -22,7 +22,7 @@ const menuLabel = statefulLabelAttrs({ open: 'nav.openMenu', close: 'nav.closeMe
 >
   <div class="container flex h-[var(--header-current-height)] items-center gap-8 transition-[height] duration-base ease-standard">
     <a
-      href={withBase('/')}
+      href={pageHref(Astro.url, '/')}
       class="shrink-0 text-base font-bold tracking-tight text-text-primary hover:text-accent-primary"
       {...i18nAttrs({ 'aria-label': 'nav.home' })}
     >
@@ -37,7 +37,7 @@ const menuLabel = statefulLabelAttrs({ open: 'nav.openMenu', close: 'nav.closeMe
       <ul class="container flex flex-col gap-1 py-4 md:flex-row md:gap-6 md:p-0">
         {links.map(({ id, key }) => (
           <li>
-            <a href={withBase(`/#${id}`)} class="nav-link block py-2 md:py-1">
+            <a href={pageHref(Astro.url, `/#${id}`)} class="nav-link block py-2 md:py-1">
               <T k={key} />
             </a>
           </li>

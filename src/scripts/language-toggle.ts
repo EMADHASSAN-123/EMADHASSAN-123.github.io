@@ -1,9 +1,48 @@
 /**
  * Client-side language runtime: switches locale without reloading.
- * Order on first visit (see LANG_BOOTSTRAP_SCRIPT): stored choice >
- * browser languages > Arabic.
+ * Each page also has its own URL per language ('/...' Arabic, '/en/...' English);
+ * switching rewrites the address and internal page links to match.
+ * First paint is handled by LANG_BOOTSTRAP_SCRIPT.
  */
-import { DIRECTIONS, LOCALES, LOCALE_STORAGE_KEY, isLocale, type Locale } from '@/lib/i18n-config';
+import {
+  DIRECTIONS,
+  LOCALES,
+  LOCALE_STORAGE_KEY,
+  isLocale,
+  localizePath,
+  stripBase,
+  type Locale,
+} from '@/lib/i18n-config';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+/** Base-free path of an internal page URL, or null for files and other origins. */
+function pagePath(url: URL): string | null {
+  if (url.origin !== window.location.origin) return null;
+  const path = stripBase(url.pathname, import.meta.env.BASE_URL);
+  return path.endsWith('/') || path === '/en' ? path : null;
+}
+
+/** Point the address bar and every internal page link at the locale's URLs. */
+function localizeUrls(locale: Locale): void {
+  document.querySelectorAll<HTMLAnchorElement>('a[href]').forEach((link) => {
+    if (link.getAttribute('href')?.startsWith('#')) return; // same-page anchors stay relative
+    const url = new URL(link.href);
+    const path = pagePath(url);
+    if (path === null) return;
+    const next = BASE + localizePath(path, locale);
+    if (next !== url.pathname) link.setAttribute('href', next + url.search + url.hash);
+  });
+
+  if (!document.documentElement.hasAttribute('data-localized')) return;
+  const here = new URL(window.location.href);
+  const path = pagePath(here);
+  if (path === null) return;
+  const next = BASE + localizePath(path, locale);
+  if (next !== here.pathname) {
+    window.history.replaceState(window.history.state, '', next + here.search + here.hash);
+  }
+}
 
 export function currentLocale(): Locale {
   const lang = document.documentElement.getAttribute('lang');
@@ -27,6 +66,7 @@ export function applyLocale(locale: Locale): void {
   if (titleText) document.title = titleText;
 
   document.querySelectorAll('[data-i18n-attrs]').forEach((el) => applyAttributes(el, locale));
+  localizeUrls(locale);
 }
 
 export function setLocale(locale: Locale): void {

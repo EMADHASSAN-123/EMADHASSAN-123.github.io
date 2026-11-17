@@ -4,12 +4,15 @@
  * Includes Results (the only project with documented results) and a
  * Related links section whose live-site link awaits the owner.
  */
+import { localeStaticPaths } from '@/lib/locale-paths';
 import ProjectLayout from '@/layouts/ProjectLayout.astro';
 import InteractiveDiagram from '@/components/projects/InteractiveDiagram.astro';
 import TechStack from '@/components/projects/TechStack.astro';
 import T from '@/components/ui/T.astro';
 import diagramSvg from '@/assets/diagrams/alshifa-website.svg?raw';
 import type { TranslationKey } from '@/lib/i18n';
+
+export const getStaticPaths = localeStaticPaths;
 
 const id = 'alshifa-quran-website';
 /** TODO: alshifa-live-url — the owner will provide the published site URL. */

@@ -12,7 +12,7 @@ import Icon, { type IconName } from '@/components/ui/Icon.astro';
 import T from '@/components/ui/T.astro';
 import profile from '@/assets/images/profile.jpg';
 import { LOCALES, i18nAttrs, t, type TranslationKey } from '@/lib/i18n';
-import { withBase } from '@/lib/site';
+import { pageHref } from '@/lib/site';
 
 type ProjectData = CollectionEntry<'projects'>['data'];
 
@@ -63,7 +63,7 @@ const led: Record<ProjectData['status'], string> = {
             {sections.map(({ id, key, icon }, index) => (
               <li>
                 <a
-                  href={withBase(`/#${id}`)}
+                  href={pageHref(Astro.url, `/#${id}`)}
                   class:list={['console__link', { 'is-current': index === 0 }]}
                 >
                   <Icon name={icon} size={16} />
@@ -189,7 +189,7 @@ const led: Record<ProjectData['status'], string> = {
                     <tr>
                       <td>
                         <a
-                          href={withBase(`/projects/${id}/`)}
+                          href={pageHref(Astro.url, `/projects/${id}/`)}
                           class="resources__link"
                           lang="en"
                           dir="ltr"
@@ -211,10 +211,10 @@ const led: Record<ProjectData['status'], string> = {
           </div>
 
           <div class="console__actions">
-            <a href={withBase('/#projects')} class="btn-primary">
+            <a href={pageHref(Astro.url, '/#projects')} class="btn-primary">
               <T k="hero.ctaProjects" />
             </a>
-            <a href={withBase('/#contact')} class="btn-outline btn-lg">
+            <a href={pageHref(Astro.url, '/#contact')} class="btn-outline btn-lg">
               <T k="hero.ctaContact" />
             </a>
           </div>

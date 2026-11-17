@@ -8,7 +8,7 @@ import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import T from '@/components/ui/T.astro';
 import { i18nAttrs, t, translations, type TranslationKey } from '@/lib/i18n';
-import { withBase } from '@/lib/site';
+import { pageHref, pageLocale } from '@/lib/site';
 import { breadcrumbJsonLd, personId } from '@/lib/seo';
 
 interface Props {
@@ -29,24 +29,28 @@ const next = ordered[index + 1];
 
 const key = (field: string) => `caseStudies.${id}.${field}` as TranslationKey;
 
-// Structured data: the case study as a CreativeWork by the site owner, plus breadcrumbs.
+// Structured data: the case study as a CreativeWork by the site owner, plus breadcrumbs,
+// in the language of this URL ('/projects/...' Arabic, '/en/projects/...' English).
 const site = Astro.site ?? new URL('https://emadhassan-123.github.io');
-const pageUrl = new URL(`/projects/${id}/`, site).href;
+const locale = pageLocale(Astro.url);
+const abs = (path: string) => new URL(pageHref(Astro.url, path), site).href;
+const pageUrl = abs(`/projects/${id}/`);
 const jsonLd = [
   {
     '@type': 'CreativeWork',
     '@id': `${pageUrl}#project`,
     name: project.name,
     alternateName: t('ar', key('nameAr')),
-    description: t('en', `projects.items.${id}.description` as TranslationKey),
+    description: t(locale, `projects.items.${id}.description` as TranslationKey),
+    inLanguage: locale,
     url: pageUrl,
     author: { '@id': personId(site) },
     creativeWorkStatus: t('en', `projects.status.${project.status}` as TranslationKey),
     ...(project.stack.length > 0 ? { keywords: project.stack.join(', ') } : {}),
   },
   breadcrumbJsonLd([
-    { name: t('ar', 'caseStudy.home'), url: new URL('/', site).href },
-    { name: t('ar', 'caseStudy.projects'), url: new URL('/#projects', site).href },
+    { name: t(locale, 'caseStudy.home'), url: abs('/') },
+    { name: t(locale, 'caseStudy.projects'), url: abs('/#projects') },
     { name: project.shortName, url: pageUrl },
   ]),
 ];
@@ -63,12 +67,12 @@ const jsonLd = [
       <nav {...i18nAttrs({ 'aria-label': 'caseStudy.breadcrumb' })}>
         <ol class="breadcrumb">
           <li>
-            <a href={withBase('/')} class="nav-link">
+            <a href={pageHref(Astro.url, '/')} class="nav-link">
               <T k="caseStudy.home" />
             </a>
           </li>
           <li>
-            <a href={withBase('/#projects')} class="nav-link">
+            <a href={pageHref(Astro.url, '/#projects')} class="nav-link">
               <T k="caseStudy.projects" />
             </a>
           </li>
@@ -106,7 +110,11 @@ const jsonLd = [
 
     <nav class="case-study__nav container" {...i18nAttrs({ 'aria-label': 'caseStudy.projectNav' })}>
       {previous ? (
-        <a href={withBase(`/projects/${previous.id}/`)} class="case-study__nav-link" rel="prev">
+        <a
+          href={pageHref(Astro.url, `/projects/${previous.id}/`)}
+          class="case-study__nav-link"
+          rel="prev"
+        >
           <span class="case-study__nav-label">
             <T k="caseStudy.previous" />
           </span>
@@ -119,7 +127,7 @@ const jsonLd = [
       )}
       {next && (
         <a
-          href={withBase(`/projects/${next.id}/`)}
+          href={pageHref(Astro.url, `/projects/${next.id}/`)}
           class="case-study__nav-link case-study__nav-link--next"
           rel="next"
         >
