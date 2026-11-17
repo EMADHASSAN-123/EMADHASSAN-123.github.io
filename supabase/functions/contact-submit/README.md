@@ -36,7 +36,23 @@ Supabase Edge Function that receives the contact form and stores it in
 Secrets are never committed. `verify_jwt` is disabled in `supabase/config.toml`
 because the public form sends no Supabase token.
 
-## Deploy (from the project owner's machine)
+## Deploy
+
+### Option A — Supabase GitHub integration (in use)
+
+The hosted project is connected to this repository (working directory `.`,
+"Deploy to production" on the production branch). Merging into that branch:
+
+- applies new files in `supabase/migrations/`;
+- deploys the Edge Functions declared in `supabase/config.toml`.
+
+Preview branches (branching) are a paid feature and stay disabled.
+
+Set the two secrets once in the Dashboard: **Edge Functions → Secrets**
+(`IP_HASH_SALT`: a random 32-byte hex value; `ALLOWED_ORIGIN`: the site origin,
+for example `https://<username>.github.io`, with no trailing slash or path).
+
+### Option B — Supabase CLI (manual)
 
 ```bash
 npx supabase login
@@ -46,5 +62,7 @@ npx supabase secrets set IP_HASH_SALT=$(openssl rand -hex 32) ALLOWED_ORIGIN=htt
 npx supabase functions deploy contact-submit
 ```
 
-Then set `PUBLIC_CONTACT_FUNCTION_URL` (GitHub secret and local `.env`) to
+### After deploying
+
+Set `PUBLIC_CONTACT_FUNCTION_URL` (GitHub secret and local `.env`) to
 `https://<project-ref>.supabase.co/functions/v1/contact-submit`.

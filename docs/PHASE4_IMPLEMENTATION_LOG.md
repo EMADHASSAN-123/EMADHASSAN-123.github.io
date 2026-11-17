@@ -590,3 +590,16 @@
 1. إنشاء مشروع Supabase مجاني.
 2. تنفيذ أوامر `supabase/functions/contact-submit/README.md` من جهازه (`db push`، `secrets set`، `functions deploy`).
 3. تزويد قيمة `PUBLIC_CONTACT_FUNCTION_URL` (رابط عام، ليس سراً).
+
+---
+
+## تحديث — ربط Supabase بالمستودع (GitHub Integration)
+
+- **التاريخ:** 17 نوفمبر 2026
+- **ما فعله صاحب المشروع:** أنشأ مشروع Supabase وربطه بالمستودع `videomontage675-design/personal-website`، مع Working directory = `.`، وتفعيل "Deploy to production".
+- **الأثر (حسب وثائق Supabase الرسمية):**
+  - عند الدمج في فرع الإنتاج: تُطبَّق ملفات `supabase/migrations/` الجديدة، وتُنشر Edge Functions المعرّفة في `supabase/config.toml`. لا حاجة لـ CLI.
+  - التكامل مع GitHub متاح في الخطة المجانية؛ **Branching (بيئات معاينة لكل PR) يتطلب خطة Pro**، فيبقى معطَّلاً التزاماً بمبدأ "No Paid Dependencies".
+  - الأسرار (`IP_HASH_SALT`، `ALLOWED_ORIGIN`) لا يضبطها التكامل؛ تُضاف من Dashboard ← Edge Functions ← Secrets.
+- **حالة النشر:** عمل المرحلة 4 كله على فرع العمل، لا على `main`. **لن يُطبَّق شيء على Supabase قبل الدمج في `main`**، والدمج قرار يتطلب اعتماد صاحب المشروع (`CLAUDE.md` § 7).
+- حُدِّث `supabase/functions/contact-submit/README.md` بخيار النشر عبر التكامل (A) بجانب CLI (B).
