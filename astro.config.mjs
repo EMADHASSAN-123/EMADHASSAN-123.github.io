@@ -6,20 +6,25 @@ import sitemap from '@astrojs/sitemap';
 
 const env = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), '');
 
-// Canonical site URL is required by the sitemap integration.
-// It is injected at build time (CI secret or local .env); never hardcoded.
-const site = env.PUBLIC_SITE_URL || undefined;
+// Canonical origin of the published site (GitHub Pages user site).
+// Required for canonical URLs, Open Graph URLs and the sitemap.
+// PUBLIC_SITE_URL can override it (e.g. for a preview build).
+const site = env.PUBLIC_SITE_URL || 'https://emadhassan-123.github.io';
 
 export default defineConfig({
   site,
   output: 'static',
-  trailingSlash: 'ignore',
+  // GitHub Pages serves directory pages at '/path/'; links must match to avoid 301s.
+  trailingSlash: 'always',
   integrations: [
     tailwind({
       // Base styles are imported explicitly from src/styles/global.css.
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      // The 404 page must never be listed.
+      filter: (page) => !page.includes('/404'),
+    }),
   ],
   vite: {
     build: {

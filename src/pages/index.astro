@@ -8,12 +8,17 @@ import Certifications from '@/components/sections/Certifications.astro';
 import Interests from '@/components/sections/Interests.astro';
 import Contact from '@/components/sections/Contact.astro';
 import { translations } from '@/lib/i18n';
+import { personJsonLd, websiteJsonLd } from '@/lib/seo';
+import profile from '@/assets/images/profile.jpg';
+
+const site = Astro.site ?? new URL('https://emadhassan-123.github.io');
+const jsonLd = [personJsonLd(site, new URL(profile.src, site).href), websiteJsonLd(site)];
 ---
 
 <BaseLayout
   title={translations('meta.homeTitle')}
   description={translations('meta.description')}
-  noindex
+  jsonLd={jsonLd}
 >
   <Hero />
   <Methodology />

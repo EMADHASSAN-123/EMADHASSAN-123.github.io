@@ -9,6 +9,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import T from '@/components/ui/T.astro';
 import { i18nAttrs, t, translations, type TranslationKey } from '@/lib/i18n';
 import { withBase } from '@/lib/site';
+import { breadcrumbJsonLd, personId } from '@/lib/seo';
 
 interface Props {
   id: CollectionEntry<'projects'>['id'];
@@ -27,12 +28,35 @@ const previous = ordered[index - 1];
 const next = ordered[index + 1];
 
 const key = (field: string) => `caseStudies.${id}.${field}` as TranslationKey;
+
+// Structured data: the case study as a CreativeWork by the site owner, plus breadcrumbs.
+const site = Astro.site ?? new URL('https://emadhassan-123.github.io');
+const pageUrl = new URL(`/projects/${id}/`, site).href;
+const jsonLd = [
+  {
+    '@type': 'CreativeWork',
+    '@id': `${pageUrl}#project`,
+    name: project.name,
+    alternateName: t('ar', key('nameAr')),
+    description: t('en', `projects.items.${id}.description` as TranslationKey),
+    url: pageUrl,
+    author: { '@id': personId(site) },
+    creativeWorkStatus: t('en', `projects.status.${project.status}` as TranslationKey),
+    ...(project.stack.length > 0 ? { keywords: project.stack.join(', ') } : {}),
+  },
+  breadcrumbJsonLd([
+    { name: t('ar', 'caseStudy.home'), url: new URL('/', site).href },
+    { name: t('ar', 'caseStudy.projects'), url: new URL('/#projects', site).href },
+    { name: project.shortName, url: pageUrl },
+  ]),
+];
 ---
 
 <BaseLayout
+  ogType="article"
+  jsonLd={jsonLd}
   title={translations(key('pageTitle'))}
   description={translations(`projects.items.${id}.description` as TranslationKey)}
-  noindex
 >
   <article class="case-study">
     <header class="case-study__header container pt-12">
@@ -82,7 +106,7 @@ const key = (field: string) => `caseStudies.${id}.${field}` as TranslationKey;
 
     <nav class="case-study__nav container" {...i18nAttrs({ 'aria-label': 'caseStudy.projectNav' })}>
       {previous ? (
-        <a href={withBase(`/projects/${previous.id}`)} class="case-study__nav-link" rel="prev">
+        <a href={withBase(`/projects/${previous.id}/`)} class="case-study__nav-link" rel="prev">
           <span class="case-study__nav-label">
             <T k="caseStudy.previous" />
           </span>
@@ -95,7 +119,7 @@ const key = (field: string) => `caseStudies.${id}.${field}` as TranslationKey;
       )}
       {next && (
         <a
-          href={withBase(`/projects/${next.id}`)}
+          href={withBase(`/projects/${next.id}/`)}
           class="case-study__nav-link case-study__nav-link--next"
           rel="next"
         >
