@@ -37,7 +37,6 @@
   },
   "hero": {
     "role": "IT Engineer",
-    "statement": "I design systems and build solutions that bring together software, artificial intelligence, and infrastructure.",
     "coreAreas": "Core areas",
     "inProgress": "in progress",
     "ctaProjects": "Explore the projects",
@@ -64,7 +63,8 @@
         "name": "Databases",
         "text": "Designing tables and access policies, on-device storage, and data modeling for a management system."
       }
-    }
+    },
+    "personal": "My work should keep serving the people it was made for, with or without me, and outlast me."
   },
   "methodology": {
     "intro": "How I move from a problem to a solution, step by step.",
@@ -178,10 +178,83 @@
       "design_fuel": "Analyzed the problem, defined the requirements and designed the overall architecture.",
       "design_cms": "Analyzed and documented the system requirements.",
       "design_shifa": "Worked with the organization to understand its needs, analyzed requirements and defined the content.",
-      "design_mis": "Analyzing the system's requirements and functional scope."
+      "design_mis": "Analyzing the system's requirements and functional scope.",
+      "analytical_fuel": "Analyzed the problem of detecting fuel quality and turned it into a system that combines multispectral sensing and machine learning.",
+      "analytical_mis": "Analyzing a 12-module management system to scope its first release.",
+      "learning_ai": "Completed the self-paced Introduction to AI course and passed its final quiz at 100%.",
+      "learning_ws": "Attend short workshops and courses on prompt engineering and freelancing.",
+      "flex_domains": "Worked across different domains: hardware and sensors, machine learning, a mobile app, and websites.",
+      "own_shifa": "Owned the Al Shifa website end to end, from understanding the need to launch.",
+      "comm_shifa": "Worked with a real organization to understand its needs and turn them into requirements and content.",
+      "present_gmai": "Graduated with distinction from an applied program after successfully defending my project.",
+      "doc_cms": "Analyzed and documented the requirements of the content management system.",
+      "doc_mis": "Documenting the analysis of the Al Shifa management system and its database design.",
+      "arch_fuel": "Designed the overall architecture of the fuel system: device, app and model."
     },
     "toolsLabel": "Everyday tools",
-    "otherTitle": "Beyond applied experience"
+    "otherTitle": "Beyond applied experience",
+    "partTech": "Technical skills",
+    "partSoft": "Professional and personal skills",
+    "frameworkTech": "Grouped by the SFIA 9 framework for IT skills, each backed by evidence from my work.",
+    "frameworkSoft": "Grouped by the core skills of the Future of Jobs Report 2025 (World Economic Forum), each backed by a real situation.",
+    "groupsV2": {
+      "dev": "Software development",
+      "dataai": "Data science and AI",
+      "datamgmt": "Data management",
+      "analysis": "Systems analysis and design",
+      "embedded": "Embedded systems and IoT",
+      "cognitive": "Cognitive skills",
+      "selfmgmt": "Self-efficacy",
+      "others": "Working with others"
+    },
+    "skillsV2": {
+      "web": "Front-end web development",
+      "mobile": "Mobile app development",
+      "backendfeat": "Authentication and real-time features",
+      "dataprep": "Data preprocessing and feature engineering",
+      "ml": "Machine learning: classification and evaluation",
+      "viz": "Data visualisation",
+      "dbdesign": "Database design and access policies",
+      "localdata": "On-device data storage",
+      "modeling": "Data modelling",
+      "requirements": "Requirements analysis and management",
+      "sysdesign": "System architecture design",
+      "iot": "Sensor integration and communication protocols",
+      "analytical": "Analytical thinking and problem solving",
+      "learning": "Curiosity and lifelong learning",
+      "flexibility": "Resilience, flexibility and agility",
+      "ownership": "Ownership and dependability",
+      "communication": "Effective stakeholder communication",
+      "presenting": "Presenting and defending ideas",
+      "documentation": "Technical documentation"
+    },
+    "skillsStd": {
+      "web": "Front-end web development",
+      "mobile": "Mobile app development",
+      "backendfeat": "Authentication and real-time features",
+      "dataprep": "Data preprocessing and feature engineering",
+      "ml": "Machine learning: classification and evaluation",
+      "viz": "Data visualisation",
+      "dbdesign": "Database design and access policies",
+      "localdata": "On-device data storage",
+      "modeling": "Data modelling",
+      "requirements": "Requirements analysis and management",
+      "sysdesign": "System architecture design",
+      "iot": "Sensor integration and communication protocols",
+      "analytical": "Analytical thinking and problem solving",
+      "learning": "Curiosity and lifelong learning",
+      "flexibility": "Resilience, flexibility and agility",
+      "ownership": "Ownership and dependability",
+      "communication": "Effective stakeholder communication",
+      "presenting": "Presenting and defending ideas",
+      "documentation": "Technical documentation"
+    },
+    "evidenceLinks": {
+      "certAi": "Introduction to AI",
+      "certGmai": "Certificate of Excellence (GMAI)",
+      "certWs": "Workshops and courses",
+      "portfolio": "The four projects"
+    }
   },
   "projects": {
     "intro": "Four engineering experiments, ordered by professional value, each with a case study.",

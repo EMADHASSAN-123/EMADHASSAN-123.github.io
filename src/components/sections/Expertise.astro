@@ -1,38 +1,48 @@
 ---
 /**
- * Expertise station — evidence board (owner-approved redesign, 17 Nov 2026).
- * Each applied skill shows where it was applied and what was actually done,
- * using the documented contributions (PROJECT_CONTEXT sections 4.1 and 5).
- * Academic knowledge (4.2) and learning (4.3) stay visibly separate, in a
- * compact strip, as required by CLAUDE.md section 2.
+ * Expertise station — evidence board, two parts (owner-approved, 17 Nov 2026):
+ * 1. Technical skills grouped by the SFIA 9 framework (group headings cite the
+ *    SFIA 9 skills they map to).
+ * 2. Professional and personal skills grouped by the core-skill families of
+ *    the WEF Future of Jobs Report 2025.
+ * Skill names use market-standard terms; every skill carries evidence from
+ * documented work (PROJECT_CONTEXT sections 4, 5 and 4.4). No proficiency
+ * levels are shown (no formal assessment exists). Academic and learning areas
+ * stay visibly separate (CLAUDE.md section 2).
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
-import SectionHeader from '@/components/ui/SectionHeader.astro';
 import Icon, { type IconName } from '@/components/ui/Icon.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 import T from '@/components/ui/T.astro';
-import type { TranslationKey } from '@/lib/i18n';
+import { t, type TranslationKey } from '@/lib/i18n';
 import { withBase } from '@/lib/site';
 
 type ProjectId = CollectionEntry<'projects'>['id'];
 type Pair = 'blue' | 'orange' | 'green' | 'brown' | 'white';
-interface Evidence {
-  project: ProjectId;
-  item: string;
-}
+type Evidence =
+  { project: ProjectId; item: string } | { href: string; label: string; item: string };
 interface Skill {
   id: string;
-  stack: string[];
+  stack?: string[];
   evidence: Evidence[];
 }
+interface Group {
+  id: string;
+  pair: Pair;
+  icon: IconName;
+  framework?: string;
+  skills: Skill[];
+}
 
-const groups: { id: string; pair: Pair; icon: IconName; skills: Skill[] }[] = [
+const technical: Group[] = [
   {
-    id: 'software',
+    id: 'dev',
     pair: 'blue',
     icon: 'code-xml',
+    framework: 'SFIA 9: Programming/software development, Software design',
     skills: [
       {
-        id: 'frontend',
+        id: 'web',
         stack: ['HTML5', 'CSS3', 'Tailwind CSS', 'JavaScript'],
         evidence: [
           { project: 'alshifa-quran-website', item: 'web_shifa' },
@@ -45,16 +55,17 @@ const groups: { id: string; pair: Pair; icon: IconName; skills: Skill[] }[] = [
         evidence: [{ project: 'fuel-quality-detection', item: 'mobile_fuel' }],
       },
       {
-        id: 'auth',
+        id: 'backendfeat',
         stack: ['Supabase', 'JavaScript'],
         evidence: [{ project: 'content-management-blog', item: 'auth_cms' }],
       },
     ],
   },
   {
-    id: 'data',
+    id: 'dataai',
     pair: 'orange',
     icon: 'brain-circuit',
+    framework: 'SFIA 9: Data science, Machine learning, Data visualisation',
     skills: [
       {
         id: 'dataprep',
@@ -62,7 +73,7 @@ const groups: { id: string; pair: Pair; icon: IconName; skills: Skill[] }[] = [
         evidence: [{ project: 'fuel-quality-detection', item: 'data_fuel' }],
       },
       {
-        id: 'models',
+        id: 'ml',
         stack: ['Scikit-learn', 'TensorFlow Lite'],
         evidence: [{ project: 'fuel-quality-detection', item: 'model_fuel' }],
       },
@@ -74,12 +85,13 @@ const groups: { id: string; pair: Pair; icon: IconName; skills: Skill[] }[] = [
     ],
   },
   {
-    id: 'databases',
+    id: 'datamgmt',
     pair: 'green',
     icon: 'database',
+    framework: 'SFIA 9: Database design, Data modelling and design',
     skills: [
       {
-        id: 'supabase',
+        id: 'dbdesign',
         stack: ['Supabase', 'PostgreSQL'],
         evidence: [
           { project: 'content-management-blog', item: 'db_cms' },
@@ -87,15 +99,28 @@ const groups: { id: string; pair: Pair; icon: IconName; skills: Skill[] }[] = [
         ],
       },
       {
-        id: 'sqlite',
+        id: 'localdata',
         stack: ['SQLite'],
         evidence: [{ project: 'fuel-quality-detection', item: 'db_fuel' }],
       },
+      { id: 'modeling', evidence: [{ project: 'alshifa-management-system', item: 'db_mis' }] },
+    ],
+  },
+  {
+    id: 'analysis',
+    pair: 'white',
+    icon: 'compass',
+    framework: 'SFIA 9: Requirements definition and management, Systems design',
+    skills: [
       {
-        id: 'modeling',
-        stack: ['Database Design', 'Data Modeling'],
-        evidence: [{ project: 'alshifa-management-system', item: 'db_mis' }],
+        id: 'requirements',
+        evidence: [
+          { project: 'alshifa-quran-website', item: 'design_shifa' },
+          { project: 'content-management-blog', item: 'design_cms' },
+          { project: 'alshifa-management-system', item: 'design_mis' },
+        ],
       },
+      { id: 'sysdesign', evidence: [{ project: 'fuel-quality-detection', item: 'arch_fuel' }] },
     ],
   },
   {
@@ -110,19 +135,55 @@ const groups: { id: string; pair: Pair; icon: IconName; skills: Skill[] }[] = [
       },
     ],
   },
+];
+
+const certs = withBase('/#certifications');
+const professional: Group[] = [
   {
-    id: 'design',
-    pair: 'white',
-    icon: 'compass',
+    id: 'cognitive',
+    pair: 'orange',
+    icon: 'lightbulb',
     skills: [
       {
-        id: 'analysis',
-        stack: ['Requirements Analysis', 'System Design'],
+        id: 'analytical',
         evidence: [
-          { project: 'fuel-quality-detection', item: 'design_fuel' },
-          { project: 'alshifa-quran-website', item: 'design_shifa' },
-          { project: 'content-management-blog', item: 'design_cms' },
-          { project: 'alshifa-management-system', item: 'design_mis' },
+          { project: 'fuel-quality-detection', item: 'analytical_fuel' },
+          { project: 'alshifa-management-system', item: 'analytical_mis' },
+        ],
+      },
+      {
+        id: 'learning',
+        evidence: [
+          { href: certs, label: 'certAi', item: 'learning_ai' },
+          { href: certs, label: 'certWs', item: 'learning_ws' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'selfmgmt',
+    pair: 'green',
+    icon: 'shield-check',
+    skills: [
+      {
+        id: 'flexibility',
+        evidence: [{ href: withBase('/#projects'), label: 'portfolio', item: 'flex_domains' }],
+      },
+      { id: 'ownership', evidence: [{ project: 'alshifa-quran-website', item: 'own_shifa' }] },
+    ],
+  },
+  {
+    id: 'others',
+    pair: 'blue',
+    icon: 'message-circle',
+    skills: [
+      { id: 'communication', evidence: [{ project: 'alshifa-quran-website', item: 'comm_shifa' }] },
+      { id: 'presenting', evidence: [{ href: certs, label: 'certGmai', item: 'present_gmai' }] },
+      {
+        id: 'documentation',
+        evidence: [
+          { project: 'content-management-blog', item: 'doc_cms' },
+          { project: 'alshifa-management-system', item: 'doc_mis' },
         ],
       },
     ],
@@ -148,6 +209,15 @@ const learning: TranslationKey[] = [
 
 const projects = new Map((await getCollection('projects')).map((p) => [p.id, p.data]));
 const k = (path: string) => path as TranslationKey;
+const parts = [
+  { id: 'tech', title: 'expertise.partTech', note: 'expertise.frameworkTech', groups: technical },
+  {
+    id: 'soft',
+    title: 'expertise.partSoft',
+    note: 'expertise.frameworkSoft',
+    groups: professional,
+  },
+] as const;
 ---
 
 <section id="expertise" class="border-t border-border py-24">
@@ -157,58 +227,91 @@ const k = (path: string) => path as TranslationKey;
       <T k="expertise.intro" />
     </p>
 
-    <div class="board">
-      {groups.map(({ id, pair, icon, skills }) => (
-        <section class="board__group" data-pair={pair} aria-labelledby={`skills-${id}`}>
-          <div class="board__head">
-            <h3 id={`skills-${id}`} class="board__title">
-              <Icon name={icon} size={22} />
-              <T k={k(`expertise.groupsApplied.${id}`)} />
-            </h3>
-            <div class="twist" aria-hidden="true" />
-          </div>
+    {parts.map((part) => (
+      <div class="board-part" aria-labelledby={`part-${part.id}`}>
+        <h3 id={`part-${part.id}`} class="board-part__title">
+          <T k={part.title} />
+        </h3>
+        <p class="board-part__note">
+          <T k={part.note} />
+        </p>
 
-          <ul class="board__skills">
-            {skills.map((skill) => (
-              <li class="skill">
-                <div class="skill__label">
-                  <h4 class="skill__name">
-                    <T k={k(`expertise.skills.${skill.id}`)} />
-                  </h4>
-                  <p class="skill__stack" lang="en" dir="ltr">
-                    {skill.stack.join(' / ')}
+        <div class="board">
+          {part.groups.map(({ id, pair, icon, framework, skills }) => (
+            <section class="board__group" data-pair={pair} aria-labelledby={`skills-${id}`}>
+              <div class="board__head">
+                <h4 id={`skills-${id}`} class="board__title">
+                  <Icon name={icon} size={22} />
+                  <T k={k(`expertise.groupsV2.${id}`)} />
+                </h4>
+                {framework && (
+                  <p class="board__framework" lang="en" dir="ltr">
+                    {framework}
                   </p>
-                </div>
-                <ul class="skill__evidence">
-                  {skill.evidence.map(({ project: pid, item }) => {
-                    const project = projects.get(pid);
-                    if (!project) throw new Error(`Unknown project "${pid}"`);
-                    return (
-                      <li class="evidence">
-                        <a
-                          href={withBase(`/projects/${pid}/`)}
-                          class:list={[
-                            'evidence__project',
-                            { 'evidence__project--design': project.status === 'in-analysis' },
-                          ]}
-                          lang="en"
-                          dir="ltr"
-                        >
-                          {project.shortName}
-                        </a>
-                        <p class="evidence__text">
-                          <T k={k(`expertise.evidenceItems.${item}`)} />
+                )}
+                <div class="twist" aria-hidden="true" />
+              </div>
+
+              <ul class="board__skills">
+                {skills.map((skill) => (
+                  <li class="skill">
+                    <div class="skill__label">
+                      <h5 class="skill__name">
+                        <T k={k(`expertise.skillsV2.${skill.id}`)} />
+                      </h5>
+                      <p class="skill__std" data-lang="ar" lang="en" dir="ltr">
+                        {t('en', k(`expertise.skillsStd.${skill.id}`))}
+                      </p>
+                      {skill.stack && (
+                        <p class="skill__stack" lang="en" dir="ltr">
+                          {skill.stack.join(' / ')}
                         </p>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
-    </div>
+                      )}
+                    </div>
+                    <ul class="skill__evidence">
+                      {skill.evidence.map((ev) => {
+                        if ('project' in ev) {
+                          const project = projects.get(ev.project);
+                          if (!project) throw new Error(`Unknown project "${ev.project}"`);
+                          return (
+                            <li class="evidence">
+                              <a
+                                href={withBase(`/projects/${ev.project}/`)}
+                                class:list={[
+                                  'evidence__project',
+                                  { 'evidence__project--design': project.status === 'in-analysis' },
+                                ]}
+                                lang="en"
+                                dir="ltr"
+                              >
+                                {project.shortName}
+                              </a>
+                              <p class="evidence__text">
+                                <T k={k(`expertise.evidenceItems.${ev.item}`)} />
+                              </p>
+                            </li>
+                          );
+                        }
+                        return (
+                          <li class="evidence">
+                            <a href={ev.href} class="evidence__project">
+                              <T k={k(`expertise.evidenceLinks.${ev.label}`)} />
+                            </a>
+                            <p class="evidence__text">
+                              <T k={k(`expertise.evidenceItems.${ev.item}`)} />
+                            </p>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </div>
+    ))}
 
     <p class="board__tools">
       <span class="text-text-muted">

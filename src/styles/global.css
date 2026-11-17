@@ -2308,7 +2308,9 @@ html:not([data-theme]) [data-requires-js] {
     display: flex;
     gap: 0.5rem;
     font-family: var(--font-mono);
+    min-width: 0;
     font-size: 0.75rem;
+    white-space: nowrap;
     color: rgb(var(--color-text-muted));
   }
 
@@ -2413,12 +2415,6 @@ html:not([data-theme]) [data-requires-js] {
     }
   }
 
-  .instance__alt {
-    margin-top: 0.25rem;
-    font-size: 0.8rem;
-    color: rgb(var(--color-text-muted));
-  }
-
   .instance__role {
     display: inline-block;
     margin-top: 0.875rem;
@@ -2458,13 +2454,6 @@ html:not([data-theme]) [data-requires-js] {
   .instance__facts dd {
     margin-top: 0.25rem;
     color: rgb(var(--color-text-primary));
-  }
-
-  .console__statement {
-    margin-top: 1.5rem;
-    max-width: 40rem;
-    font-size: 1.1rem;
-    color: rgb(var(--color-text-secondary));
   }
 
   .console__panels {
@@ -2586,12 +2575,6 @@ html:not([data-theme]) [data-requires-js] {
   }
 }
 
-@media (max-width: 639px) {
-  .instance__role {
-    font-size: 1.05rem;
-  }
-}
-
 /* ===== Section heading (icon + title + twisted rule) ===== */
 @layer components {
   .section-head {
@@ -2702,5 +2685,114 @@ html:not([data-theme]) [data-requires-js] {
   .nav-link.is-current {
     color: rgb(var(--color-text-primary));
     background-size: 100% 2px;
+  }
+}
+
+/* ===== Expertise: two-part board (technical / professional) ===== */
+@layer components {
+  .board-part {
+    margin-top: 4rem;
+  }
+
+  .board-part + .board-part {
+    padding-top: 3.5rem;
+    border-top: 1px dashed rgb(var(--color-border-strong) / 0.5);
+  }
+
+  .board-part__title {
+    font-size: 1.953rem;
+    font-weight: 700;
+  }
+
+  .board-part__note {
+    max-width: var(--layout-prose);
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-muted));
+  }
+
+  .board-part .board {
+    margin-top: 2.5rem;
+  }
+
+  .board__framework {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: rgb(var(--color-text-muted));
+    text-align: start;
+  }
+
+  [dir='rtl'] .board__framework,
+  [dir='rtl'] .skill__std {
+    text-align: right;
+  }
+
+  .skill__std {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-secondary));
+  }
+}
+
+/* ===== Hero console: alignment and small-screen sizing ===== */
+@layer components {
+  /* Name and title form one block, vertically centred on the portrait. */
+  .instance {
+    align-items: center;
+  }
+
+  .instance__role {
+    margin-top: 0.75rem;
+  }
+
+  .instance__personal {
+    max-width: 40rem;
+    margin-top: 1.5rem;
+    padding-inline-start: 0.875rem;
+    border-inline-start: 3px solid rgb(var(--color-accent-primary));
+    font-size: 1.1rem;
+    line-height: var(--leading-body);
+    color: rgb(var(--color-text-secondary));
+  }
+
+  @media (max-width: 639px) {
+    .instance {
+      gap: 1rem;
+    }
+
+    .instance__photo {
+      width: 5.5rem;
+    }
+
+    .instance__name {
+      font-size: 1.5rem;
+      line-height: 1.25;
+    }
+
+    .instance__role {
+      margin-top: 0.5rem;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.95rem;
+    }
+
+    .instance__personal {
+      font-size: 1rem;
+    }
+  }
+
+  /* Narrowest phones: keep the title chip on one line where possible. */
+  @media (max-width: 379px) {
+    .instance__photo {
+      width: 4.75rem;
+    }
+
+    .instance__name {
+      font-size: 1.375rem;
+    }
+
+    .instance__role {
+      padding-inline: 0.45rem;
+      font-size: 0.875rem;
+    }
   }
 }
