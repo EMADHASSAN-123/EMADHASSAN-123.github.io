@@ -548,6 +548,7 @@
 ## الخطوة 14 — إعداد Supabase (Migration + RLS + Edge Function)
 
 - **التاريخ:** 17 نوفمبر 2026
+- **Commit:** `08a09d6` — `feat: add contact_messages schema and contact-submit edge function`
 - **الحالة:** الكود منفذ ومختبَر محلياً — **النشر الفعلي بانتظار صاحب المشروع** (مشروع Supabase + قيم المتغيرات).
 
 ### ما تم
