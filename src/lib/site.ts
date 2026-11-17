@@ -22,6 +22,5 @@ export const CONTACT = {
   whatsappUrl: 'https://wa.me/967773568667',
   linkedinUrl: 'https://www.linkedin.com/in/emad-hassan-14262b2b2',
   facebookUrl: 'https://www.facebook.com/share/1BzwNq4Nfh/',
-  /** TODO: contact-email — set once the owner provides the address. */
-  email: null as string | null,
+  email: 'emadaali62@gmail.com' as string | null,
 } as const;
