@@ -615,3 +615,20 @@
 - **`main` يحتوي الآن الـ Migration و Edge Function**، فتكامل Supabase يطبقهما عند الدمج. صاحب المشروع أكد نجاح التكامل.
 - لا يوجد بعد Workflow نشر GitHub Pages (الخطوة 16)، فلا شيء منشور للعامة من الموقع.
 - دُمج `origin/main` في فرع العمل لمزامنة سجل الدمج (بلا تغيير في المحتوى).
+
+---
+
+## نقل المستودع وتثبيت عنوان الموقع (17 نوفمبر 2026)
+
+- **قرار صاحب المشروع:** نُقل المستودع من `videomontage675-design/personal-website` إلى حسابه وأُعيدت تسميته: **`EMADHASSAN-123/EMADHASSAN-123.github.io`**.
+- **عنوان الموقع النهائي:** `https://emadhassan-123.github.io` (Root user site، بلا `base`). يحقق قرار `CLAUDE.md` § 4 (`<username>.github.io`).
+- انتقلت الفروع كاملة (`main` عند `7a9a3ea`، وفرع العمل عند `d93d1d3`).
+- ثبّت صاحب المشروع تطبيق Claude GitHub على هذا المستودع فقط.
+- **`ALLOWED_ORIGIN` في Supabase:** `https://emadhassan-123.github.io`.
+
+### حادثة: بناء GitHub Pages التلقائي (Jekyll)
+
+- عند إعادة التسمية فعّل GitHub تلقائياً Pages بوضع "Deploy from a branch" (Jekyll على `main`).
+- فشل التشغيل `pages build and deployment #1` لأن Jekyll قرأ ترويسات ملفات `.astro` كـ YAML front matter.
+- **الفشل منع نشر ملفات المستودع الخام** (الكود، `docs/`، `CLAUDE.md`) على العنوان العام قبل اعتماد الإطلاق.
+- **الإجراء المطلوب من صاحب المشروع:** Settings ← Pages ← Build and deployment ← Source = **GitHub Actions**. لا يُنشر شيء حتى يُضاف Workflow النشر (الخطوة 16) ويُعتمد الإطلاق.
